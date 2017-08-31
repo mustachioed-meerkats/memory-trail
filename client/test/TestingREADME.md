@@ -51,11 +51,13 @@ To add enzyme...
 
 #Bugs you may encounter. 
 
+If you encounter a bug, please notify Sam. 
+
 FILE PATHS MAY BE WRONG. IF YOU ARE GETTING ERRORS, LET ME KNOW, THAT IS PROBABLY THE ISSUE. 
 
 THINGS ARE ORDERED FOR A REASON. If things break, peel them back one by one. 
 
-Enzyme breaks when it comes across files that are not JS. If you have non JS files in your client folder, build a ignore-utils.js file and use the require-hacker npm package to mock them out. 
+Enzyme breaks when it comes across files that are not JS. I think that Jest will automatically mock out files, but we may need to build a ignore-utils.js file and use the require-hacker npm package to mock them out. 
 
 Redux has a tendency to break Enzyme. If this happens, you need to add the redux-mock-store.  
 
@@ -64,7 +66,20 @@ The CSS modules plugin will break Jest. If you add this package, follow the dire
 If there are DOM issues, add jsdom to enzyme. 
 
 
-
 #How to test.
 
-Place Jest Tests within the 
+Place Jest Snapshot Tests within the __test__ folder. 
+
+Jest can run regular mocha/chai tests on the server side. 
+
+On the Client side, it utlizes snapshot testing, which means it takes a snapshot of a pariton of a file, then compares that snapshot to other snapshots in the future. If they are inconsistent, the test will fail. 
+
+Snapshot testing instructions can be found here: https://facebook.github.io/jest/docs/en/snapshot-testing.html#content
+
+Enzyme tests components. To test with enzyme, write tests in this folder, using the describe/it expects syntax. 
+
+BE AWARE, for Enzyme you must import every component/setting from your actual development setting. This can be difficult and can be quite fragile when components change. Be cognizant of how your changes to the font end can and will fail tests. 
+
+There are two types of Enzyme tests. Shallow rendering is good for telling if things are rendering/creating on the page. Mounting creates a virtual dom of your app, and allows you to test things such as component lifecycles and click events. 
+
+As of right now, we will be using shallow dom rendering, as our Redux build will allow us to have only stateless components. This should allow us to work without JSdom. 
