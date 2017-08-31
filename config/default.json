@@ -8,6 +8,13 @@
       "host": "localhost",
       "port": 5432
     },
+    "passport": {
+      "Google": {
+        "clientID": "",
+        "clientSecret": "",
+        "callbackURL": ""
+      }
+    },
     "pool": {
       "min": 1,
       "max": 2
