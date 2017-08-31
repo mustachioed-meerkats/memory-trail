@@ -1,0 +1,20 @@
+language: node_js
+node_js:
+  - "node"
+
+services:
+  - postgreSQL
+
+cache:
+  directories:
+    - "node_modules"
+
+env:
+  - NODE_ENV=test
+
+before_script:
+  - webpack
+
+script:
+  - "npm test"
+  - "npm run lint"
