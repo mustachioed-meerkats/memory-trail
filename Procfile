@@ -1,1 +1,1 @@
-web: webpack --watch
+web: npm run build 
