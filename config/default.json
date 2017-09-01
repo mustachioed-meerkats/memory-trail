@@ -1,6 +1,6 @@
 {
   "knex": {
-    "client": "postgres",
+    "client": "postgresql",
     "connection": {
       "database": "thesis",
       "user": "postgres",
