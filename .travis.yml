@@ -12,8 +12,6 @@ cache:
 env:
   - NODE_ENV=test
 
-before_install: 
- - NODE_ENV=test grunt test
 
 before_script:
   - webpack
