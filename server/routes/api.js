@@ -14,22 +14,22 @@ router.route('/')
 
 router.route('/test')
   .get((req, res) => {
-    models.Post.forge({
-      profile_id: 2,
-      lat: 37.7836920,
-      lng: -122.4089670,
-      content: 'This is my first blog! I am super excited about it!',
-      title: 'First Blog Ever!'
-    }).save()
-      .then((result) => {
-        res.status(200).send('oh heyyy');
+    var profile_id = 2;
+    var lat = 37.7836920;
+    var lng = -122.4089670;
+    var content = 'Spain was tight yo';
+    var title = 'Kevin in Spain';
+    models.Post.createPost(profile_id, lat, lng, content, title)
+      .then(result => {
+        res.status(200).send(result);
       });
   });
 
 router.route('/test2')
   .get((req, res) => {
-    models.Post.where('id', 1).fetch()
-      .then((post) => {
+    var id = 3;
+    models.Post.getPostById(id)
+      .then(post => {
         res.send(post);
       });
   });
