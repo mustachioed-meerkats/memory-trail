@@ -29,8 +29,9 @@
   },
 
   "passport": {
-    "Google": {},
-    "Facebook": {},
-    "Twitter": {}
-  }
+    "Google": {
+      "clientID": "fake",
+      "clientSecret": "alsofake",
+      "callbackURL": "http://reallyfake/auth/google/callback"
+    },
 }
