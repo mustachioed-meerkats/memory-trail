@@ -4,6 +4,7 @@ const express = require('express');
 const expect = require('chai').expect;
 const app = require('../app.js');
 const dbUtils = require('../../db/lib/utils.js');
+global.Promise = require.requireActual('promise');
 
 describe('Profiles API', function () {
   beforeEach(function (done) {

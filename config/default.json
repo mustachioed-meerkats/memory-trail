@@ -27,7 +27,6 @@
       "directory": "db/seeds"
     }
   },
-
   "passport": {
     "Google": {
       "clientID": "fake",
