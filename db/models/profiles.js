@@ -10,4 +10,5 @@ const Profile = db.Model.extend({
   }
 });
 
-module.exports = db.model('Profile', Profile);
+var profileModel = db.model('Profile', Profile);
+module.exports = profileModel;

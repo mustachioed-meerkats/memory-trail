@@ -6,7 +6,8 @@ const Post = db.Model.extend({
   }
 });
 
-var postModel = db.model('Post', Post); //what is this line doing
+var postModel = db.model('Post', Post);
+module.exports = postModel;
 
 module.exports.createPost = (profile_id, lat, lng, content, title) => {
   return postModel.forge({
