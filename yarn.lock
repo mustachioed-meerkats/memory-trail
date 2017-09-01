@@ -1836,6 +1836,10 @@ emojis-list@^2.0.0:
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/emojis-list/-/emojis-list-2.1.0.tgz#4daa4d9db00f9819880c79fa457ae5b09a1fd389"
 
+empty-dir@^0.1.0:
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/empty-dir/-/empty-dir-0.1.0.tgz#4915bd8b63773c3f458b2dc50339c908849c84f0"
+
 encodeurl@~1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/encodeurl/-/encodeurl-1.0.1.tgz#79e3d58655346909fe6f0f45a5de68103b294d20"
@@ -4620,6 +4624,12 @@ postgres-interval@~1.0.0:
   dependencies:
     xtend "^4.0.0"
 
+postgresql@^0.0.1:
+  version "0.0.1"
+  resolved "https://registry.yarnpkg.com/postgresql/-/postgresql-0.0.1.tgz#f07c179d937e0c54ee735a15eb2e462b1967ab70"
+  dependencies:
+    empty-dir "^0.1.0"
+
 prelude-ls@~1.1.2:
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/prelude-ls/-/prelude-ls-1.1.2.tgz#21932a549f5e52ffd9a827f570e04be62a97da54"
@@ -4875,13 +4885,25 @@ redis-parser@^2.5.0:
   version "2.5.0"
   resolved "https://registry.yarnpkg.com/redis-parser/-/redis-parser-2.5.0.tgz#79fc2b1d4a6e4d2870b35368433639271fca2617"
 
-redis@^2.1.0, redis@^2.7.1:
+redis-parser@^2.6.0:
+  version "2.6.0"
+  resolved "https://registry.yarnpkg.com/redis-parser/-/redis-parser-2.6.0.tgz#52ed09dacac108f1a631c07e9b69941e7a19504b"
+
+redis@^2.1.0:
   version "2.7.1"
   resolved "https://registry.yarnpkg.com/redis/-/redis-2.7.1.tgz#7d56f7875b98b20410b71539f1d878ed58ebf46a"
   dependencies:
     double-ended-queue "^2.1.0-0"
     redis-commands "^1.2.0"
     redis-parser "^2.5.0"
+
+redis@^2.8.0:
+  version "2.8.0"
+  resolved "https://registry.yarnpkg.com/redis/-/redis-2.8.0.tgz#202288e3f58c49f6079d97af7a10e1303ae14b02"
+  dependencies:
+    double-ended-queue "^2.1.0-0"
+    redis-commands "^1.2.0"
+    redis-parser "^2.6.0"
 
 regenerate@^1.2.1:
   version "1.3.2"

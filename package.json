@@ -4,7 +4,7 @@
   "scripts": {
     "postinstall": "curl -s https://raw.githubusercontent.com/reactorcore/pomander/master/bin/install | bash",
     "start": "nodemon server",
-    "test": "jest",
+    "test": "jest NODE_ENV=test grunt test",
     "build": "webpack --watch"
   },
   "author": "Hack Reactor",
@@ -32,9 +32,10 @@
     "passport-local": "^1.0.0",
     "passport-twitter": "^1.0.4",
     "pg": "^6.1.5",
+    "postgresql": "^0.0.1",
     "react": "^15.4.2",
     "react-dom": "^15.4.2",
-    "redis": "^2.7.1",
+    "redis": "^2.8.0",
     "yarn": "^0.27.5"
   },
   "devDependencies": {
