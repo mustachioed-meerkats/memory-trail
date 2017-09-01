@@ -14,8 +14,7 @@ env:
 
 
 before_script:
- - psql -c 'thesis' -U postgres
-  - webpack
+ - psql -c 'create database travis_ci_test;' -U postgres
 
 script:
   - "npm test"
