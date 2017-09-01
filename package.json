@@ -9,6 +9,9 @@
   "engines": {
     "node": "6.11.2"
   },
+  "keywords" : [
+    "heroku"
+  ],
   "author": "Hack Reactor",
   "license": "MIT",
   "dependencies": {
