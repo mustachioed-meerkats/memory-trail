@@ -4,8 +4,7 @@
   "scripts": {
     "start": "nodemon server",
     "test": "jest NODE_ENV=test grunt test",
-    "build": "webpack --watch",
-    "postinstall": "npm run build"
+    "build": "webpack --watch"
   },
   "engines": {
     "node": "6.11.2"
