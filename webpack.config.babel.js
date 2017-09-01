@@ -3,6 +3,12 @@ import path from 'path';
 
 const config = {
   entry: './client/src/app',
+  externals: {
+    'react/addons': true,
+    'react/lib/ExecutionEnvironment': true,
+    'react/lib/ReactContext': true,
+    'react-addons-test-utils': 'react-dom',
+  },
   output: {
     path: path.join(__dirname, 'public/dist'),
     filename: 'bundle.js'

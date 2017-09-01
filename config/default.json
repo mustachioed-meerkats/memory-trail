@@ -8,6 +8,13 @@
       "host": "localhost",
       "port": 5432
     },
+    "passport": {
+      "Google": {
+        "clientID": "",
+        "clientSecret": "",
+        "callbackURL": ""
+      }
+    },
     "pool": {
       "min": 1,
       "max": 2
@@ -20,10 +27,11 @@
       "directory": "db/seeds"
     }
   },
-
   "passport": {
-    "Google": {},
-    "Facebook": {},
-    "Twitter": {}
+    "Google": {
+      "clientID": "fake",
+      "clientSecret": "alsofake",
+      "callbackURL": "http://reallyfake/auth/google/callback"
+    }
   }
 }
