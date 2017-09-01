@@ -7,6 +7,9 @@
     "test": "jest NODE_ENV=test grunt test",
     "build": "webpack --watch"
   },
+  "engines": {
+    "node": "6.10.3"
+  },
   "author": "Hack Reactor",
   "license": "MIT",
   "dependencies": {
