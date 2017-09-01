@@ -33,5 +33,6 @@
       "clientID": "fake",
       "clientSecret": "alsofake",
       "callbackURL": "http://reallyfake/auth/google/callback"
-    },
+    }
+  }
 }
