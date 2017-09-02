@@ -12,9 +12,6 @@ export default () => (
       <Navbar.Toggle />
     </Navbar.Header>
     <Navbar.Collapse>
-      <Navbar.Text pullRight>
-        
-      </Navbar.Text>
       <Nav pullRight>
         <LinkContainer to='/post/new'>
           <NavItem>Write a Story</NavItem>

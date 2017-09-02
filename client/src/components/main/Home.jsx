@@ -17,7 +17,7 @@ import {
 } from '../../store/modules/counter';
 
 import { Grid, Row, Col } from 'react-bootstrap';
-import Map from './map/Map.jsx';
+import ExploreMap from './maps/ExploreMap.jsx';
 import PostList from './PostList.jsx';
 
 //Define 
