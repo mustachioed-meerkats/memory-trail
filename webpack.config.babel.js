@@ -2,7 +2,7 @@ import webpack from 'webpack';
 import path from 'path';
 
 const config = {
-  entry: './client/src/app',
+  entry: './client/src/index.jsx',
   externals: {
     'react/addons': true,
     'react/lib/ExecutionEnvironment': true,
@@ -21,13 +21,14 @@ const config = {
         use: [
           { loader: 'babel-loader',
             options: {
-              presets: ['react', 'es2015']
+              presets: ['react', 'es2015', 'stage-0']
             }
           }
         ]
       }
     ]
-  }
+  },
+  devtool: 'source-map'
 };
 
 export default config;
