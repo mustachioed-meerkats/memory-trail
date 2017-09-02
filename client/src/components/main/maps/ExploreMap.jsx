@@ -10,8 +10,8 @@ import PostList from '../PostList.jsx';
 const GettingStartedGoogleMap = withGoogleMap(props => (
   <GoogleMap
     ref={props.onMapLoad}
-    defaultZoom={3}
-    defaultCenter={{lat: -25.363882, lng: 131.044922}}
+    defaultZoom={12}
+    defaultCenter={{lat: props.mapCenter.lat, lng: props.mapCenter.lng}}
     onClick={props.onMapClick}
   >
     {props.markers.map(marker => (
@@ -71,14 +71,15 @@ class ExploreMap extends React.Component {
 
   render() {
     return (
-      <div style={{height: '100%'}}>
+      <div style={{height: '700px'}}>
         <GettingStartedGoogleMap
           containerElement={
-            <div style={{height: '500px'}} />
+            <div style={{height: '100%'}} />
           }
           mapElement={
-            <div style={{height: '500px'}} />
+            <div style={{height: '100%'}} />
           }
+          mapCenter={this.props.mapCenter}
           onMapLoad={this.handleMapLoad}
           onMapClick={this.handleMapClick}
           markers={this.state.markers}
@@ -90,7 +91,7 @@ class ExploreMap extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  mapCenter: state.app.mapCenter,
+  mapCenter: state.map.mapCenter,
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
