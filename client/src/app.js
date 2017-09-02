@@ -1,4 +1,5 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import TestContainer from './components/testContainer.jsx';
 
-ReactDOM.render(<h1>Hello World from React</h1>, document.getElementById('root'));
+ReactDOM.render(<TestContainer />, document.getElementById('root'));
