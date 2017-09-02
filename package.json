@@ -3,11 +3,10 @@
   "version": "1.0.0",
   "scripts": {
     "start": "nodemon server",
-    "test": " mocha ./server --recursive  jest --testPathPattern ./client/test\/.js  NODE_ENV=test grunt test",
-
+    "test": " mocha ./server --recursive  jest --testPathPattern ./client/test/.js  NODE_ENV=test grunt test",
     "build": "webpack --watch"
   },
-  "engines" : {
+  "engines": {
     "node": "6.11.2",
     "npm": "3.10.10"
   },
@@ -30,7 +29,6 @@
     "enzyme": "^2.9.1",
     "express": "^4.15.2",
     "express-session": "^1.15.1",
-    "google-map-react": "^0.24.0",
     "grunt-pg": "https://github.com/watsoncj/grunt-pg.git",
     "history": "^4.7.2",
     "knex": "^0.12.9",
@@ -45,11 +43,11 @@
     "react": "^15.4.2",
     "react-bootstrap": "^0.31.2",
     "react-dom": "^15.4.2",
+    "react-google-maps": "6.3.0",
     "react-redux": "^5.0.6",
     "react-router-bootstrap": "^0.24.3",
     "react-router-dom": "^4.2.2",
     "react-router-redux": "^5.0.0-alpha.6",
-    "react-google-maps": "6.3.0",
     "redis": "^2.8.0",
     "redux": "^3.7.2",
     "redux-thunk": "^2.2.0",
