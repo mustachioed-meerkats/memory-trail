@@ -14,7 +14,7 @@ const GettingStartedGoogleMap = withGoogleMap(props => (
         onRightClick={() => props.onMarkerRightClick(marker)}
       />
     ))}
-    </GoogleMap>
+  </GoogleMap>
 ));
 
 export default class GettingStartedExample extends React.Component {
@@ -72,13 +72,13 @@ export default class GettingStartedExample extends React.Component {
 
   render() {
     return (
-      <div style={{height: `100%`}}>
+      <div style={{height: '100%'}}>
         <GettingStartedGoogleMap
           containerElement={
-            <div style={{height: `500px`}} />
+            <div style={{height: '500px'}} />
           }
           mapElement={
-            <div style={{height: `500px`}} />
+            <div style={{height: '500px'}} />
           }
           onMapLoad={this.handleMapLoad}
           onMapClick={this.handleMapClick}
