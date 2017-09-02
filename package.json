@@ -4,7 +4,11 @@
   "scripts": {
     "postinstall": "curl -s https://raw.githubusercontent.com/reactorcore/pomander/master/bin/install | bash",
     "start": "nodemon server",
+<<<<<<< HEAD
     "test": " mocha ./server --recursive  jest --testPathPattern ./client/test\/.*  NODE_ENV=test grunt test",
+=======
+    "test": " mocha ./server --recursive  jest --testPathPattern ./client\/.*  NODE_ENV=test grunt test",
+>>>>>>> e0f2b101a6184ff68e81f9b03d1284343c408882
     "build": "webpack --watch"
   },
   "engines" : {
