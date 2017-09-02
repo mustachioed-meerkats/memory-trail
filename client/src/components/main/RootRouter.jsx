@@ -7,8 +7,8 @@ import CreateNewPost from './CreateNewPost.jsx';
 const RootRouter = () => (
   <Switch>
     <Route exact path='/' component={Home} />
-    <Route exact path='/post/:id' component={Post} />
     <Route exact path='/post/new' component={CreateNewPost} />
+    <Route exact path='/post/:id' component={Post} />
   </Switch>
 );
 

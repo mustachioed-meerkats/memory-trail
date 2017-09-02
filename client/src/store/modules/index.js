@@ -1,9 +1,9 @@
 import { combineReducers } from 'redux';
 import { routerReducer } from 'react-router-redux';
-// import app from './app';
-// import map from './map';
-// import counter from './counter';
-// import posts from './posts';
+import app from './app';
+import map from './map';
+import counter from './counter';
+import posts from './posts';
 
 /** ============================================================
  * 
@@ -11,8 +11,8 @@ import { routerReducer } from 'react-router-redux';
  */
 export default combineReducers({
   routing: routerReducer,
-  // app,
-  // map,
-  // counter,
-  // posts
+  app,
+  map,
+  counter,
+  posts
 });

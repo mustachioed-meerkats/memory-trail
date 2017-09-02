@@ -13,12 +13,18 @@ export default () => (
     </Navbar.Header>
     <Navbar.Collapse>
       <Navbar.Text pullRight>
-        <Navbar.Link href="/api/auth/google">Login</Navbar.Link>
+        
       </Navbar.Text>
       <Nav pullRight>
-        <LinkContainer to='/profile'>
-          <NavItem>Profile</NavItem>
+        <LinkContainer to='/post/new'>
+          <NavItem>Write a Story</NavItem>
         </LinkContainer>
+        <Navbar.Text >
+          <Navbar.Link href="/profile">Profile</Navbar.Link>
+        </Navbar.Text>
+        <Navbar.Text >
+          <Navbar.Link href="/logout">Logout</Navbar.Link>
+        </Navbar.Text>
       </Nav>
     </Navbar.Collapse>
   </Navbar>
