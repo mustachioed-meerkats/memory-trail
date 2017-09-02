@@ -20,11 +20,10 @@
       "directory": "db/seeds"
     }
   },
+
   "passport": {
-    "Google": {
-      "clientID": "fake",
-      "clientSecret": "alsofake",
-      "callbackURL": "http://reallyfake/auth/google/callback"
-    }
+    "Google": {},
+    "Facebook": {},
+    "Twitter": {}
   }
 }

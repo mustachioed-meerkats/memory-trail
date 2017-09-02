@@ -4,10 +4,10 @@ The project description
 
 ## Team
 
-- teamMember
-- teamMember
-- teamMember
-- teamMember
+- Dylan Baker
+- Kevin Huang
+- Talis Lazdins
+- Sam Davis
 
 ## Roadmap
 
