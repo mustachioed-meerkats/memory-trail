@@ -27,6 +27,12 @@ const NO_INPUT_MSG = 'No Message';
 const Home = (props) => {
   let playGround = false;
 
+  navigator.geolocation.getCurrentPosition(function(location) {
+    console.log(location.coords.latitude);
+    console.log(location.coords.longitude);
+    console.log(location.coords.accuracy);
+  });
+  
   if (playGround) {
     return (
       <div>
@@ -57,6 +63,7 @@ const Home = (props) => {
   } else {
     return (
       <div>
+        <ExploreMap />
         <PostList />
       </div>
     );
