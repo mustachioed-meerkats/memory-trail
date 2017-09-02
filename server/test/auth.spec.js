@@ -3,7 +3,6 @@ const httpMocks = require('node-mocks-http');
 const dbUtils = require('../../db/lib/utils.js');
 const passport = require('../middleware/passport');
 const models = require('../../db/models');
-global.Promise = require.requireActual('promise');
 
 describe('Authentication', () => {
   let fakeFlash = function(key, message) {

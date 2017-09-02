@@ -3,7 +3,6 @@ const request = require('supertest');
 const express = require('express');
 const expect = require('chai').expect;
 const app = require('../app.js');
-global.Promise = require.requireActual('promise'); //ANY DB tests MUST have this line of code!!
 
 describe('basic server', function() {
   xit('sends back hello world', function(done) {
