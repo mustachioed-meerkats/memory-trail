@@ -4,8 +4,13 @@
   "scripts": {
     "postinstall": "curl -s https://raw.githubusercontent.com/reactorcore/pomander/master/bin/install | bash",
     "start": "nodemon server",
-    "test": "jest NODE_ENV=test grunt test",
+    "test": " mocha ./server --recursive  jest --testPathPattern ./client/test\/.js  NODE_ENV=test grunt test",
+
     "build": "webpack --watch"
+  },
+  "engines" : {
+    "node": "6.11.2",
+    "npm": "3.10.10"
   },
   "author": "Hack Reactor",
   "license": "MIT",
