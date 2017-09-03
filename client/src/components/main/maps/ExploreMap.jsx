@@ -29,10 +29,10 @@ class ExploreMap extends React.Component {
     this.state = {
       markers: [{
         position: {
-          lat: 25.0112183,
-          lng: 121.52067570000001
+          lat: 37.769421,
+          lng: -122.486214
         },
-        key: 'Taiwan',
+        key: 'Golden Gate Park',
         defaultAnimation: 2
       }]
     };
