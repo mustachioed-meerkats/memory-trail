@@ -16,7 +16,7 @@ import {
   inputHandler
 } from '../../store/modules/counter';
 
-import {setMapCenter} from '../../store/modules/map';
+import {setCenter} from '../../store/modules/map';
 
 import { Grid, Row, Col } from 'react-bootstrap';
 import ExploreMap from './maps/ExploreMap.jsx';
@@ -32,7 +32,7 @@ const Home = (props) => {
   navigator.geolocation.getCurrentPosition(function(location) {
     var lat = location.coords.latitude;
     var lng = location.coords.longitude;
-    props.setMapCenter(lat, lng);
+    props.setCenter(lat, lng);
     console.log(location.coords.latitude);
     console.log(location.coords.longitude);
   });
@@ -67,7 +67,9 @@ const Home = (props) => {
   } else {
     return (
       <div>
-        <ExploreMap />
+        <div style={{height: '700px'}}>
+          <ExploreMap />
+        </div>
         <PostList />
       </div>
     );
@@ -88,7 +90,7 @@ const mapDispatchToProps = dispatch => bindActionCreators({
   decrementAsync,
   handleSelector: selectHandler,
   handleInput: inputHandler,
-  setMapCenter
+  setCenter
 }, dispatch);
 
 export default connect(
