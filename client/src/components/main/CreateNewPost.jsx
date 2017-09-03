@@ -60,7 +60,7 @@ const CreateNewPost = (props) => {
                 type="text" 
                 onChange={(e) => { props.handleTitleInput(e.target.value); }}
                 placeholder="Title"
-                />
+              />
             </FormGroup>
             <FormGroup>
               {/* <FormControl
@@ -74,7 +74,7 @@ const CreateNewPost = (props) => {
                 componentClass="textarea"
                 onChange={(e) => { props.handleContentTextArea(e.target.value); }}
                 placeholder="Memory..."
-                />
+              />
             </FormGroup>
           </form>
         </Col>
