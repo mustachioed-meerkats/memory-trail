@@ -12,13 +12,36 @@ router.route('/')
     res.status(201).send({ data: 'Posted!' });
   });
 
+/** ============================================================
+ * POST ROUTES
+ * =============================================================
+ */
+
+router.route('/posts/new')
+  .post((req, res) => {
+    req.body.profile_id = 2;
+    req.body.lat = 37.7836920;
+    req.body.lng = -122.4089670;
+    console.log(req.body);
+    console.log('(Server) Intiating POST Request! CREATING NEW POST');
+    models.Post.createPost(req.body)
+      .then(result => {
+        res.status(200).send(result);
+      });
+  });
+
+/** ============================================================
+ * TEST ROUTES
+ * =============================================================
+ */
+
 router.route('/test')
   .get((req, res) => {
     var profile_id = 2;
     var lat = 37.7836920;
     var lng = -122.4089670;
-    var content = 'Spain was tight yo';
-    var title = 'Kevin in Spain';
+    var content = 'Meerkats mobs yo';
+    var title = 'Katz in Paris';
     models.Post.createPost(profile_id, lat, lng, content, title)
       .then(result => {
         res.status(200).send(result);
@@ -27,7 +50,7 @@ router.route('/test')
 
 router.route('/test2')
   .get((req, res) => {
-    var id = 3;
+    var id = 2;
     models.Post.getPostById(id)
       .then(post => {
         res.send(post);
