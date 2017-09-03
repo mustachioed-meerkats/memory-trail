@@ -8,6 +8,7 @@ export const SET_CENTER = 'map/SET_MAP_CENTER';
 export const HANDLE_MAP_MOUNTED = 'map/HANDLE_MAP_MOUNTED';
 export const HANDLE_SEARCHBOX_MOUNTED = 'map/HANDLE_SEARCHBOX_MOUNTED';
 export const HANDLE_PLACES_CHANGED = 'map/HANDLE_PLACES_CHANGED';
+export const HANDLE_BOUNDS_CHANGED = 'map/HANDLE_BOUNDS_CHANGED';
 
 /** ============================================================
  * Define Initial State
@@ -46,6 +47,12 @@ export default (state = initialState, action) => {
       ...state,
       center: action.center,
       markers: action.markers
+    };
+  case HANDLE_BOUNDS_CHANGED:
+    return {
+      ...state,
+      bounds: action.bounds,
+      center: action.center
     };
   default:
     return state;
@@ -94,6 +101,16 @@ export const handlePlacesChanged = (searchBox) => {
       type: HANDLE_PLACES_CHANGED,
       center,
       markers
+    });
+  };
+};
+
+export const handleBoundsChanged = (map) => {
+  return dispatch => {
+    dispatch({
+      type: HANDLE_BOUNDS_CHANGED,
+      bounds: map.getBounds(),
+      center: map.getCenter()
     });
   };
 };

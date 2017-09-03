@@ -6,7 +6,8 @@ import SearchBox from 'react-google-maps/lib/places/SearchBox';
 import {
   handleMapMounted, 
   handleSearchBoxMounted,
-  handlePlacesChanged
+  handlePlacesChanged,
+  handleBoundsChanged
 } from '../../../store/modules/map';
 
 import Markers from './Markers.jsx';
@@ -33,6 +34,7 @@ const ExploreMap = withGoogleMap(props => (
     ref={props.handleMapMounted}
     defaultZoom={12}
     center={props.center}
+    onBoundsChanged={() => props.handleBoundsChanged(props.map)}
   >
     <SearchBox
       ref={props.handleSearchBoxMounted}
@@ -43,10 +45,7 @@ const ExploreMap = withGoogleMap(props => (
       inputStyle={props.inputStyle}
     />
     {props.markers.map((marker, index) => (
-      <Marker
-        {...marker}
-        key={index}
-      />
+      <Marker {...marker} key={index} />
     ))}
   </GoogleMap>
 ));
@@ -58,13 +57,15 @@ const mapStateToProps = state => ({
   containerElement: <div style={{height: '100%'}} />,
   mapElement: <div style={{height: '100%'}} />,
   markers: state.map.markers,
-  searchBox: state.map._searchBox
+  searchBox: state.map._searchBox,
+  map: state.map._map
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
   handleMapMounted,
   handleSearchBoxMounted,
   handlePlacesChanged,
+  handleBoundsChanged
 }, dispatch);
 
 export default connect(
