@@ -5,7 +5,7 @@ import axios from 'axios';
  * =============================================================
  */
 export const SET_CENTER = 'map/SET_MAP_CENTER';
-export const HANDLE_MAP_MOUNTED ='map/HANDLE_MAP_MOUNTED';
+export const HANDLE_MAP_MOUNTED = 'map/HANDLE_MAP_MOUNTED';
 export const HANDLE_SEARCHBOX_MOUNTED = 'map/HANDLE_SEARCHBOX_MOUNTED';
 export const HANDLE_PLACES_CHANGED = 'map/HANDLE_PLACES_CHANGED';
 
