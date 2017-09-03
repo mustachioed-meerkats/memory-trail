@@ -7,6 +7,7 @@ import axios from 'axios';
 export const SET_CENTER = 'map/SET_MAP_CENTER';
 export const HANDLE_MAP_MOUNTED ='map/HANDLE_MAP_MOUNTED';
 export const HANDLE_SEARCHBOX_MOUNTED = 'map/HANDLE_SEARCHBOX_MOUNTED';
+export const HANDLE_PLACES_CHANGED = 'map/HANDLE_PLACES_CHANGED';
 
 /** ============================================================
  * Define Initial State
@@ -18,21 +19,6 @@ const initialState = {
   _map: null,
   _searchBox: null,
   markers: [],
-  inputStyle: {
-    boxSizing: 'border-box',
-    MozBoxSizing: 'border-box',
-    border: '1px solid transparent',
-    width: '240px',
-    height: '32px',
-    marginTop: '27px',
-    padding: '0 12px',
-    borderRadius: '1px',
-    boxShadow: '0 2px 6px rgba(0, 0, 0, 0.3)',
-    fontSize: '14px',
-    outline: 'none',
-    textOverflow: 'ellipses',
-  },
-
 };
 /** ============================================================
  * Define Reducer
@@ -54,6 +40,12 @@ export default (state = initialState, action) => {
     return {
       ...state,
       _searchBox: action._searchBox
+    };
+  case HANDLE_PLACES_CHANGED:
+    return {
+      ...state,
+      center: action.center,
+      markers: action.markers
     };
   default:
     return state;
@@ -87,6 +79,21 @@ export const handleSearchBoxMounted = (searchBox) => {
     dispatch({
       type: HANDLE_SEARCHBOX_MOUNTED,
       _searchBox: searchBox
+    });
+  };
+};
+
+export const handlePlacesChanged = (searchBox) => {
+  const places = searchBox.getPlaces();
+  const markers = places.map(place => ({
+    position: place.geometry.location
+  }));
+  const center = markers.length > 0 ? markers[0].position : this.state.center;
+  return dispatch => {
+    dispatch({
+      type: HANDLE_PLACES_CHANGED,
+      center,
+      markers
     });
   };
 };
