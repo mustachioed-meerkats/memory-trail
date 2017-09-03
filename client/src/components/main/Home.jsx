@@ -16,6 +16,8 @@ import {
   inputHandler
 } from '../../store/modules/counter';
 
+import {setMapCenter} from '../../store/modules/map';
+
 import { Grid, Row, Col } from 'react-bootstrap';
 import ExploreMap from './maps/ExploreMap.jsx';
 import PostList from './PostList.jsx';
@@ -28,6 +30,9 @@ const Home = (props) => {
   let playGround = false;
 
   navigator.geolocation.getCurrentPosition(function(location) {
+    var lat = location.coords.latitude;
+    var lng = location.coords.longitude;
+    props.setMapCenter(lat, lng);
     console.log(location.coords.latitude);
     console.log(location.coords.longitude);
   });
@@ -82,7 +87,8 @@ const mapDispatchToProps = dispatch => bindActionCreators({
   decrement,
   decrementAsync,
   handleSelector: selectHandler,
-  handleInput: inputHandler
+  handleInput: inputHandler,
+  setMapCenter
 }, dispatch);
 
 export default connect(

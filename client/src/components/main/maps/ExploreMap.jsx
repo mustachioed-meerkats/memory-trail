@@ -11,7 +11,7 @@ const GettingStartedGoogleMap = withGoogleMap(props => (
   <GoogleMap
     ref={props.onMapLoad}
     defaultZoom={12}
-    defaultCenter={{lat: props.mapCenter.lat, lng: props.mapCenter.lng}}
+    center={props.mapCenter}
     onClick={props.onMapClick}
   >
     {props.markers.map(marker => (

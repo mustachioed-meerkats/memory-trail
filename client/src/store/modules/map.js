@@ -35,3 +35,14 @@ export default (state = initialState, action) => {
  * Define Dispatches
  * =============================================================
  */
+export const setMapCenter = (lat, lng) => {
+  return dispatch => {
+    dispatch({
+      type: SET_MAP_CENTER,
+      mapCenter: {
+        lat, 
+        lng
+      }
+    });
+  };
+};
