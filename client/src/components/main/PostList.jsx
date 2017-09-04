@@ -4,19 +4,15 @@ import { connect } from 'react-redux';
 import { Grid, Row, Col, Panel } from 'react-bootstrap';
 import PostListEntry from './PostListEntry.jsx';
 
-const PostList = (props) => {
-  //TEMP DATA
-  //let data = [{title: 'First Post', postMemory: 'This is my first memory'}];
-  //let posts = data.map((post, i) => { return <PostListEntry post={post} key={i} />; });
-
+const PostList = ({posts}) => {
   return (
-    <Panel collapsible defaultExpanded header="Panel Header" bsStyle="info">
-      This is where posts go
-    </Panel>
+    <Grid>
+      {posts.map((post, i) => { 
+        return <PostListEntry post={post} id={i} key={i} />; 
+      })}
+    </Grid>
   );
 };
-
-//export default PostList;
 
 const mapStateToProps = (state) => ({
   posts: state.posts

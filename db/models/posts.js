@@ -28,3 +28,7 @@ module.exports.createPost = (post) => {
 module.exports.getPostById = (id) => {
   return postModel.where('id', id).fetch();
 };
+
+module.exports.getPostsByUserId = (profile_id) => {
+  return postModel.where('profile_id', profile_id).fetchAll();
+};

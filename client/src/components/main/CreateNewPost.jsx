@@ -18,22 +18,17 @@ import {
   handleTitleInput,
   handleContentTextArea,
   handleLocationInput
-} from '../../store/modules/posts';
+} from '../../store/modules/newpost';
 
 const CreateNewPost = (props) => {
-
-  const getLocation = () => {
-    return navigator.geolocation.getCurrentPosition(function(location) {
-      var lat = location.coords.latitude;
-      var lng = location.coords.longitude;
-      return {lat: lat, lng: lng};
-    });
-  };
 
   const handleSubmit = () => {
     const post = {
       title: props.title,
       content: props.content,
+      lat: props.map.lat,
+      lng: props.map.lng,
+      profile_id: props.user.id
     };
     console.log('(Client) Intiating POST Request! CREATING NEW POST');
     console.log(post);
@@ -98,9 +93,11 @@ const CreateNewPost = (props) => {
  * =============================================================
  */
 const mapStateToProps = state => ({
-  title: state.posts.newPost.title,
-  content: state.posts.newPost.content,
-  location: state.posts.newPost.location
+  title: state.newpost.title,
+  content: state.newpost.content,
+  location: state.newpost.location,
+  map: state.map.center,
+  user: state.user
 });
 
 /** ============================================================
@@ -112,6 +109,7 @@ const mapDispatchToProps = dispatch => bindActionCreators({
   handleTitleInput: handleTitleInput,
   handleContentTextArea: handleContentTextArea,
   handleLocationInput: handleLocationInput
+
 }, dispatch);
 
 export default connect(
