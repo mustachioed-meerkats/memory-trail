@@ -13,13 +13,15 @@ const footerStyle = {
 };
 
 export default () => (
-  <div style={footerStyle}>
-    <Grid>
-      <Row className="show-grid">
-        <Col xs={6} md={4}>Footer Left</Col>
-        <Col xs={6} md={4}>Footer Center</Col>
-        <Col xs={6} md={4}>Footer Right</Col>
-      </Row>
-    </Grid>
+  // <div style={footerStyle}>
+  //   <Grid>
+  //     <Row className="show-grid">
+  //       <Col xs={6} md={4}>Footer Left</Col>
+  //       <Col xs={6} md={4}>Footer Center</Col>
+  //       <Col xs={6} md={4}>Footer Right</Col>
+  //     </Row>
+  //   </Grid>
+  // </div>
+  <div>
   </div>
 );

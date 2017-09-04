@@ -1,47 +1,58 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { Grid, Row, Col, Button, ButtonGroup, ListGroupItem, Glyphicon, Tooltip, OverlayTrigger } from 'react-bootstrap';
 
-const cardStyle = {
-  padding: '1.5rem',
-  boxShadow: '0 1px 2px #aaa',
-  background: 'white',
-  margin: '0 1rem 1rem',
-  borderRadius: '3px',
-  paddingBottom: '3em'
+const style = {
+  card: {
+    boxShadow: '0 1px 2px #aaa',
+    background: 'white',
+    margin: '0 1rem 1rem',
+    borderRadius: '3px',
+    paddingBottom: '3em',
+    container: {
+      padding: '1.5rem',
+    },
+    title: {
+      fontSize: '2rem',
+      fontWeight: 200
+    },
+    content: {
+      fontSize: '1.25rem',
+      lineHeight: 2.5,
+      color: 'gray',
+      fontWeight: 400
+    },
+    stats: {
+      fontSize: '.9rem',
+      lineHeight: 2.5,
+      color: 'gray',
+      fontWeight: 400
+    },
+    button: {
+      float: 'right',
+      overflow: 'hidden',
+      borderWidth: '0',
+      outline: 'none',
+      borderRadius: '2px',
+      boxShadow: '0 1px 4px rgba(0, 0, 0, .6)',
+      backgroundColor: 'white',
+      color: 'gray',
+      transition: 'background-color .3s',
+    },
+    header: {
+      position: 'relative',
+      zIndex: '0',
+      top: 0, left: 0, right: 0,
+      height: '10rem',
+      transition: 'transform .5s, opacity .3s',
+      background: 'url(http://cdn-image.travelandleisure.com/sites/default/files/styles/1600x1000/public/1444253482/DG2015-san-francisco.jpg?itok=MdRJm2Zo)  center center',
+      backgroundSize: 'cover',
+    }
+  }
 };
 
-const titleStyle = {
-  fontSize: '2rem',
-  fontWeight: 200
-};
-
-const contentStyle = {
-  fontSize: '1.25rem',
-  lineHeight: 2.5,
-  color: 'gray',
-  fontWeight: 400
-};
-
-const userStyle = {
-  fontSize: '.9rem',
-  lineHeight: 2.5,
-  color: 'gray',
-  fontWeight: 400
-};
-
-const likeButton = {
-  float: 'right',
-  overflow: 'hidden',
-  borderWidth: '0',
-  outline: 'none',
-  borderRadius: '2px',
-  boxShadow: '0 1px 4px rgba(0, 0, 0, .6)',
-  backgroundColor: 'white',
-  color: 'gray',
-  transition: 'background-color .3s',
-};
 const getTimeSincePost = (postTime) => {
   let postDateMilliseconds = new Date(postTime).getTime();
   let currentDateMilliseconds = new Date().getTime();
@@ -70,18 +81,22 @@ const getTimeSincePost = (postTime) => {
 
 const PostListEntry = (props) => {
   return (
-    <Row>
-      <Col md={3}/>
-      <Col md={5}>
-        <div style={cardStyle}>
-          <div style={titleStyle}>{props.post.title}</div>
-          <div style={userStyle}>Submitted {getTimeSincePost('2015-03-25T12:00:00Z')} by {props.post.profile_id}</div>
-          <div style={contentStyle}>{props.post.content.slice(0, 64) + ' ...'}</div>
-          <Button style={likeButton}><Glyphicon glyph="bookmark" /></Button>
+    // <Row>
+    //   <Col md={3}/>
+    //   <Col md={5}>
+    <div style={style.card}>
+      <div style={style.card.container}>
+        <div style={style.card.title}>
+          <Link to={`/post/${props.post.id}`}>{props.post.title}</Link>
         </div>
-      </Col>
-      <Col md={3}/>
-    </Row>
+        <div style={style.card.stats}>Submitted {getTimeSincePost('2015-03-25T12:00:00Z')} by {props.post.profile_id}</div>
+        <div style={style.card.content}>{props.post.content.slice(0, 64) + ' ...'}</div>
+        <Button style={style.card.button}><Glyphicon glyph="bookmark" /></Button>
+      </div>
+    </div>
+    //   </Col>
+    //   <Col md={3}/>
+    // </Row>
   );
 };
 
