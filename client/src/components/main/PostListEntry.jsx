@@ -84,16 +84,16 @@ const PostListEntry = (props) => {
     // <Row>
     //   <Col md={3}/>
     //   <Col md={5}>
-        <div style={style.card}>
-          <div style={style.card.container}>
-            <div style={style.card.title}>
-              <Link to={`/post/${props.post.id}`}>{props.post.title}</Link>
-            </div>
-            <div style={style.card.stats}>Submitted {getTimeSincePost('2015-03-25T12:00:00Z')} by {props.post.profile_id}</div>
-            <div style={style.card.content}>{props.post.content.slice(0, 64) + ' ...'}</div>
-            <Button style={style.card.button}><Glyphicon glyph="bookmark" /></Button>
-          </div>
+    <div style={style.card}>
+      <div style={style.card.container}>
+        <div style={style.card.title}>
+          <Link to={`/post/${props.post.id}`}>{props.post.title}</Link>
         </div>
+        <div style={style.card.stats}>Submitted {getTimeSincePost('2015-03-25T12:00:00Z')} by {props.post.profile_id}</div>
+        <div style={style.card.content}>{props.post.content.slice(0, 64) + ' ...'}</div>
+        <Button style={style.card.button}><Glyphicon glyph="bookmark" /></Button>
+      </div>
+    </div>
     //   </Col>
     //   <Col md={3}/>
     // </Row>
