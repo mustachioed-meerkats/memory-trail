@@ -4,6 +4,8 @@ import app from './app';
 import map from './map';
 import counter from './counter';
 import posts from './posts';
+import user from './user';
+import newpost from './newpost';
 
 /** ============================================================
  * 
@@ -12,7 +14,9 @@ import posts from './posts';
 export default combineReducers({
   routing: routerReducer,
   app,
+  user,
   map,
   counter,
+  newpost,
   posts
 });

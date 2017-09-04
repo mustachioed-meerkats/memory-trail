@@ -1,11 +1,17 @@
 const express = require('express');
 const middleware = require('../middleware');
-
+const models = require('../../db/models');
 const router = express.Router();
 
 router.route('/')
   .get(middleware.auth.verify, (req, res) => {
-    res.render('index.ejs');
+    const preloadedState = {};  
+    preloadedState.user = req.user;
+    models.Post.getPostsByUserId(req.user.id)
+      .then(posts => {
+        preloadedState.posts = posts;
+        res.render('index', {preloadedState});
+      });
   });
 
 router.route('/login')

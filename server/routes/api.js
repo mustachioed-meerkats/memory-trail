@@ -19,14 +19,20 @@ router.route('/')
 
 router.route('/posts/new')
   .post((req, res) => {
-    req.body.profile_id = 2;
-    req.body.lat = 37.7836920;
-    req.body.lng = -122.4089670;
     console.log(req.body);
     console.log('(Server) Intiating POST Request! CREATING NEW POST');
     models.Post.createPost(req.body)
       .then(result => {
         res.status(200).send(result);
+      });
+  });
+
+// Determine the appropriate endpoint
+router.route('/posts/user')
+  .get((req, res) => {
+    models.Post.getPostById(req.user.id)
+      .then(post => {
+        res.status(200).send(post);
       });
   });
 
