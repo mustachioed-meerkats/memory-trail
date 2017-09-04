@@ -57,7 +57,7 @@ router.route('/test')
 
 router.route('/test2')
   .get((req, res) => {
-    var id = 2;
+    var id = 11;
     models.Post.getPostById(id)
       .then(post => {
         res.send(post);
@@ -67,7 +67,8 @@ router.route('/test2')
 router.route('/posts')
   .post((req, res) => {
     var {lat, lng} = req.body;
-    models.Post.getAllPosts()
+    // models.Post.getAllPosts()
+    models.Post.getPostsWithinRadius(req.body)
       .then(results => {
         res.send(results);
       });

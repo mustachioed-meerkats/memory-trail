@@ -98,6 +98,7 @@ export const handlePlacesChanged = (searchBox, oldCenter) => {
   return dispatch => {
     return getPostsWithinRadius(center)
       .then(results => {
+        console.log('results: ', results);
         dispatch({
           type: HANDLE_PLACES_CHANGED,
           markers: results.data,
