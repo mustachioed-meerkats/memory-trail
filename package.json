@@ -30,6 +30,7 @@
     "express": "^4.15.2",
     "express-session": "^1.15.1",
     "grunt-pg": "https://github.com/watsoncj/grunt-pg.git",
+    "haversine": "^1.0.2",
     "history": "^4.7.2",
     "knex": "^0.12.9",
     "morgan": "^1.8.1",
