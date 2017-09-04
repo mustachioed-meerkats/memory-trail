@@ -2,6 +2,8 @@ import React from 'react';
 import axios from 'axios';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import Autocomplete from 'react-google-autocomplete';
+
 
 /** ============================================================
  * Define React Bootstrap Components
@@ -20,7 +22,16 @@ import {
   handleLocationInput
 } from '../../store/modules/newpost';
 
+
+
 const CreateNewPost = (props) => {
+
+  // Implementing autocomplete location input field
+  function initialize() {
+    let input = document.getElementById('locationInput');
+    let autocomplete = new google.maps.places.Autocomplete(input);
+  }
+  google.maps.event.addDomListener(window, 'load', initialize);
 
   const handleSubmit = () => {
     const post = {
@@ -59,11 +70,20 @@ const CreateNewPost = (props) => {
               />
             </FormGroup>
             <FormGroup>
+              <Autocomplete
+                input="text"
+                style={{width: '90%'}}
+                onPlaceSelected={(place) => {
+                  console.log(place);
+                }}
+              />
+
               {/* <FormControl
-                type="text" 
-                onChange={(e) => { props.handleLocationInput(e.target.value); }}
-                placeholder="Location"
-              /> */}
+              type="text"
+              id="locationInput"
+              onChange={(e) => { props.handleLocationInput(e.target.value); }}
+              placeholder="Location"
+              />  */}
             </FormGroup>
             <FormGroup>
               <FormControl
