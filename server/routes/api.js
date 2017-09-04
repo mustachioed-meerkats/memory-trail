@@ -43,12 +43,13 @@ router.route('/posts/user')
 
 router.route('/test')
   .get((req, res) => {
-    var profile_id = 2;
-    var lat = 37.7836920;
-    var lng = -122.4089670;
-    var content = 'Meerkats mobs yo';
-    var title = 'Katz in Paris';
-    models.Post.createPost(profile_id, lat, lng, content, title)
+    var post = {};
+    post.profile_id = 2;
+    post.lat = 37.741576;
+    post.lng = -122.508059;
+    post.content = 'Going to the beach';
+    post.title = 'We are going to the beach yay yay yay. best day ever.';
+    models.Post.createPost(post)
       .then(result => {
         res.status(200).send(result);
       });
