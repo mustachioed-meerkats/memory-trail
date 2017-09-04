@@ -95,25 +95,16 @@ export const handlePlacesChanged = (searchBox, oldCenter) => {
     position: place.geometry.location
   }));
   const center = places.length > 0 ? places[0].position : oldCenter;
-
   return dispatch => {
     return getPostsWithinRadius(center)
       .then(results => {
         dispatch({
           type: HANDLE_PLACES_CHANGED,
-          center,
-          markers: results.data
+          markers: results.data,
+          center
         });
       });
   };
-
-  // return dispatch => {
-  //   dispatch({
-  //     type: HANDLE_PLACES_CHANGED,
-  //     center,
-  //     markers
-  //   });
-  // };
 };
 
 export const handleBoundsChanged = (map) => {
