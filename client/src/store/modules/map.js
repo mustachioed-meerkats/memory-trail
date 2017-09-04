@@ -90,22 +90,34 @@ export const handleSearchBoxMounted = (searchBox) => {
   };
 };
 
-export const handlePlacesChanged = (searchBox) => {
-  const places = searchBox.getPlaces();
-  const markers = places.map(place => ({
+export const handlePlacesChanged = (searchBox, oldCenter) => {
+  var places = searchBox.getPlaces().map(place => ({
     position: place.geometry.location
   }));
-  const center = markers.length > 0 ? markers[0].position : this.state.center;
+  const center = places.length > 0 ? places[0].position : oldCenter;
+
   return dispatch => {
-    dispatch({
-      type: HANDLE_PLACES_CHANGED,
-      center,
-      markers
-    });
+    return getPostsWithinRadius(center)
+      .then(results => {
+        dispatch({
+          type: HANDLE_PLACES_CHANGED,
+          center,
+          markers: results.data
+        });
+      });
   };
+
+  // return dispatch => {
+  //   dispatch({
+  //     type: HANDLE_PLACES_CHANGED,
+  //     center,
+  //     markers
+  //   });
+  // };
 };
 
 export const handleBoundsChanged = (map) => {
+  // console.log('center changed: ', map.getCenter());
   return dispatch => {
     dispatch({
       type: HANDLE_BOUNDS_CHANGED,
@@ -113,4 +125,12 @@ export const handleBoundsChanged = (map) => {
       center: map.getCenter()
     });
   };
+};
+
+// helper function
+export const getPostsWithinRadius = (center) => {
+  var lat = center.lat();
+  var lng = center.lng();
+  // later refacor with get request instead of post
+  return axios.post('/api/posts', {lat, lng});
 };

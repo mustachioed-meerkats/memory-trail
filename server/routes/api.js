@@ -63,4 +63,13 @@ router.route('/test2')
       });
   });
 
+router.route('/posts')
+  .post((req, res) => {
+    var {lat, lng} = req.body;
+    models.Post.getAllPosts()
+      .then(results => {
+        res.send(results);
+      });
+  });
+
 module.exports = router;

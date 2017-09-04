@@ -40,12 +40,12 @@ const ExploreMap = withGoogleMap(props => (
       ref={props.handleSearchBoxMounted}
       bounds={props.bounds}
       controlPosition={google.maps.ControlPosition.TOP_LEFT}
-      onPlacesChanged={() => props.handlePlacesChanged(props.searchBox)}
+      onPlacesChanged={() => props.handlePlacesChanged(props.searchBox, props.center)}
       inputPlaceholder='Search for a place!'
       inputStyle={props.inputStyle}
     />
     {props.markers.map((marker, index) => (
-      <Marker {...marker} key={index} />
+      <Marker position={{lat: parseFloat(marker.lat), lng: parseFloat(marker.lng)}} key={index} />
     ))}
   </GoogleMap>
 ));
