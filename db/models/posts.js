@@ -9,7 +9,13 @@ const Post = db.Model.extend({
 var postModel = db.model('Post', Post);
 module.exports = postModel;
 
-module.exports.createPost = (profile_id, lat, lng, content, title) => {
+module.exports.createPost = (post) => {
+  let profile_id = post.profile_id;
+  let lat = post.lat;
+  let lng = post.lng;
+  let content = post.content;
+  let title = post.title;
+  
   return postModel.forge({
     profile_id,
     lat,
