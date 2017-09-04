@@ -25,7 +25,15 @@ import PostList from './PostList.jsx';
 //Define 
 const NO_SELECT_MSG = 'No Selection';
 const NO_INPUT_MSG = 'No Message';
-
+const postListStyle = {
+  position: 'fixed',
+  width: '360px',
+  height: window.innerHeight - 20,
+  bottom: 0,
+  top: 64,
+  right: 1,
+  overflowY: 'auto'
+};
 const Home = (props) => {
   let playGround = false;
 
@@ -67,10 +75,12 @@ const Home = (props) => {
   } else {
     return (
       <div>
-        <div style={{height: '700px'}}>
+        <div style={{height: window.innerHeight, marginTop: '-20px'}}>
           <ExploreMap />
         </div>
-        <PostList />
+        <div style={postListStyle}>
+          <PostList />
+        </div>
       </div>
     );
   }

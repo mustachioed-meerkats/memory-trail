@@ -6,11 +6,11 @@ import PostListEntry from './PostListEntry.jsx';
 
 const PostList = ({posts}) => {
   return (
-    <Grid>
+    <div>
       {posts.map((post, i) => { 
         return <PostListEntry post={post} id={i} key={i} />; 
       })}
-    </Grid>
+    </div>
   );
 };
 

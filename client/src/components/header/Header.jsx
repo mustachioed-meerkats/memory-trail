@@ -1,13 +1,16 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Navbar, Nav, NavItem } from 'react-bootstrap';
+import { Navbar, Nav, NavItem, Image } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
 
 export default () => (
   <Navbar collapseOnSelect>
     <Navbar.Header>
       <Navbar.Brand>
-        <Link to="/">MemoryTrail</Link> <small>Explore and share</small>
+        <Link to="/">
+          <Image src="http://i.imgur.com/LEj6FJG.png" alt="Memory Trail" width={32}/>
+        </Link> 
+        <small> Explore and share</small>
       </Navbar.Brand>
       <Navbar.Toggle />
     </Navbar.Header>
