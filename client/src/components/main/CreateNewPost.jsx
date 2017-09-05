@@ -2,7 +2,7 @@ import React from 'react';
 import axios from 'axios';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import Autocomplete from 'react-google-autocomplete';
+import Autocomplete, { onPlaceSelected } from 'react-google-autocomplete';
 
 
 /** ============================================================
@@ -26,19 +26,30 @@ import {
 
 const CreateNewPost = (props) => {
 
-  // Implementing autocomplete location input field
-  function initialize() {
-    let input = document.getElementById('locationInput');
+  // Autocomplete feature for the form's location input field
+  const initLocationAutocomplete = (e) => {
+    e.persist();
+    let address = e.target.value;
+    let input = document.getElementById('locationInput');    
     let autocomplete = new google.maps.places.Autocomplete(input);
   }
-  google.maps.event.addDomListener(window, 'load', initialize);
+
+  const geocodeLocationInput = (location) => {
+    let url = `https://maps.googleapis.com/maps/api/geocode/json?address=${location}&key=AIzaSyDXLOMgs19AOUHeizaMnRwjVyzxcTGWmJ8`
+    return axios.get(url)
+    .then((res) => {
+      console.log('response from geocoding API: ', res);
+      props.handleLocationInput(res.data.results[0].geometry.location);
+    })
+  }
 
   const handleSubmit = () => {
+    console.log('value of props.location: ', props.location);
     const post = {
       title: props.title,
       content: props.content,
-      lat: props.map.lat,
-      lng: props.map.lng,
+      lat: props.location.lat,
+      lng: props.location.lng,
       profile_id: props.user.id
     };
 
@@ -71,13 +82,13 @@ const CreateNewPost = (props) => {
             </FormGroup>
             <FormGroup>
               <Autocomplete
-                input="text"
-                style={{width: '90%'}}
+                id="locationInput"
+                onChange={(e) => initLocationAutocomplete(e)}
                 onPlaceSelected={(place) => {
-                  console.log(place);
+                  geocodeLocationInput(place.name);
                 }}
               />
-
+              
               {/* <FormControl
               type="text"
               id="locationInput"
