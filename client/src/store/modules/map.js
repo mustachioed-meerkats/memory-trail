@@ -10,6 +10,8 @@ export const HANDLE_SEARCHBOX_MOUNTED = 'map/HANDLE_SEARCHBOX_MOUNTED';
 export const HANDLE_PLACES_CHANGED = 'map/HANDLE_PLACES_CHANGED';
 export const HANDLE_BOUNDS_CHANGED = 'map/HANDLE_BOUNDS_CHANGED';
 export const HANDLE_SEARCH_AREA = 'map/HANDLE_SEARCH_AREA';
+export const HANDLE_MARKER_CLICK = 'map/HANDLE_MARKER_CLICK';
+export const HANDLE_MARKER_CLOSE = 'map/HANDLE_MARKER_CLOSE';
 
 /** ============================================================
  * Define Initial State
@@ -60,6 +62,19 @@ export default (state = initialState, action) => {
     return {
       ...state,
       markers: action.markers
+    };
+  case HANDLE_MARKER_CLICK:
+    return {
+      ...state,
+      markers: state.markers.map(marker => {
+        if (marker === action.targetMarker) {
+          return {
+            ...marker,
+            showInfo: true
+          };
+        }
+        return marker;
+      })
     };
   default:
     return state;
@@ -139,6 +154,15 @@ export const handleSearchArea = (center) => {
           markers: results.data
         });
       });
+  };
+};
+
+export const handleMarkerClick = (marker) => {
+  return dispatch => {
+    dispatch({
+      type: HANDLE_MARKER_CLICK,
+      targetMarker: marker
+    });
   };
 };
 

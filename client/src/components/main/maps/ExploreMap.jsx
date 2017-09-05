@@ -2,14 +2,16 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import RaisedButton from 'material-ui/RaisedButton';
-import {withGoogleMap, GoogleMap, Marker} from 'react-google-maps';
+import {withGoogleMap, GoogleMap, Marker, InfoWindow} from 'react-google-maps';
 import SearchBox from 'react-google-maps/lib/places/SearchBox';
 import {
   handleMapMounted, 
   handleSearchBoxMounted,
   handlePlacesChanged,
   handleBoundsChanged,
-  handleSearchArea
+  handleSearchArea,
+  handleMarkerClick,
+  handleMarkerClose
 } from '../../../store/modules/map';
 
 import Markers from './Markers.jsx';
@@ -54,8 +56,14 @@ const ExploreMap = withGoogleMap(props => (
     {props.markers.map((marker, index) => (
       <Marker 
         position={{lat: parseFloat(marker.lat), lng: parseFloat(marker.lng)}} key={index} 
-        onClick={() => console.log('someone hovered over me!')}
-      />
+        onClick={() => props.handleMarkerClick(marker)}
+      >
+        {marker.showInfo && (
+          <InfoWindow onCloseClick={() => props.handleMarkerClose(marker)}>
+            <div>{marker.title}</div>
+          </InfoWindow>
+        )}
+      </Marker>
     ))}
   </GoogleMap>
 ));
@@ -76,7 +84,9 @@ const mapDispatchToProps = dispatch => bindActionCreators({
   handleSearchBoxMounted,
   handlePlacesChanged,
   handleBoundsChanged,
-  handleSearchArea
+  handleSearchArea,
+  handleMarkerClick,
+  handleMarkerClose
 }, dispatch);
 
 export default connect(
