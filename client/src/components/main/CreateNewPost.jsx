@@ -30,6 +30,7 @@ const CreateNewPost = (props) => {
       lng: props.map.lng,
       profile_id: props.user.id
     };
+
     console.log('(Client) Intiating POST Request! CREATING NEW POST');
     console.log(post);
     return axios.post('/api/posts/new', post)

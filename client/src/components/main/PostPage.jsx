@@ -105,7 +105,8 @@ const PostPage = (props) => {
 };
 
 const mapStateToProps = (state) => ({
-  posts: state.posts
+  //should perhaps get all posts instead of posts on map
+  posts: state.map.markers
 });
 
 export default connect(

@@ -1,12 +1,18 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import {withGoogleMap, GoogleMap, Marker} from 'react-google-maps';
+import RaisedButton from 'material-ui/RaisedButton';
+import { Link } from 'react-router-dom';
+import {withGoogleMap, GoogleMap, Marker, InfoWindow} from 'react-google-maps';
 import SearchBox from 'react-google-maps/lib/places/SearchBox';
 import {
   handleMapMounted, 
   handleSearchBoxMounted,
-  handlePlacesChanged
+  handlePlacesChanged,
+  handleBoundsChanged,
+  handleSearchArea,
+  handleMarkerClick,
+  handleMarkerClose
 } from '../../../store/modules/map';
 
 import Markers from './Markers.jsx';
@@ -28,25 +34,37 @@ var inputStyle = {
   textOverflow: 'ellipses',
 };
 
+const buttonStyle = {
+  margin: 12,
+};
+
 const ExploreMap = withGoogleMap(props => (
   <GoogleMap
     ref={props.handleMapMounted}
-    defaultZoom={12}
+    defaultZoom={10}
     center={props.center}
+    onBoundsChanged={() => props.handleBoundsChanged(props.map)}
   >
+    <RaisedButton label="Search this area" primary={true} style={buttonStyle} onClick={() => props.handleSearchArea(props.center)}/>
     <SearchBox
       ref={props.handleSearchBoxMounted}
       bounds={props.bounds}
       controlPosition={google.maps.ControlPosition.TOP_LEFT}
-      onPlacesChanged={() => props.handlePlacesChanged(props.searchBox)}
+      onPlacesChanged={() => props.handlePlacesChanged(props.searchBox, props.center)}
       inputPlaceholder='Search for a place!'
       inputStyle={props.inputStyle}
     />
     {props.markers.map((marker, index) => (
-      <Marker
-        {...marker}
-        key={index}
-      />
+      <Marker 
+        position={{lat: parseFloat(marker.lat), lng: parseFloat(marker.lng)}} key={index} 
+        onClick={() => props.handleMarkerClick(marker)}
+      >
+        {marker.showInfo && (
+          <InfoWindow onCloseClick={() => props.handleMarkerClose(marker)}>
+            <div><Link to={`/post/${marker.id}`}>{marker.title}</Link></div>
+          </InfoWindow>
+        )}
+      </Marker>
     ))}
   </GoogleMap>
 ));
@@ -58,13 +76,18 @@ const mapStateToProps = state => ({
   containerElement: <div style={{height: '100%'}} />,
   mapElement: <div style={{height: '100%'}} />,
   markers: state.map.markers,
-  searchBox: state.map._searchBox
+  searchBox: state.map._searchBox,
+  map: state.map._map
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
   handleMapMounted,
   handleSearchBoxMounted,
   handlePlacesChanged,
+  handleBoundsChanged,
+  handleSearchArea,
+  handleMarkerClick,
+  handleMarkerClose
 }, dispatch);
 
 export default connect(
