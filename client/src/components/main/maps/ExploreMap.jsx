@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import RaisedButton from 'material-ui/RaisedButton';
+import { Link } from 'react-router-dom';
 import {withGoogleMap, GoogleMap, Marker, InfoWindow} from 'react-google-maps';
 import SearchBox from 'react-google-maps/lib/places/SearchBox';
 import {
@@ -60,7 +61,7 @@ const ExploreMap = withGoogleMap(props => (
       >
         {marker.showInfo && (
           <InfoWindow onCloseClick={() => props.handleMarkerClose(marker)}>
-            <div>{marker.title}</div>
+            <div><Link to={`/post/${marker.id}`}>{marker.title}</Link></div>
           </InfoWindow>
         )}
       </Marker>
