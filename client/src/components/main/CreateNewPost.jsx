@@ -26,11 +26,6 @@ import {
 
 const CreateNewPost = (props) => {
 
-  // Autocomplete feature for the form's location input field
-  const initLocationAutocomplete = () => {
-    let input = document.getElementById('locationInput');    
-    let autocomplete = new google.maps.places.Autocomplete(input);
-  }
 
   const geocodeLocationInput = (location) => {
     let url = `https://maps.googleapis.com/maps/api/geocode/json?address=${location}&key=AIzaSyDXLOMgs19AOUHeizaMnRwjVyzxcTGWmJ8`
@@ -41,6 +36,17 @@ const CreateNewPost = (props) => {
     })
     .catch((err) => {
       console.log('(Client) Error calling Google Geocoding API');
+    });
+  }
+
+  // Autocomplete feature for the form's location input field
+  const initLocationAutocomplete = () => {
+    let input = document.getElementById('locationInput');    
+    let autocomplete = new google.maps.places.Autocomplete(input);
+    let place;
+    google.maps.event.addListener(autocomplete, 'place_changed', () => {
+      place = autocomplete.getPlace();
+      geocodeLocationInput(place.formatted_address);
     });
   }
 
@@ -81,26 +87,13 @@ const CreateNewPost = (props) => {
               />
             </FormGroup>
             <FormGroup>
-              <div> Use current location for post? </div>
-              {/* <ButtonToolbar>
-                <Button bsSize="sm" onClick={props.handleLocationInput(props.map)}> Yes </Button>
-                <Button bsSize="sm"> Choose a location </Button>
-              </ButtonToolbar> */}
               <Autocomplete
+                className="form-control"
                 id="locationInput"
+                placeholder="Search for places"
                 style={{width: '100%'}}
                 onChange={initLocationAutocomplete}
-                onPlaceSelected={(place) => {
-                  geocodeLocationInput(place.name);
-                }}
               />
-
-              {/* <FormControl
-              type="text"
-              id="locationInput"
-              onChange={(e) => { props.handleLocationInput(e.target.value); }}
-              placeholder="Location"
-              />  */}
             </FormGroup>
             <FormGroup>
               <FormControl
@@ -115,11 +108,15 @@ const CreateNewPost = (props) => {
         </Col>
       </Row>
       <Row>
-        <Col smOffset={2} sm={1}>
-          <ButtonToolbar>
+        <Col sm={4}>
+        </Col>
+        <Col sm={4}>
+          <ButtonToolbar style={{textAlign: 'center'}}>
             <Button type="submit" bsStyle="success" onClick={handleSubmit}>Publish</Button>
             <Button href="/" bsStyle="danger">Cancel</Button>
           </ButtonToolbar>
+        </Col>
+        <Col sm={4}>
         </Col>
       </Row>
     </Grid>
