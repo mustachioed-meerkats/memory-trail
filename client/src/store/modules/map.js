@@ -76,6 +76,19 @@ export default (state = initialState, action) => {
         return marker;
       })
     };
+  case HANDLE_MARKER_CLOSE:
+    return {
+      ...state,
+      markers: state.markers.map(marker => {
+        if (marker === action.targetMarker) {
+          return {
+            ...marker,
+            showInfo: false
+          };
+        }
+        return marker;
+      })
+    };
   default:
     return state;
   }
@@ -161,6 +174,15 @@ export const handleMarkerClick = (marker) => {
   return dispatch => {
     dispatch({
       type: HANDLE_MARKER_CLICK,
+      targetMarker: marker
+    });
+  };
+};
+
+export const handleMarkerClose = (marker) => {
+  return dispatch => {
+    dispatch({
+      type: HANDLE_MARKER_CLOSE,
       targetMarker: marker
     });
   };
