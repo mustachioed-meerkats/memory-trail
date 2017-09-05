@@ -9,6 +9,7 @@ export const HANDLE_MAP_MOUNTED = 'map/HANDLE_MAP_MOUNTED';
 export const HANDLE_SEARCHBOX_MOUNTED = 'map/HANDLE_SEARCHBOX_MOUNTED';
 export const HANDLE_PLACES_CHANGED = 'map/HANDLE_PLACES_CHANGED';
 export const HANDLE_BOUNDS_CHANGED = 'map/HANDLE_BOUNDS_CHANGED';
+export const HANDLE_SEARCH_AREA = 'map/HANDLE_SEARCH_AREA';
 
 /** ============================================================
  * Define Initial State
@@ -54,6 +55,11 @@ export default (state = initialState, action) => {
       ...state,
       bounds: action.bounds,
       center: action.center
+    };
+  case HANDLE_SEARCH_AREA:
+    return {
+      ...state,
+      markers: action.markers
     };
   default:
     return state;
@@ -121,6 +127,18 @@ export const handleBoundsChanged = (map) => {
       bounds: map.getBounds(),
       center: map.getCenter()
     });
+  };
+};
+
+export const handleSearchArea = (center) => {
+  return dispatch => {
+    return getPostsWithinRadius(center)
+      .then(results => {
+        dispatch({
+          type: HANDLE_SEARCH_AREA,
+          markers: results.data
+        });
+      });
   };
 };
 

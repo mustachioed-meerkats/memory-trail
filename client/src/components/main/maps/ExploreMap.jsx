@@ -1,13 +1,15 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import RaisedButton from 'material-ui/RaisedButton';
 import {withGoogleMap, GoogleMap, Marker} from 'react-google-maps';
 import SearchBox from 'react-google-maps/lib/places/SearchBox';
 import {
   handleMapMounted, 
   handleSearchBoxMounted,
   handlePlacesChanged,
-  handleBoundsChanged
+  handleBoundsChanged,
+  handleSearchArea
 } from '../../../store/modules/map';
 
 import Markers from './Markers.jsx';
@@ -29,6 +31,10 @@ var inputStyle = {
   textOverflow: 'ellipses',
 };
 
+const buttonStyle = {
+  margin: 12,
+};
+
 const ExploreMap = withGoogleMap(props => (
   <GoogleMap
     ref={props.handleMapMounted}
@@ -36,6 +42,7 @@ const ExploreMap = withGoogleMap(props => (
     center={props.center}
     onBoundsChanged={() => props.handleBoundsChanged(props.map)}
   >
+    <RaisedButton label="Search this area" primary={true} style={buttonStyle} onClick={() => props.handleSearchArea(props.center)}/>
     <SearchBox
       ref={props.handleSearchBoxMounted}
       bounds={props.bounds}
@@ -65,7 +72,8 @@ const mapDispatchToProps = dispatch => bindActionCreators({
   handleMapMounted,
   handleSearchBoxMounted,
   handlePlacesChanged,
-  handleBoundsChanged
+  handleBoundsChanged,
+  handleSearchArea
 }, dispatch);
 
 export default connect(
