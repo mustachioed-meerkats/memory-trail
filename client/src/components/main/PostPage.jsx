@@ -105,6 +105,7 @@ const PostPage = (props) => {
 };
 
 const mapStateToProps = (state) => ({
+  //should perhaps get all posts instead of posts on map
   posts: state.map.markers
 });
 

@@ -41,7 +41,7 @@ const buttonStyle = {
 const ExploreMap = withGoogleMap(props => (
   <GoogleMap
     ref={props.handleMapMounted}
-    defaultZoom={12}
+    defaultZoom={10}
     center={props.center}
     onBoundsChanged={() => props.handleBoundsChanged(props.map)}
   >

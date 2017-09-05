@@ -141,7 +141,7 @@ export const handlePlacesChanged = (searchBox, oldCenter) => {
         dispatch({
           type: HANDLE_PLACES_CHANGED,
           markers: results.data,
-          center
+          center: {lat: center.lat(), lng: center.lng()}
         });
       });
   };
@@ -153,7 +153,7 @@ export const handleBoundsChanged = (map) => {
     dispatch({
       type: HANDLE_BOUNDS_CHANGED,
       bounds: map.getBounds(),
-      center: map.getCenter()
+      center: {lat: map.getCenter().lat(), lng: map.getCenter().lng()}
     });
   };
 };
