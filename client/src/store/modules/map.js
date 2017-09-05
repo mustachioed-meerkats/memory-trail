@@ -30,12 +30,13 @@ export default (state = initialState, action) => {
   case SET_CENTER:
     return {
       ...state,
-      center: action.center
+      center: action.center,
+      markers: action.markers
     };
   case HANDLE_MAP_MOUNTED:
     return {
       ...state,
-      _map: action._map
+      _map: action._map,
     };
   case HANDLE_SEARCHBOX_MOUNTED:
     return {
@@ -65,10 +66,14 @@ export default (state = initialState, action) => {
  */
 export const setCenter = (lat, lng) => {
   return dispatch => {
-    dispatch({
-      type: SET_CENTER,
-      center: {lat, lng}
-    });
+    return getPostsWithinRadius({lat, lng})
+      .then(results => {
+        dispatch({
+          type: SET_CENTER,
+          center: {lat, lng},
+          markers: results.data
+        });
+      });
   };
 };
 
@@ -96,7 +101,7 @@ export const handlePlacesChanged = (searchBox, oldCenter) => {
   }));
   const center = places.length > 0 ? places[0].position : oldCenter;
   return dispatch => {
-    return getPostsWithinRadius(center)
+    return getPostsWithinRadius({lat: center.lat(), lng: center.lng()})
       .then(results => {
         console.log('results: ', results);
         dispatch({
@@ -121,8 +126,6 @@ export const handleBoundsChanged = (map) => {
 
 // helper function
 export const getPostsWithinRadius = (center) => {
-  var lat = center.lat();
-  var lng = center.lng();
   // later refacor with get request instead of post
-  return axios.post('/api/posts', {lat, lng});
+  return axios.post('/api/posts', center);
 };

@@ -15,7 +15,7 @@ const PostList = ({posts}) => {
 };
 
 const mapStateToProps = (state) => ({
-  posts: state.posts
+  posts: state.map.markers
 });
 
 export default connect(
