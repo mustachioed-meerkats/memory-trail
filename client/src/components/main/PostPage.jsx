@@ -105,7 +105,7 @@ const PostPage = (props) => {
 };
 
 const mapStateToProps = (state) => ({
-  posts: state.posts
+  posts: state.map.markers
 });
 
 export default connect(

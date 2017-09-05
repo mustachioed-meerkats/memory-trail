@@ -52,7 +52,10 @@ const ExploreMap = withGoogleMap(props => (
       inputStyle={props.inputStyle}
     />
     {props.markers.map((marker, index) => (
-      <Marker position={{lat: parseFloat(marker.lat), lng: parseFloat(marker.lng)}} key={index} />
+      <Marker 
+        position={{lat: parseFloat(marker.lat), lng: parseFloat(marker.lng)}} key={index} 
+        onClick={() => console.log('someone hovered over me!')}
+      />
     ))}
   </GoogleMap>
 ));
