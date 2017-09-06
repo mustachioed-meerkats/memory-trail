@@ -43,7 +43,7 @@ const ExploreMap = withGoogleMap(props => (
     ref={props.handleMapMounted}
     defaultZoom={10}
     center={props.center}
-    onBoundsChanged={() => props.handleBoundsChanged(props.map)}
+    onDragEnd={() => props.handleBoundsChanged(props.map)}
   >
     <RaisedButton label="Search this area" primary={true} style={buttonStyle} onClick={() => props.handleSearchArea(props.center)}/>
     <SearchBox

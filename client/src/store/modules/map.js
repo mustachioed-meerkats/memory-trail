@@ -148,7 +148,7 @@ export const handlePlacesChanged = (searchBox, oldCenter) => {
 };
 
 export const handleBoundsChanged = (map) => {
-  // console.log('center changed: ', map.getCenter());
+  console.log('center changed: ', map.getCenter().lat(), map.getCenter().lng());
   return dispatch => {
     dispatch({
       type: HANDLE_BOUNDS_CHANGED,
@@ -191,5 +191,5 @@ export const handleMarkerClose = (marker) => {
 // helper function
 export const getPostsWithinRadius = (center) => {
   // later refacor with get request instead of post
-  return axios.post('/api/posts', center);
+  return axios.post('/api/posts/nearby', center);
 };

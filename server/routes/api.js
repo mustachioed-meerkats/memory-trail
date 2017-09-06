@@ -36,6 +36,15 @@ router.route('/posts/user')
       });
   });
 
+router.route('/posts/nearby')
+  .post((req, res) => {
+    var {lat, lng} = req.body;
+    models.Post.getPostsWithinRadius(req.body)
+      .then(results => {
+        res.send(results);
+      });
+  });
+
 /** ============================================================
  * TEST ROUTES
  * =============================================================
@@ -64,14 +73,6 @@ router.route('/test2')
       });
   });
 
-router.route('/posts')
-  .post((req, res) => {
-    var {lat, lng} = req.body;
-    // models.Post.getAllPosts()
-    models.Post.getPostsWithinRadius(req.body)
-      .then(results => {
-        res.send(results);
-      });
-  });
 
+  
 module.exports = router;

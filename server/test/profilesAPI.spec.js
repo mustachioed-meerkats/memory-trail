@@ -15,7 +15,7 @@ describe('Profiles API', function () {
     dbUtils.rollback(done);
   });
 
-  xit('accepts GET requests to /api/profiles', function (done) {
+  it('accepts GET requests to /api/profiles', function (done) {
     request(app)
       .get('/api/profiles')
       .expect(res => {
@@ -29,7 +29,7 @@ describe('Profiles API', function () {
       .end(done);
   });
 
-  xit('accepts GET requests to /api/profiles/:id', function (done) {
+  it('accepts GET requests to /api/profiles/:id', function (done) {
     request(app)
       .get('/api/profiles/1')
       .expect(res => {
@@ -45,7 +45,7 @@ describe('Profiles API', function () {
       .end(done);
   });
 
-  xit('sends 404 if id on GET requests to /api/profiles/:id does not exist', function (done) {
+  it('sends 404 if id on GET requests to /api/profiles/:id does not exist', function (done) {
     request(app)
       .get('/api/profiles/123')
       .expect(404)
@@ -72,7 +72,7 @@ describe('Profiles API', function () {
   //     .end(done);
   // });
 
-  xit('accepts PUT requests to /api/profiles/:id', function () {
+  it('accepts PUT requests to /api/profiles/:id', function () {
     let profile = {
       first: 'James',
       last: 'Davenport',
@@ -101,7 +101,7 @@ describe('Profiles API', function () {
       });
   });
 
-  xit('sends 404 if id on PUT requests to /api/profiles/:id does not exist', function (done) {
+  it('sends 404 if id on PUT requests to /api/profiles/:id does not exist', function (done) {
     request(app)
       .put('/api/profiles/123')
       .expect(404)
