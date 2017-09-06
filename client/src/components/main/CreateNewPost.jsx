@@ -66,7 +66,6 @@ const CreateNewPost = (props) => {
         console.log('(Client) Success! CREATING NEW POST');
         // TODO: Add redirection to Explore Map
       })
-      .then()
       .catch((err) => {
         console.log('(Client) Error! CREATING NEW POST');
         console.log(err);
