@@ -34,6 +34,7 @@
     "haversine": "^1.0.2",
     "history": "^4.7.2",
     "knex": "^0.12.9",
+    "knex-cli": "^1.0.2",
     "material-ui": "^0.19.1",
     "morgan": "^1.8.1",
     "passport": "^0.3.2",
@@ -80,7 +81,8 @@
     "plugins": [
       "transform-es2015-modules-commonjs",
       "es2015",
-      "react"
+      "react",
+      "stage-0"
     ]
   },
   "jest": {

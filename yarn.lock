@@ -243,6 +243,27 @@ axios@^0.16.2:
     follow-redirects "^1.2.3"
     is-buffer "^1.1.5"
 
+babel-cli@^6.10.0:
+  version "6.26.0"
+  resolved "https://registry.yarnpkg.com/babel-cli/-/babel-cli-6.26.0.tgz#502ab54874d7db88ad00b887a06383ce03d002f1"
+  dependencies:
+    babel-core "^6.26.0"
+    babel-polyfill "^6.26.0"
+    babel-register "^6.26.0"
+    babel-runtime "^6.26.0"
+    commander "^2.11.0"
+    convert-source-map "^1.5.0"
+    fs-readdir-recursive "^1.0.0"
+    glob "^7.1.2"
+    lodash "^4.17.4"
+    output-file-sync "^1.1.2"
+    path-is-absolute "^1.0.1"
+    slash "^1.0.0"
+    source-map "^0.5.6"
+    v8flags "^2.1.1"
+  optionalDependencies:
+    chokidar "^1.6.1"
+
 babel-code-frame@^6.16.0, babel-code-frame@^6.22.0:
   version "6.22.0"
   resolved "https://registry.yarnpkg.com/babel-code-frame/-/babel-code-frame-6.22.0.tgz#027620bee567a88c32561574e7fd0801d33118e4"
@@ -910,6 +931,14 @@ babel-plugin-transform-strict-mode@^6.22.0:
     babel-runtime "^6.22.0"
     babel-types "^6.22.0"
 
+babel-polyfill@^6.26.0:
+  version "6.26.0"
+  resolved "https://registry.yarnpkg.com/babel-polyfill/-/babel-polyfill-6.26.0.tgz#379937abc67d7895970adc621f284cd966cf2153"
+  dependencies:
+    babel-runtime "^6.26.0"
+    core-js "^2.5.0"
+    regenerator-runtime "^0.10.5"
+
 babel-preset-es2015@^6.24.0:
   version "6.24.0"
   resolved "https://registry.yarnpkg.com/babel-preset-es2015/-/babel-preset-es2015-6.24.0.tgz#c162d68b1932696e036cd3110dc1ccd303d2673a"
@@ -1213,7 +1242,7 @@ block-stream@*:
   dependencies:
     inherits "~2.0.0"
 
-bluebird@^3.4.3, bluebird@^3.4.6, bluebird@^3.5.0:
+bluebird@^3.3.4, bluebird@^3.4.3, bluebird@^3.4.6, bluebird@^3.5.0:
   version "3.5.0"
   resolved "https://registry.yarnpkg.com/bluebird/-/bluebird-3.5.0.tgz#791420d7f551eea2897453a8a77653f96606d67c"
 
@@ -1523,6 +1552,21 @@ chokidar@^1.4.3, chokidar@^1.6.0:
   optionalDependencies:
     fsevents "^1.0.0"
 
+chokidar@^1.6.1:
+  version "1.7.0"
+  resolved "https://registry.yarnpkg.com/chokidar/-/chokidar-1.7.0.tgz#798e689778151c8076b4b360e5edd28cda2bb468"
+  dependencies:
+    anymatch "^1.3.0"
+    async-each "^1.0.0"
+    glob-parent "^2.0.0"
+    inherits "^2.0.1"
+    is-binary-path "^1.0.0"
+    is-glob "^2.0.0"
+    path-is-absolute "^1.0.0"
+    readdirp "^2.0.0"
+  optionalDependencies:
+    fsevents "^1.0.0"
+
 chownr@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/chownr/-/chownr-1.0.1.tgz#e2a75042a9551908bebd25b8523d5f9769d79181"
@@ -1622,7 +1666,7 @@ commander@2.9.0, commander@^2.2.0:
   dependencies:
     graceful-readlink ">= 1.0.0"
 
-commander@^2.9.0:
+commander@^2.11.0, commander@^2.9.0:
   version "2.11.0"
   resolved "https://registry.yarnpkg.com/commander/-/commander-2.11.0.tgz#157152fd1e7a6c8d98a5b715cf376df928004563"
 
@@ -2676,6 +2720,10 @@ fs-exists-sync@^0.1.0:
   version "0.1.0"
   resolved "https://registry.yarnpkg.com/fs-exists-sync/-/fs-exists-sync-0.1.0.tgz#982d6893af918e72d08dec9e8673ff2b5a8d6add"
 
+fs-readdir-recursive@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/fs-readdir-recursive/-/fs-readdir-recursive-1.0.0.tgz#8cd1745c8b4f8a29c8caec392476921ba195f560"
+
 fs.realpath@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/fs.realpath/-/fs.realpath-1.0.0.tgz#1504ad2523158caa40db4a2787cb01411994ea4f"
@@ -2793,7 +2841,7 @@ glob@7.0.5, glob@^7.0.0, glob@^7.0.3, glob@^7.0.5:
     once "^1.3.0"
     path-is-absolute "^1.0.0"
 
-glob@^7.1.1:
+glob@^7.1.1, glob@^7.1.2:
   version "7.1.2"
   resolved "https://registry.yarnpkg.com/glob/-/glob-7.1.2.tgz#c19c9df9a028702d678612384a6552404c636d15"
   dependencies:
@@ -2864,7 +2912,7 @@ google-maps-infobox@^1.1.13:
   version "1.1.15"
   resolved "https://registry.yarnpkg.com/google-maps-infobox/-/google-maps-infobox-1.1.15.tgz#22a28a97cf72a2cd8493eef755c71fc1a2995170"
 
-graceful-fs@^4.1.11, graceful-fs@^4.1.2:
+graceful-fs@^4.1.11, graceful-fs@^4.1.2, graceful-fs@^4.1.4:
   version "4.1.11"
   resolved "https://registry.yarnpkg.com/graceful-fs/-/graceful-fs-4.1.11.tgz#0e8bdfe4d1ddb8854d64e04ea7c00e2a026e5658"
 
@@ -3029,6 +3077,10 @@ hash.js@^1.0.0, hash.js@^1.0.3:
   resolved "https://registry.yarnpkg.com/hash.js/-/hash.js-1.0.3.tgz#1332ff00156c0a0ffdd8236013d07b77a0451573"
   dependencies:
     inherits "^2.0.1"
+
+hashmap@^2.0.1:
+  version "2.3.0"
+  resolved "https://registry.yarnpkg.com/hashmap/-/hashmap-2.3.0.tgz#b13fb65da7c8ba5e3db8fc1b8c5ba1d0049daf22"
 
 haversine@^1.0.2:
   version "1.0.2"
@@ -3910,6 +3962,34 @@ kind-of@^3.0.2:
   dependencies:
     is-buffer "^1.0.2"
 
+knex-cli@^1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/knex-cli/-/knex-cli-1.0.2.tgz#1313f9fbb9350256ab626f80af8b71baac4be393"
+  dependencies:
+    babel-cli "^6.10.0"
+    knex "^0.11.5"
+
+knex@^0.11.5:
+  version "0.11.10"
+  resolved "https://registry.yarnpkg.com/knex/-/knex-0.11.10.tgz#f16d1df618c022e331e016baa9190edc44ef0dc4"
+  dependencies:
+    bluebird "^3.3.4"
+    chalk "^1.0.0"
+    commander "^2.2.0"
+    debug "^2.1.3"
+    inherits "~2.0.1"
+    interpret "^0.6.5"
+    liftoff "~2.2.0"
+    lodash "^4.6.0"
+    minimist "~1.1.0"
+    mkdirp "^0.5.0"
+    node-uuid "~1.4.0"
+    pg-connection-string "^0.1.3"
+    pool2 "^1.1.0"
+    readable-stream "^1.1.12"
+    tildify "~1.0.0"
+    v8flags "^2.0.2"
+
 knex@^0.12.9:
   version "0.12.9"
   resolved "https://registry.yarnpkg.com/knex/-/knex-0.12.9.tgz#aa852138c09ed46181e890fd698270bbe7761124"
@@ -4456,6 +4536,10 @@ node-pre-gyp@^0.6.29:
     tar "^2.2.1"
     tar-pack "^3.4.0"
 
+node-uuid@~1.4.0:
+  version "1.4.8"
+  resolved "https://registry.yarnpkg.com/node-uuid/-/node-uuid-1.4.8.tgz#b040eb0923968afabf8d32fb1f17f1167fdab907"
+
 nopt@^4.0.1:
   version "4.0.1"
   resolved "https://registry.yarnpkg.com/nopt/-/nopt-4.0.1.tgz#d0d4685afd5415193c8c7505602d0d17cd64474d"
@@ -4666,6 +4750,14 @@ osenv@^0.1.4:
   dependencies:
     os-homedir "^1.0.0"
     os-tmpdir "^1.0.0"
+
+output-file-sync@^1.1.2:
+  version "1.1.2"
+  resolved "https://registry.yarnpkg.com/output-file-sync/-/output-file-sync-1.1.2.tgz#d0a33eefe61a205facb90092e826598d5245ce76"
+  dependencies:
+    graceful-fs "^4.1.4"
+    mkdirp "^0.5.1"
+    object-assign "^4.1.0"
 
 p-limit@^1.1.0:
   version "1.1.0"
@@ -4925,6 +5017,15 @@ pkg-dir@^1.0.0:
 pluralize@^1.2.1:
   version "1.2.1"
   resolved "https://registry.yarnpkg.com/pluralize/-/pluralize-1.2.1.tgz#d1a21483fd22bb41e58a12fa3421823140897c45"
+
+pool2@^1.1.0:
+  version "1.4.1"
+  resolved "https://registry.yarnpkg.com/pool2/-/pool2-1.4.1.tgz#32fbd4f6a37764599002faeab8a0494a2a76a2d0"
+  dependencies:
+    debug "^2.1.3"
+    double-ended-queue "^2.1.0-0"
+    hashmap "^2.0.1"
+    simple-backoff "^1.0.0"
 
 portfinder@^1.0.9:
   version "1.0.13"
@@ -5397,6 +5498,10 @@ regenerator-runtime@^0.10.0:
   version "0.10.3"
   resolved "https://registry.yarnpkg.com/regenerator-runtime/-/regenerator-runtime-0.10.3.tgz#8c4367a904b51ea62a908ac310bf99ff90a82a3e"
 
+regenerator-runtime@^0.10.5:
+  version "0.10.5"
+  resolved "https://registry.yarnpkg.com/regenerator-runtime/-/regenerator-runtime-0.10.5.tgz#336c3efc1220adcedda2c9fab67b5a7955a33658"
+
 regenerator-runtime@^0.11.0:
   version "0.11.0"
   resolved "https://registry.yarnpkg.com/regenerator-runtime/-/regenerator-runtime-0.11.0.tgz#7e54fe5b5ccd5d6624ea6255c3473be090b802e1"
@@ -5725,6 +5830,10 @@ signal-exit@^3.0.0, signal-exit@^3.0.2:
 simple-assign@^0.1.0:
   version "0.1.0"
   resolved "https://registry.yarnpkg.com/simple-assign/-/simple-assign-0.1.0.tgz#17fd3066a5f3d7738f50321bb0f14ca281cc4baa"
+
+simple-backoff@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/simple-backoff/-/simple-backoff-1.0.0.tgz#a4fa290ec01969c07ca136fe8bbfb40e0ef35ac2"
 
 slash@^1.0.0:
   version "1.0.0"
@@ -6297,7 +6406,7 @@ v8-compile-cache@^1.1.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/v8-compile-cache/-/v8-compile-cache-1.1.0.tgz#1dc2a340fb8e5f800a32bcdbfb8c23cd747021b9"
 
-v8flags@^2.0.2:
+v8flags@^2.0.2, v8flags@^2.1.1:
   version "2.1.1"
   resolved "https://registry.yarnpkg.com/v8flags/-/v8flags-2.1.1.tgz#aab1a1fa30d45f88dd321148875ac02c0b55e5b4"
   dependencies:
