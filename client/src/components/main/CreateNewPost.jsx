@@ -28,10 +28,12 @@ const CreateNewPost = (props) => {
 
 
   const geocodeLocationInput = (location) => {
+    // calls google geocoding API to fetch lat/lng from address selected in autocomplete form
     let url = `https://maps.googleapis.com/maps/api/geocode/json?address=${location}&key=AIzaSyDXLOMgs19AOUHeizaMnRwjVyzxcTGWmJ8`
     return axios.get(url)
     .then((res) => {
       console.log('response from geocoding API: ', res);
+      // action handler to update location value in state
       props.handleLocationInput(res.data.results[0].geometry.location);
     })
     .catch((err) => {
@@ -40,12 +42,15 @@ const CreateNewPost = (props) => {
   }
 
   // Autocomplete feature for the form's location input field
-  const initLocationAutocomplete = () => {
-    let input = document.getElementById('locationInput');    
+  const initializeAutocomplete = () => {
+    let input = document.getElementById('locationInput');
+    // render predictions from google autocomplete using input from location field
     let autocomplete = new google.maps.places.Autocomplete(input);
     let place;
+    // listen for location selection from the dropdown
     google.maps.event.addListener(autocomplete, 'place_changed', () => {
       place = autocomplete.getPlace();
+      // when a place is selected, use its address property to call google geocoding API
       geocodeLocationInput(place.formatted_address);
     });
   }
@@ -92,7 +97,7 @@ const CreateNewPost = (props) => {
                 id="locationInput"
                 placeholder="Search for places"
                 style={{width: '100%'}}
-                onChange={initLocationAutocomplete}
+                onChange={initializeAutocomplete}
               />
             </FormGroup>
             <FormGroup>
