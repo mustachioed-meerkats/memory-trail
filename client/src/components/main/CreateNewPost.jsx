@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import Autocomplete from 'react-google-autocomplete';
 
-
 /** ============================================================
  * Define React Bootstrap Components
  * =============================================================
@@ -22,24 +21,21 @@ import {
   handleLocationInput
 } from '../../store/modules/newpost';
 
-
-
 const CreateNewPost = (props) => {
-
 
   const geocodeLocationInput = (location) => {
     // calls google geocoding API to fetch lat/lng from address selected in autocomplete form
-    let url = `https://maps.googleapis.com/maps/api/geocode/json?address=${location}&key=AIzaSyDXLOMgs19AOUHeizaMnRwjVyzxcTGWmJ8`
+    let url = `https://maps.googleapis.com/maps/api/geocode/json?address=${location}&key=AIzaSyDXLOMgs19AOUHeizaMnRwjVyzxcTGWmJ8`;
     return axios.get(url)
-    .then((res) => {
-      console.log('response from geocoding API: ', res);
-      // action handler to update location value in state
-      props.handleLocationInput(res.data.results[0].geometry.location);
-    })
-    .catch((err) => {
-      console.log('(Client) Error calling Google Geocoding API');
-    });
-  }
+      .then((res) => {
+        console.log('response from geocoding API: ', res);
+        // action handler to update location value in state
+        props.handleLocationInput(res.data.results[0].geometry.location);
+      })
+      .catch((err) => {
+        console.log('(Client) Error calling Google Geocoding API');
+      });
+  };
 
   // Autocomplete feature for the form's location input field
   const initializeAutocomplete = () => {
@@ -53,7 +49,7 @@ const CreateNewPost = (props) => {
       // when a place is selected, use its address property to call google geocoding API
       geocodeLocationInput(place.formatted_address);
     });
-  }
+  };
 
   const handleSubmit = () => {
     const post = {
@@ -144,12 +140,10 @@ const mapStateToProps = state => ({
  * Define Dispatches Subscriptions
  * =============================================================
  */
-
 const mapDispatchToProps = dispatch => bindActionCreators({
   handleTitleInput: handleTitleInput,
   handleContentTextArea: handleContentTextArea,
   handleLocationInput: handleLocationInput
-
 }, dispatch);
 
 export default connect(

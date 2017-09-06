@@ -2,8 +2,7 @@ import React from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { Navbar, Nav, NavItem, Image, NavDropdown, MenuItem } from 'react-bootstrap';
-import { Dropdown, ButtonToolbar, Glyphicon, Button } from 'react-bootstrap';
+import { Navbar, Nav, NavItem, Image } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
 import navbar from '../../styles/navbar';
 
