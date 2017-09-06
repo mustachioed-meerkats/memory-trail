@@ -11,7 +11,6 @@ import axios from 'axios';
  */
 const initialState = {
   posts: __PRELOADED_STATE__.posts,
-  userPosts: __PRELOADED_STATE__.userPosts
 };
 
 /** ============================================================
