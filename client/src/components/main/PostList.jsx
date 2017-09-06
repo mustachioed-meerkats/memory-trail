@@ -8,7 +8,7 @@ const PostList = ({posts, type}) => {
   if (type === 'TYPE_PROFILE') {
     return (
       <div>
-        {posts.map((post, i) => { 
+        {userPosts.map((post, i) => { 
           return <PostListEntry post={post} id={i} key={i} />; 
         }).slice(0, 3)}
       </div>
