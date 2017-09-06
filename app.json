@@ -1,0 +1,21 @@
+{
+  "name": "mustachioed-meerkats",
+  "scripts": {
+  },
+  "env": {
+    "REDIS_URL": {
+      "required": true
+    }
+  },
+  "formation": {
+  },
+  "addons": [
+    "heroku-postgresql",
+    "heroku-redis"
+  ],
+  "buildpacks": [
+    {
+      "url": "heroku/nodejs"
+    }
+  ]
+}
