@@ -5,7 +5,7 @@ const expect = require('chai').expect;
 const app = require('../app.js');
 
 describe('basic server', function() {
-  xit('sends back hello world', function(done) {
+  it('sends back hello world', function(done) {
     request(app)
       .get('/api')
       .expect(200)
@@ -15,7 +15,7 @@ describe('basic server', function() {
       .end(done);
   });
 
-  xit('accepts POST request', function(done) {
+  it('accepts POST request', function(done) {
     request(app)
       .post('/api')
       .expect(201)
