@@ -7,6 +7,8 @@ import PostListEntry from './PostListEntry.jsx';
 import { Grid, Row, Col, Button, ButtonGroup, ListGroupItem, Glyphicon, Tooltip, OverlayTrigger } from 'react-bootstrap';
 
 const PostPage = (props) => {
+
+  // TODO: Refactor into Styles
   const style = {
     card: {
       boxShadow: '0 1px 2px #aaa',
@@ -56,6 +58,7 @@ const PostPage = (props) => {
     }
   };
   
+  // TODO: Refactor into a library 
   const getTimeSincePost = (postTime) => {
     let postDateMilliseconds = new Date(postTime).getTime();
     let currentDateMilliseconds = new Date().getTime();
@@ -81,8 +84,9 @@ const PostPage = (props) => {
     }
     return 0;
   };
+
   const currentPost = props.posts.filter((post) => { return post.id === parseInt(props.match.params.id); })[0];
-  console.log(currentPost);
+
   return (
     <Row>
       <Col md={3}/>
@@ -93,7 +97,7 @@ const PostPage = (props) => {
             <div style={style.card.title}>
               <Link to={`/post/${currentPost.id}`}>{currentPost.title}</Link>
             </div>
-            <div style={style.card.stats}>Submitted {getTimeSincePost('2015-03-25T12:00:00Z')} by {currentPost.profile_id}</div>
+            <div style={style.card.stats}>Submitted {getTimeSincePost('2015-03-25')} by {currentPost.profile_id}</div>
             <div style={style.card.content}>{currentPost.content}</div>
             <Button style={style.card.button}><Glyphicon glyph="bookmark" /></Button>
           </div>

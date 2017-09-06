@@ -2,8 +2,9 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { Grid, Row, Col, Button, ButtonGroup, ListGroupItem, Glyphicon, Tooltip, OverlayTrigger } from 'react-bootstrap';
+import { Button, ButtonGroup, Glyphicon } from 'react-bootstrap';
 
+//TODO: Refactor into seperate style
 const style = {
   card: {
     boxShadow: '0 1px 2px #aaa',
@@ -53,6 +54,7 @@ const style = {
   }
 };
 
+// TODO: Refactor into a seperte library
 const getTimeSincePost = (postTime) => {
   let postDateMilliseconds = new Date(postTime).getTime();
   let currentDateMilliseconds = new Date().getTime();
@@ -81,9 +83,6 @@ const getTimeSincePost = (postTime) => {
 
 const PostListEntry = (props) => {
   return (
-    // <Row>
-    //   <Col md={3}/>
-    //   <Col md={5}>
     <div style={style.card}>
       <div style={style.card.container}>
         <div style={style.card.title}>
@@ -94,9 +93,6 @@ const PostListEntry = (props) => {
         <Button style={style.card.button}><Glyphicon glyph="bookmark" /></Button>
       </div>
     </div>
-    //   </Col>
-    //   <Col md={3}/>
-    // </Row>
   );
 };
 

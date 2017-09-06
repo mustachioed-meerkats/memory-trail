@@ -1,7 +1,6 @@
 import React from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { Grid, Row, Col, Panel } from 'react-bootstrap';
 import PostListEntry from './PostListEntry.jsx';
 
 const PostList = ({posts, userPosts, type}) => {
@@ -27,7 +26,6 @@ const PostList = ({posts, userPosts, type}) => {
 const mapStateToProps = (state) => ({
   posts: state.map.markers,
   userPosts: state.userPosts
-
 });
 
 export default connect(

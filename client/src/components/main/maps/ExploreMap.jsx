@@ -19,6 +19,7 @@ import Markers from './Markers.jsx';
 import Search from './Search.jsx';
 import PostList from '../PostList.jsx';
 
+// TODO: Refactor into styles
 var inputStyle = {
   boxSizing: 'border-box',
   MozBoxSizing: 'border-box',
@@ -34,8 +35,9 @@ var inputStyle = {
   textOverflow: 'ellipses',
 };
 
+// TODO: Refactor into styles
 const buttonStyle = {
-  margin: 12,
+  margin: '1rem'
 };
 
 const ExploreMap = withGoogleMap(props => (
