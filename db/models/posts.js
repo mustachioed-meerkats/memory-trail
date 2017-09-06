@@ -9,8 +9,7 @@ const Post = db.Model.extend({
   }
 });
 
-var postModel = db.model('Post', Post);
-module.exports = postModel;
+module.exports = db.model('Post', Post);
 
 module.exports.createPost = (post) => {
   return knex('posts').insert(post);
