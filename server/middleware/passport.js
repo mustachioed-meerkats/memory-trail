@@ -2,8 +2,6 @@
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 const GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
-//const FacebookStrategy = require('passport-facebook').Strategy;
-//const TwitterStrategy = require('passport-twitter').Strategy;
 const config = require('config')['passport'];
 const models = require('../../db/models');
 
@@ -114,25 +112,6 @@ passport.use('google', new GoogleStrategy({
 },
 (accessToken, refreshToken, profile, done) => getOrCreateOAuthProfile('google', profile, done))
 );
-
-// passport.use('facebook', new FacebookStrategy({
-//   clientID: config.Facebook.clientID,
-//   clientSecret: config.Facebook.clientSecret,
-//   callbackURL: config.Facebook.callbackURL,
-//   profileFields: ['id', 'emails', 'name']
-// },
-//   (accessToken, refreshToken, profile, done) => getOrCreateOAuthProfile('facebook', profile, done))
-// );
-
-// REQUIRES PERMISSIONS FROM TWITTER TO OBTAIN USER EMAIL ADDRESSES
-// passport.use('twitter', new TwitterStrategy({
-//   consumerKey: config.Twitter.consumerKey,
-//   consumerSecret: config.Twitter.consumerSecret,
-//   callbackURL: config.Twitter.callbackURL,
-//   userProfileURL: 'https://api.twitter.com/1.1/account/verify_credentials.json?include_email=true'
-// },
-//   (accessToken, refreshToken, profile, done) => getOrCreateOAuthProfile('twitter', profile, done))
-// );
 
 const getOrCreateOAuthProfile = (type, oauthProfile, done) => {
   return models.Auth.where({ type, oauth_id: oauthProfile.id }).fetch({
