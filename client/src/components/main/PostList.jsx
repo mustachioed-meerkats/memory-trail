@@ -25,7 +25,8 @@ const PostList = ({posts, type}) => {
 };
 
 const mapStateToProps = (state) => ({
-  posts: state.map.markers
+  posts: state.map.markers,
+  userPosts: state.posts.userPosts
 });
 
 export default connect(
