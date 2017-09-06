@@ -37,8 +37,7 @@ module.exports.getAllPosts = () => {
 };
 
 module.exports.getPostsByUserId = (profile_id) => {
-  // refactor to use knex
-  return postModel.where('profile_id', profile_id).fetchAll();
+  return knex('posts').where('profile_id', profile_id);
 };
 
 module.exports.getPostsWithinRadius = (center, radius = 13) => {

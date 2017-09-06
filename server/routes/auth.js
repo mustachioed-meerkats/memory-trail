@@ -7,11 +7,19 @@ router.route('/')
   .get(middleware.auth.verify, (req, res) => {
     const preloadedState = {};  
     preloadedState.user = req.user;
-    models.Post.getPostsByUserId(req.user.id)
-      .then(posts => {
-        preloadedState.posts = posts;
+
+    Promise.all([models.Post.getAllPosts(), models.Post.getPostsByUserId(req.user.id)])  
+      .then((results) => {
+        preloadedState.posts = results[0];
+        preloadedState.userPosts = results[1];
+      })
+      .then(() => { 
         res.render('index', {preloadedState});
+      })
+      .catch((err) => {
+        console.log('(Server) Error! Preloading State');
       });
+
   });
 
 router.route('/login')
@@ -19,27 +27,10 @@ router.route('/login')
     res.render('login.ejs', { message: req.flash('loginMessage') });
   })
   .post(middleware.passport.authenticate('local-login', {
-    successRedirect: '/profile',
+    successRedirect: '/',
     failureRedirect: '/login',
     failureFlash: true
   }));
-
-router.route('/signup')
-  .get((req, res) => {
-    res.render('signup.ejs', { message: req.flash('signupMessage') });
-  })
-  .post(middleware.passport.authenticate('local-signup', {
-    successRedirect: '/profile',
-    failureRedirect: '/signup',
-    failureFlash: true
-  }));
-
-router.route('/profile')
-  .get(middleware.auth.verify, (req, res) => {
-    res.render('profile.ejs', {
-      user: req.user // get the user out of session and pass to template
-    });
-  });
 
 router.route('/logout')
   .get((req, res) => {
@@ -52,7 +43,7 @@ router.get('/auth/google', middleware.passport.authenticate('google', {
 }));
 
 router.get('/auth/google/callback', middleware.passport.authenticate('google', {
-  successRedirect: '/profile',
+  successRedirect: '/',
   failureRedirect: '/login'
 }));
 
