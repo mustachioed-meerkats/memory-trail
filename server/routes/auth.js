@@ -7,18 +7,6 @@ router.route('/')
   .get(middleware.auth.verify, (req, res) => {
     const preloadedState = {};  
     preloadedState.user = req.user;
-    // models.Post.getPostsByUserId(req.user.id)  
-    //   .then((results) => {
-    //     preloadedState.posts = results;
-    //   })
-    //   .then(middleware.auth.getPostion)
-    //   .then((results) => {
-    //     preloadedState.userLocation = results;
-    //   })
-    //   .catch((err) => {
-    //     console.log('(Auth) Error! Preloading state!');
-    //     console.log(err);
-    //   });
 
     Promise.all([models.Post.getAllPosts(), models.Post.getPostsByUserId(req.user.id)])  
       .then((results) => {
@@ -32,12 +20,6 @@ router.route('/')
 
       });
 
-
-    // models.Post.getPostsByUserId(req.user.id)
-    //   .then(posts => {
-    //     preloadedState.posts = posts;
-    //     res.render('index', {preloadedState});
-    //   });
   });
 
 router.route('/login')
