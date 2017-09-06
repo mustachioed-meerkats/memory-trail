@@ -21,14 +21,12 @@ const Header = (props) => {
       <Navbar.Collapse>
         <Nav pullRight>
           <LinkContainer to='/post/new'>
-            <NavItem>Write a Story</NavItem>
+            <NavItem eventKey="1">Write a Story</NavItem>
           </LinkContainer>
           <LinkContainer to='/profile'>
-            <NavItem>{props.user.display}</NavItem>
+            <NavItem eventKey="2">{props.user.display}</NavItem>
           </LinkContainer>
-          <Navbar.Text >
-            <Navbar.Link href="/logout">Logout</Navbar.Link>
-          </Navbar.Text>
+          <NavItem href="/logout" eventKey="3">Logout</NavItem>
         </Nav>
       </Navbar.Collapse>
     </Navbar>
