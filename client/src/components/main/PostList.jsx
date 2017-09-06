@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { Grid, Row, Col, Panel } from 'react-bootstrap';
 import PostListEntry from './PostListEntry.jsx';
 
-const PostList = ({posts, type}) => {
+const PostList = ({posts, userPosts, type}) => {
   if (type === 'TYPE_PROFILE') {
     return (
       <div>
@@ -26,7 +26,8 @@ const PostList = ({posts, type}) => {
 
 const mapStateToProps = (state) => ({
   posts: state.map.markers,
-  userPosts: state.posts.userPosts
+  userPosts: state.userPosts
+
 });
 
 export default connect(
