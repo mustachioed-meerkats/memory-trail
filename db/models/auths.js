@@ -33,5 +33,4 @@ const Auth = db.Model.extend({
   }
 });
 
-var authModel = db.model('Auth', Auth);
-module.exports = authModel;
+module.exports = db.model('Auth', Auth);

@@ -9,23 +9,10 @@ const Post = db.Model.extend({
   }
 });
 
-var postModel = db.model('Post', Post);
-module.exports = postModel;
+module.exports = db.model('Post', Post);
 
 module.exports.createPost = (post) => {
-  let profile_id = post.profile_id;
-  let lat = post.lat;
-  let lng = post.lng;
-  let content = post.content;
-  let title = post.title;
-  
-  return postModel.forge({
-    profile_id,
-    lat,
-    lng,
-    content,
-    title
-  }).save();
+  return knex('posts').insert(post);
 };
 
 module.exports.getPostById = (id) => {
