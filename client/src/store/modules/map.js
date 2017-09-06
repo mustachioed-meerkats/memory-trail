@@ -148,7 +148,7 @@ export const handlePlacesChanged = (searchBox, oldCenter) => {
 };
 
 export const handleBoundsChanged = (map) => {
-  // console.log('center changed: ', map.getCenter());
+  console.log('center changed: ', map.getCenter().lat(), map.getCenter().lng());
   return dispatch => {
     dispatch({
       type: HANDLE_BOUNDS_CHANGED,
