@@ -17,7 +17,7 @@ router.route('/')
         res.render('index', {preloadedState});
       })
       .catch((err) => {
-
+        console.log('(Server) Error! Preloading State');
       });
 
   });
