@@ -9,7 +9,6 @@ import PostList from './PostList.jsx';
 
 import {
   handleMapMounted, 
-  handleSearchBoxMounted,
   handlePlacesChanged,
   handleBoundsChanged,
   handleSearchArea,
@@ -53,13 +52,11 @@ const mapStateToProps = state => ({
   containerElement: <div style={{height: '100%'}} />,
   mapElement: <div style={{height: '100%'}} />,
   markers: state.map.markers,
-  searchBox: state.map._searchBox,
   map: state.map._map
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
   handleMapMounted,
-  handleSearchBoxMounted,
   handlePlacesChanged,
   handleBoundsChanged,
   handleSearchArea,
