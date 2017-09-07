@@ -26,7 +26,7 @@ const Header = (props) => {
           <LinkContainer to='/profile'>
             <NavItem eventKey="2">{props.user.display}</NavItem>
           </LinkContainer>
-          <NavItem href="/logout" eventKey="3">Logout</NavItem>
+          <li role="presentation"><a href='/logout'>Logout</a></li>
         </Nav>
       </Navbar.Collapse>
     </Navbar>
