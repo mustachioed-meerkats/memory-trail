@@ -2,7 +2,6 @@ import React from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import PostListEntry from './PostListEntry.jsx';
-import {Col} from 'react-bootstrap';
 import StoryListEntry from './StoryListEntry.jsx';
 
 const PostList = ({posts, userPosts, type}) => {
