@@ -20,7 +20,7 @@ import {
 const TimelineComponent = withGoogleMap(props => {
   const path = [];
   props.markers.forEach(function (post) {
-    var obj = {'lat': Number(post.lat), 'lng': Number(post.lng)};
+    var obj = {'lat': parseFloat(post.lat), 'lng': parseFloat(post.lng)};
     path.push(obj);
   });
   console.log(path);
@@ -85,7 +85,6 @@ const mapStateToProps = state => ({
   containerElement: <div style={{height: '100%'}} />,
   mapElement: <div style={{height: '100%'}} />,
   markers: state.map.markers,
-  map: state.map._map
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
