@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import PostListEntry from './PostListEntry.jsx';
 
 const PostList = ({posts, userPosts, type}) => {
+  
   if (type === 'TYPE_PROFILE') {
     return (
       <div>

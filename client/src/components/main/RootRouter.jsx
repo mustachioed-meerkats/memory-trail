@@ -4,6 +4,7 @@ import Home from './Home.jsx';
 import PostPage from './PostPage.jsx';
 import CreateNewPost from './CreateNewPost.jsx';
 import UserProfilePage from './UserProfilePage.jsx';
+import Timeline from './Timeline.jsx';
 
 const RootRouter = () => (
   <Switch>
