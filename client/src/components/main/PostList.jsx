@@ -4,13 +4,16 @@ import { connect } from 'react-redux';
 import PostListEntry from './PostListEntry.jsx';
 import StoryListEntry from './StoryListEntry.jsx';
 
-const PostList = ({posts, userPosts, type}) => {
+const PostList = ({posts, userPosts, StoryListClick, type}) => {
   if (type === 'TYPE_STORY') {
-    console.log(userPosts);
     return (
       <div style = {{display: 'flex', flexDirection: 'row', flexWrap: 'nowrap', justifyContent: 'space-evenly', overflowX: 'scroll'}}>     
         {userPosts.map((post, i) => { 
+<<<<<<< HEAD
           return <StoryListEntry post={post} id={i} key={i} />; 
+=======
+          return <StoryListEntry StoryListClick = {StoryListClick} post={post} id={i} key={i}/>; 
+>>>>>>> Added post click. Map Center next.
         })}
       </div>
     );
