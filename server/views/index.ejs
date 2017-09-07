@@ -1,9 +1,12 @@
 <% include head.ejs%>
-
-    <div id='root'></div>
-    <script>
-        var __PRELOADED_STATE__ = <%- JSON.stringify(preloadedState) %>;
-    </script>
-    <script src="/dist/bundle.js"></script>
-
+<div id='root'></div>
+<script>
+	var __PRELOADED_STATE__ = <%- JSON.stringify(preloadedState) %>;
+	navigator.geolocation.getCurrentPosition(function(location) {
+		var lat = location.coords.latitude;
+		var lng = location.coords.longitude;
+		__PRELOADED_STATE__.map = {lat, lng};
+	});
+</script>
+<script src="/dist/bundle.js"></script>
 <% include foot.ejs%>
