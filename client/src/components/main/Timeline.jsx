@@ -23,23 +23,25 @@ const TimelineComponent = withGoogleMap(props => {
     var obj = {'lat': parseFloat(post.lat), 'lng': parseFloat(post.lng)};
     path.push(obj);
   });
-  console.log(path);
   return (
-    <GoogleMap
-      ref={props.handleMapMounted}
-      defaultZoom={10}
-      center={props.center}
-    >
-      {props.markers.map((marker, index) => (
-        <Marker
-          position={{lat: parseFloat(marker.lat), lng: parseFloat(marker.lng)}} key={index}
-        >
-        </Marker>
-      ))}
-      <Polyline
-        path={path}
-      />
-    </GoogleMap>
+    <div>
+      <GoogleMap
+        ref={props.handleMapMounted}
+        zoom={props.zoom}
+        center={props.center}
+      >
+        {props.markers.map((marker, index) => (
+          <Marker
+            position={{lat: parseFloat(marker.lat), lng: parseFloat(marker.lng)}} key={index}
+          >
+          </Marker>
+        ))}
+        <Polyline
+          path={path}
+        />
+      </GoogleMap>
+      <PostList type={'TYPE_STORY'} StoryListClick={props.StoryListClick} />
+    </div>
   );
 });
 
@@ -48,8 +50,19 @@ class Timeline extends React.Component {
     super(props);
     this.state = {
       _map: null,
+      center: this.props.center,
+      zoom: 10
     };
     this.handleMapMounted = this.handleMapMounted.bind(this);
+    this.StoryListClick = this.StoryListClick.bind(this);
+  }
+
+  StoryListClick(post) {
+    console.log('STORYLIST CLICK WORKING', post);
+    this.setState({
+      center: {lat: parseFloat(post.lat), lng: parseFloat(post.lng)},
+      zoom: 15
+    });
   }
 
   handleMapMounted(map) {
@@ -70,9 +83,11 @@ class Timeline extends React.Component {
         containerElement={this.props.containerElement}
         mapElement={this.props.mapElement}
         handleMapMounted={this.handleMapMounted}
-        center={this.props.center}
+        center={this.state.center}
         map={this.state._map}
         markers={this.props.markers}
+        zoom={this.state.zoom}
+        StoryListClick={this.StoryListClick}
       />
     );
   }
