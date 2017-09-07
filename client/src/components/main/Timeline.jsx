@@ -8,25 +8,24 @@ import Search from './maps/Search.jsx';
 import PostList from './PostList.jsx';
 
 import {
-  handleMapMounted, 
-  handleSearchBoxMounted,
+  handleMapMounted,
   handlePlacesChanged,
   handleBoundsChanged,
   handleSearchArea,
 } from '../../store/modules/map';
 
 //The strategy utilized here only works with posts coming from the server organized by timestamp,
-//it cannot use the same routes as the home page. 
+//it cannot use the same routes as the home page.
 
 
 const Timeline = withGoogleMap(props => {
   const path = [];
-  
+
   props.markers.forEach(function (post) {
     var obj = {'lat': Number(post.lat), 'lng': Number(post.lng)};
     path.push(obj);
   });
-  console.log(path);  
+  console.log(path);
   return (
   <GoogleMap
     ref={props.handleMapMounted}
@@ -34,14 +33,14 @@ const Timeline = withGoogleMap(props => {
     center={props.center}
   >
     {props.markers.map((marker, index) => (
-      <Marker 
-        position={{lat: parseFloat(marker.lat), lng: parseFloat(marker.lng)}} key={index} 
+      <Marker
+        position={{lat: parseFloat(marker.lat), lng: parseFloat(marker.lng)}} key={index}
       >
       </Marker>
     ))}
-    <Polyline 
-      path={path} 
-    /> 
+    <Polyline
+      path={path}
+    />
   </GoogleMap>
   );
 });
@@ -53,13 +52,11 @@ const mapStateToProps = state => ({
   containerElement: <div style={{height: '100%'}} />,
   mapElement: <div style={{height: '100%'}} />,
   markers: state.map.markers,
-  searchBox: state.map._searchBox,
   map: state.map._map
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
   handleMapMounted,
-  handleSearchBoxMounted,
   handlePlacesChanged,
   handleBoundsChanged,
   handleSearchArea,
@@ -69,4 +66,4 @@ const mapDispatchToProps = dispatch => bindActionCreators({
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(Timeline); 
+)(Timeline);

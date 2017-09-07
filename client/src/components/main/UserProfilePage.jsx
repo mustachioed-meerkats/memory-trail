@@ -26,20 +26,16 @@ const UserProfilePage = (props) => {
         </Col>
         <Col sm={9} md={9} style={{padding: '0 2rem 0 0'}}>
           <div style={profile.container.title}>{props.user.display}</div>
-          <PostList style = {profile.storyPostList}/>
+          <PostList type={'TYPE_PROFILE'}/>
           <div className="pull-right">
             <a href="#">Load more ...</a>
           </div>
         </Col>
       </Row>
-      <div style={{height: '500px'}}>
+      <Row style={{height: '500px'}}>
         <Timeline />
-      </div>
-      <div>
+      </Row>
         <PostList type={'TYPE_STORY'} />
-      </div>
-
-
     </div>
   );
 };
