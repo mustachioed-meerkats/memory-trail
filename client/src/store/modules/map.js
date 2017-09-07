@@ -5,8 +5,6 @@ import axios from 'axios';
  * =============================================================
  */
 export const SET_CENTER = 'map/SET_MAP_CENTER';
-export const HANDLE_MAP_MOUNTED = 'map/HANDLE_MAP_MOUNTED';
-export const HANDLE_SEARCHBOX_MOUNTED = 'map/HANDLE_SEARCHBOX_MOUNTED';
 export const HANDLE_PLACES_CHANGED = 'map/HANDLE_PLACES_CHANGED';
 export const HANDLE_BOUNDS_CHANGED = 'map/HANDLE_BOUNDS_CHANGED';
 export const HANDLE_SEARCH_AREA = 'map/HANDLE_SEARCH_AREA';
@@ -20,8 +18,6 @@ export const HANDLE_MARKER_CLOSE = 'map/HANDLE_MARKER_CLOSE';
 const initialState = {
   center: {lat: 36.209681, lng: -115.093977},
   bounds: null,
-  _map: null,
-  _searchBox: null,
   markers: [],
 };
 /** ============================================================
@@ -35,16 +31,6 @@ export default (state = initialState, action) => {
       ...state,
       center: action.center,
       markers: action.markers
-    };
-  case HANDLE_MAP_MOUNTED:
-    return {
-      ...state,
-      _map: action._map,
-    };
-  case HANDLE_SEARCHBOX_MOUNTED:
-    return {
-      ...state,
-      _searchBox: action._searchBox
     };
   case HANDLE_PLACES_CHANGED:
     return {
@@ -111,24 +97,6 @@ export const setCenter = (lat, lng) => {
   };
 };
 
-export const handleMapMounted = (map) => {
-  return dispatch => {
-    dispatch({
-      type: HANDLE_MAP_MOUNTED,
-      _map: map
-    });
-  };
-};
-
-export const handleSearchBoxMounted = (searchBox) => {
-  return dispatch => {
-    dispatch({
-      type: HANDLE_SEARCHBOX_MOUNTED,
-      _searchBox: searchBox
-    });
-  };
-};
-
 export const handlePlacesChanged = (searchBox, oldCenter) => {
   var places = searchBox.getPlaces().map(place => ({
     position: place.geometry.location
@@ -188,8 +156,8 @@ export const handleMarkerClose = (marker) => {
   };
 };
 
+
 // helper function
 export const getPostsWithinRadius = (center) => {
-  // later refacor with get request instead of post
   return axios.post('/api/posts/nearby', center);
 };

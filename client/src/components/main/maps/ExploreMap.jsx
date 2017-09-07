@@ -40,7 +40,7 @@ const buttonStyle = {
   margin: '1rem'
 };
 
-const ExploreMap = withGoogleMap(props => (
+const ExploreMapComponent = withGoogleMap(props => (
   <GoogleMap
     ref={props.handleMapMounted}
     defaultZoom={10}
@@ -71,6 +71,53 @@ const ExploreMap = withGoogleMap(props => (
   </GoogleMap>
 ));
 
+
+class ExploreMap extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      _map: null,
+      _searchBox: null
+    };
+    this.handleMapMounted = this.handleMapMounted.bind(this);
+    this.handleSearchBoxMounted = this.handleSearchBoxMounted.bind(this);
+  }
+
+  handleMapMounted(map) {
+    this.setState({
+      _map: map
+    });
+  }
+
+  handleSearchBoxMounted(searchBox) {
+    this.setState({
+      _searchBox: searchBox
+    });
+  }
+
+  render() {
+    return (
+      <ExploreMapComponent 
+        containerElement={this.props.containerElement}
+        mapElement={this.props.mapElement}
+        handleMapMounted={this.handleMapMounted}
+        center={this.props.center}
+        handleBoundsChanged={this.props.handleBoundsChanged}
+        map={this.state._map}
+        handleSearchArea={this.props.handleSearchArea}
+        handleSearchBoxMounted={this.handleSearchBoxMounted}
+        bounds={this.props.bounds}
+        handlePlacesChanged={this.handlePlacesChanged}
+        searchBox={this.state._searchBox}
+        inputStyle={this.props.inputStyle}
+        handleMarkerClick={this.props.handleMarkerClick}
+        handleMarkerClose={this.props.handleMarkerClose}
+        markers={this.props.markers}
+      />
+    );
+  }
+}
+
 const mapStateToProps = state => ({
   center: state.map.center,
   bounds: state.map.bounds,
@@ -78,13 +125,9 @@ const mapStateToProps = state => ({
   containerElement: <div style={{height: '100%'}} />,
   mapElement: <div style={{height: '100%'}} />,
   markers: state.map.markers,
-  searchBox: state.map._searchBox,
-  map: state.map._map
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
-  handleMapMounted,
-  handleSearchBoxMounted,
   handlePlacesChanged,
   handleBoundsChanged,
   handleSearchArea,
