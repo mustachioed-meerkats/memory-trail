@@ -4,6 +4,8 @@ import { connect } from 'react-redux';
 import { Grid, Row, Col, Panel, Image, Glyphicon } from 'react-bootstrap';
 import profile from '../../styles/profile';
 import PostList from './PostList.jsx';
+import Timeline from './Timeline.jsx';
+
 const UserProfilePage = (props) => {
   return (
     <div style={profile.container}>
@@ -24,12 +26,20 @@ const UserProfilePage = (props) => {
         </Col>
         <Col sm={9} md={9} style={{padding: '0 2rem 0 0'}}>
           <div style={profile.container.title}>{props.user.display}</div>
-          <PostList type={'TYPE_PROFILE'}/>
+          <PostList style = {profile.storyPostList}/>
           <div className="pull-right">
             <a href="#">Load more ...</a>
           </div>
         </Col>
       </Row>
+      <div style={{height: '500px'}}>
+        <Timeline />
+      </div>
+      <div>
+        <PostList type={'TYPE_STORY'} />
+      </div>
+
+
     </div>
   );
 };

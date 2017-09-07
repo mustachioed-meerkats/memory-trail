@@ -5,6 +5,7 @@ import { Grid, Row, Col, Panel } from 'react-bootstrap';
 import PostListEntry from './PostListEntry.jsx';
 
 const PostList = ({posts, userPosts, type}) => {
+  
   if (type === 'TYPE_PROFILE') {
     return (
       <div>

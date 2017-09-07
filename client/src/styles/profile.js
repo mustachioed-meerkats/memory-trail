@@ -50,6 +50,9 @@ const profile = {
       color: 'gray',
       transition: 'background-color .3s',
     },
+    storyPostList: {
+
+    },
     header: {
       position: 'relative',
       zIndex: '0',
