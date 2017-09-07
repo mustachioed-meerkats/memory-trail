@@ -5,7 +5,7 @@ import PostListEntry from './PostListEntry.jsx';
 import {Col} from 'react-bootstrap';
 import StoryListEntry from './StoryListEntry.jsx';
 
-const PostList = ({posts, userPosts, props, type}) => {
+const PostList = ({posts, userPosts, type}) => {
   if (type === 'TYPE_STORY') {
     console.log(userPosts);
     return (
