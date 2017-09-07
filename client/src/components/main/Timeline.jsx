@@ -7,8 +7,7 @@ import Markers from './maps/Markers.jsx';
 import Search from './maps/Search.jsx';
 import PostList from './PostList.jsx';
 
-import {
-  handleMapMounted, 
+import { 
   handlePlacesChanged,
   handleBoundsChanged,
   handleSearchArea,
@@ -18,7 +17,7 @@ import {
 //it cannot use the same routes as the home page.
 
 
-const Timeline = withGoogleMap(props => {
+const TimelineComponent = withGoogleMap(props => {
   const path = [];
   props.markers.forEach(function (post) {
     var obj = {'lat': Number(post.lat), 'lng': Number(post.lng)};
@@ -44,6 +43,41 @@ const Timeline = withGoogleMap(props => {
   );
 });
 
+class Timeline extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      _map: null,
+    };
+    this.handleMapMounted = this.handleMapMounted.bind(this);
+  }
+
+  handleMapMounted(map) {
+    this.setState({
+      _map: map
+    });
+  }
+
+  handleSearchBoxMounted(searchBox) {
+    this.setState({
+      _searchBox: searchBox
+    });
+  }
+
+  render() {
+    return (
+      <TimelineComponent 
+        containerElement={this.props.containerElement}
+        mapElement={this.props.mapElement}
+        handleMapMounted={this.handleMapMounted}
+        center={this.props.center}
+        map={this.state._map}
+        markers={this.props.markers}
+      />
+    );
+  }
+}
+
 
 const mapStateToProps = state => ({
   center: state.map.center,
@@ -55,7 +89,6 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
-  handleMapMounted,
   handlePlacesChanged,
   handleBoundsChanged,
   handleSearchArea,
