@@ -37,7 +37,7 @@ const PostList = ({posts, userPosts, StoryListClick, type, storyPosts}) => {
 const mapStateToProps = (state) => ({
   posts: state.map.markers,
   userPosts: state.userPosts,
-  storyPosts: state.map.storyPosts
+  // storyPosts: state.map.storyPosts
 });
 
 
