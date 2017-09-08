@@ -26,6 +26,28 @@ router.route('/posts/user/:id')
 router.route('/posts/nearby')
   .post(controller.Posts.getPostsWithinRadius);
 
+router.route('/posts/story/:id')
+  .get(controller.Posts.getPostsByStoryId);
 
+/** ============================================================
+ * STORY ROUTES
+ * =============================================================
+ */
   
+router.route('/stories/:id')
+  .get(controller.Stories.getStoryById);
+
+router.route('/stories/user/:user_id')
+  .get(controller.Stories.getPostsByStoryId);
+
+router.route('/stories/new')
+  .post(controller.Stories.createStory);
+
+/** ============================================================
+ * LANDMARK ROUTES
+ * =============================================================
+ */
+
+
+
 module.exports = router;
