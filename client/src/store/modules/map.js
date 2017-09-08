@@ -16,7 +16,7 @@ export const HANDLE_MARKER_CLOSE = 'map/HANDLE_MARKER_CLOSE';
  * =============================================================
  */
 const initialState = {
-  center: {lat: 36.209681, lng: -115.093977},
+  center: __PRELOADED_STATE__.map,
   bounds: null,
   markers: [],
 };
