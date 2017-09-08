@@ -1,7 +1,7 @@
 const models = require('../../db/models');
-
+//done
 module.exports.createStory = (req, res) => {
-  models.Story.createStory()
+  models.Story.createStory(req.body)
     .then(result => {
       res.status(200).send(result);
     });
