@@ -7,6 +7,7 @@ module.exports.createStory = (req, res) => {
     });
 };
 
+//done
 module.exports.getStoryById = (req, res) => {
   models.Story.getStoryById(req.params.id)
     .then(results => {
@@ -14,8 +15,9 @@ module.exports.getStoryById = (req, res) => {
     });
 };
 
+//done
 module.exports.getStoriesByUserId = (req, res) => {
-  models.Story.getStoriesByUserId()
+  models.Story.getStoriesByUserId(req.params.id)
     .then(results => {
       res.status(200).send(results);
     });
