@@ -15,13 +15,14 @@ const Post = db.Model.extend({
   }
 }, {
   getPostsByStoryId: function(story_id) {
-    return this.where({story_id: null}).fetchAll();
+    return this.where({story_id}).orderBy('created_at', 'ASC').fetchAll({withRelated: ['profile']});
   }
 });
 
 module.exports = db.model('Post', Post);
 
 module.exports.createPost = (post) => {
+  // post.story_id = 2;
   return knex('posts').insert(post);
 };
 

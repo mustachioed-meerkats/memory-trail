@@ -22,7 +22,7 @@ module.exports.getPostsWithinRadius = (req, res) => {
     });
 };
 
-
+//done
 module.exports.getPostsByStoryId = (req, res) => {
   models.Post.getPostsByStoryId(req.params.id)
     .then(results => {
