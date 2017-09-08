@@ -8,11 +8,11 @@ router.route('/')
     const preloadedState = {};  
     preloadedState.user = req.user;
 
-    // Promise.all([models.Post.getAllPosts(), models.Post.getPostsByUserId(req.user.id)]) 
-    Promise.all([models.Post.getAllPosts()])  
+    Promise.all([models.Post.getAllPosts(), models.Post.getPostsByUserId(req.user.id)]) 
+    // Promise.all([models.Post.getAllPosts()])  
       .then((results) => {
         preloadedState.posts = results[0];
-        // preloadedState.userPosts = results[1];
+        preloadedState.userPosts = results[1];
       })
       .then(() => { 
         res.render('index', {preloadedState});

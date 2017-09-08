@@ -22,6 +22,7 @@ const Post = db.Model.extend({
 module.exports = db.model('Post', Post);
 
 module.exports.createPost = (post) => {
+  // uncomment line below to insert dummy story id until story feature is avail
   // post.story_id = 2;
   return knex('posts').insert(post);
 };
