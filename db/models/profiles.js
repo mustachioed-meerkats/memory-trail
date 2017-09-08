@@ -10,6 +10,9 @@ const Profile = db.Model.extend({
   },
   stories: function() {
     return this.hasMany('Story');
+  },
+  followings: function() {
+    return this.hasMany('Following');
   }
 });
 

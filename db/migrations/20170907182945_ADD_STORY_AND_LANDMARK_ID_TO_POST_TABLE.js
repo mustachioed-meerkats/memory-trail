@@ -8,7 +8,7 @@ exports.up = function(knex, Promise) {
 
 exports.down = function(knex, Promise) {
   return knex.schema.table('posts', function(table) {
-    table.dropColumn('story_id');
     table.dropColumn('landmark_id');
+    table.dropColumn('story_id');
   });
 };

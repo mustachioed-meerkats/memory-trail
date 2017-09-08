@@ -13,3 +13,8 @@ To modify existing table:
 ## Database Model Usage & Creation 
 To create methods specific to a model
 * create that method in the model file
+
+
+## To Drop Table
+1. run 'knex migrate:rollback' on the command line
+2. keep running the above command until the desired table is dropped
