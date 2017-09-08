@@ -9,6 +9,7 @@ const RootRouter = () => (
   <Switch>
     <Route exact path='/' component={Home} />
     <Route exact path='/profile' component={UserProfilePage} />
+    <Route exact path='/landmark' component={LandMark} />
     <Route exact path='/post/new' component={CreateNewPost} />
     <Route exact path='/post/:id' component={PostPage} />
   </Switch>
