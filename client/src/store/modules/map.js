@@ -19,6 +19,7 @@ const initialState = {
   center: __PRELOADED_STATE__.map,
   bounds: null,
   markers: [],
+  storyPosts: [],
 };
 /** ============================================================
  * Define Reducer
@@ -43,6 +44,11 @@ export default (state = initialState, action) => {
       ...state,
       bounds: action.bounds,
       center: action.center
+    };
+  case HANDLE_STORY_LOAD:
+    return {
+      ...state,
+      storyPosts: action.storyPosts
     };
   case HANDLE_SEARCH_AREA:
     return {
@@ -138,6 +144,18 @@ export const handleSearchArea = (center) => {
   };
 };
 
+export const handleStoryLoad = (storyID) => {
+  return dispatch => {
+    return getPostsByStory(userID, title)
+    .then(results => {
+      dispatch({
+        type: HANDLE_STORY_LOAD,
+        storyPosts: results.data,
+      });
+    });
+  };
+};
+
 export const handleMarkerClick = (marker) => {
   return dispatch => {
     dispatch({
@@ -160,4 +178,8 @@ export const handleMarkerClose = (marker) => {
 // helper function
 export const getPostsWithinRadius = (center) => {
   return axios.post('/api/posts/nearby', center);
+};
+
+export const getPostsByStory = (title) => {
+  return axios.post('/api/posts/story', title);
 };
