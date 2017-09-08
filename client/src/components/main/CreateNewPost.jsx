@@ -157,6 +157,7 @@ class CreateNewPost extends React.Component {
 
   hideModal () {
     this.setState({show: false});
+    
   }
   render () {
     return (
