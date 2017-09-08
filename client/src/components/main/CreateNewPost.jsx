@@ -10,7 +10,7 @@ import Upload from './Upload.jsx';
  * =============================================================
  */
 import { Grid, Row, Col } from 'react-bootstrap';
-import { Modal, Button, ButtonToolbar, ControlLabel, Form, FormGroup, FormControl, Radio, ButtonGroup } from 'react-bootstrap';
+import { Modal, Button, MenuItem, ButtonToolbar, ControlLabel, Form, FormGroup, DropdownButton, FormControl, Radio, ButtonGroup } from 'react-bootstrap';
 
 /** ============================================================
  * Define Store Modules
@@ -163,7 +163,15 @@ class CreateNewPost extends React.Component {
                 </Modal.Footer>
               </Modal>
             </ButtonToolbar>
-
+            <ButtonToolbar>
+              <DropdownButton bsSize="large" title="Choose A Story!!" id="dropdown-size-large">
+                <MenuItem eventKey="1">stuff</MenuItem>
+                <MenuItem eventKey="2">Another action</MenuItem>
+                <MenuItem eventKey="3">Something else here</MenuItem>
+                <MenuItem eventKey="4">link</MenuItem>
+              </DropdownButton>
+            </ButtonToolbar>
+            Current Story = whatever. 
           </Col>
           <Col sm={4}>
           </Col>
