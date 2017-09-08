@@ -21,3 +21,25 @@ module.exports.getPostsWithinRadius = (req, res) => {
       res.status(200).send(results);
     });
 };
+
+//done
+module.exports.getPostsByStoryId = (req, res) => {
+  models.Post.getPostsByStoryId(req.params.id)
+    .then(results => {
+      res.status(200).send(results);
+    });
+};
+
+module.exports.getPostsByLandmarkId = (req, res) => {
+  models.Post.getPostsByLandmarkId(req.body)
+    .then(results => {
+      res.status(200).send(results);
+    });
+};
+
+module.exports.getPostsByFollowing = (req, res) => {
+  models.Post.getPostsByFollowing(req.body)
+    .then(results => {
+      res.status(200).send(results);
+    });
+};

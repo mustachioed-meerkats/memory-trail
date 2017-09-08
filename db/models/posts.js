@@ -6,12 +6,24 @@ const Post = db.Model.extend({
   tableName: 'posts',
   profile: function() {
     return this.belongsTo('Profile');
+  },
+  story: function() {
+    return this.belongsTo('Story');
+  },
+  landmark: function() {
+    return this.belongsTo('Landmark');
+  }
+}, {
+  getPostsByStoryId: function(story_id) {
+    return this.where({story_id}).orderBy('created_at', 'ASC').fetchAll({withRelated: ['profile']});
   }
 });
 
 module.exports = db.model('Post', Post);
 
 module.exports.createPost = (post) => {
+  // uncomment line below to insert dummy story id until story feature is avail
+  // post.story_id = 2;
   return knex('posts').insert(post);
 };
 
