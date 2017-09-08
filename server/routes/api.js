@@ -22,31 +22,54 @@ router.route('/posts/new')
 
 router.route('/posts/user/:id')
   .get(controller.Posts.getPostsByUserId);
+  
+router.route('/posts/story/:id')
+  .get(controller.Posts.getPostsByStoryId);
+
+router.route('/posts/landmark/:id')
+  .get(controller.Posts.getPostsByLandmarkId);
+
+router.route('/posts/following')
+  .get(controller.Posts.getPostsByFollowing);
 
 router.route('/posts/nearby')
   .post(controller.Posts.getPostsWithinRadius);
-
-router.route('/posts/story/:id')
-  .get(controller.Posts.getPostsByStoryId);
 
 /** ============================================================
  * STORY ROUTES
  * =============================================================
  */
+
+router.route('/stories/new')
+  .post(controller.Stories.createStory);
   
 router.route('/stories/:id')
   .get(controller.Stories.getStoryById);
 
 router.route('/stories/user/:user_id')
-  .get(controller.Stories.getPostsByStoryId);
-
-router.route('/stories/new')
-  .post(controller.Stories.createStory);
+  .get(controller.Stories.getStoriesByUserId);
 
 /** ============================================================
  * LANDMARK ROUTES
  * =============================================================
  */
+
+router.route('/landmarks/new')
+  .post(controller.Landmarks.createLandmark);
+
+router.route('/landmarks/:id')
+  .get(controller.Landmarks.getLandmarkById);
+
+/** ============================================================
+ * FOLLOWING ROUTES
+ * =============================================================
+ */
+
+router.route('/followings/new')
+  .post(controller.Followings.createFollowing);
+
+router.route('/followings')
+  .get(controller.Followings.getAllFollowings);
 
 
 
