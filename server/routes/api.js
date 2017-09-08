@@ -17,19 +17,23 @@ router.route('/')
  * =============================================================
  */
 
+//insert entry into post table, return created entry
 router.route('/posts/new')
   .post(controller.Posts.createPost);
 
 router.route('/posts/user/:id')
   .get(controller.Posts.getPostsByUserId);
   
+//return posts entries from post table by story id SORTED BY TIME STAMP
 router.route('/posts/story/:id')
   .get(controller.Posts.getPostsByStoryId);
 
+// return all posts entries by a landmark id
 router.route('/posts/landmark/:id')
   .get(controller.Posts.getPostsByLandmarkId);
 
-router.route('/posts/following')
+//return posts entries by user's followings with userinfo
+router.route('/posts/followings')
   .get(controller.Posts.getPostsByFollowing);
 
 router.route('/posts/nearby')
@@ -40,12 +44,15 @@ router.route('/posts/nearby')
  * =============================================================
  */
 
+// expect story object and create entry in story table, return added entry
 router.route('/stories/new')
   .post(controller.Stories.createStory);
   
+// get story entry by id
 router.route('/stories/:id')
   .get(controller.Stories.getStoryById);
 
+// get all story entries by a certain userId
 router.route('/stories/user/:user_id')
   .get(controller.Stories.getStoriesByUserId);
 
@@ -54,9 +61,11 @@ router.route('/stories/user/:user_id')
  * =============================================================
  */
 
+// create new entry in landmarks
 router.route('/landmarks/new')
   .post(controller.Landmarks.createLandmark);
 
+// return landmark entry by landmark id
 router.route('/landmarks/:id')
   .get(controller.Landmarks.getLandmarkById);
 
@@ -65,9 +74,11 @@ router.route('/landmarks/:id')
  * =============================================================
  */
 
+// create new following relationship with current user id and following id
 router.route('/followings/new')
   .post(controller.Followings.createFollowing);
 
+// return list of profile entries current user is following 
 router.route('/followings')
   .get(controller.Followings.getAllFollowings);
 

@@ -13,11 +13,27 @@ exports.seed = function (knex, Promise) {
         summary: 'This is a test story. it is getting late.'
       }).save();
     })
+    .catch(() => {
+      console.log('WARNING: story already exists.');
+    })
+    .then(() => {
+      return models.Story.where({title: 'Europe Trip'}).fetch();
+    })
+    .then(story => {
+      if (story) {
+        throw story;
+      }
+      return models.Story.forge({
+        profile_id: 1,
+        title: 'Europe Trip',
+        summary: 'This was so much fun. Can not wait to go back!'
+      }).save();
+    })
     .error(err => {
-      console.error('ERROR: failed to create profile');
+      console.error('ERROR: failed to create story');
       throw err;
     })
     .catch(() => {
-      console.log('WARNING: defualt user already exists.');
+      console.log('WARNING: story already exists.');
     });
 };
