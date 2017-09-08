@@ -7,6 +7,7 @@ import { Button, ButtonGroup, Glyphicon } from 'react-bootstrap';
 //TODO: Refactor into seperate style
 const style = {
   card: {
+    flex: '0 0 20%',
     boxShadow: '0 1px 2px #aaa',
     background: 'white',
     margin: '0 1rem 1rem',
@@ -54,7 +55,7 @@ const style = {
   }
 };
 
-// TODO: Refactor into a seperte library
+// TODO: Refactor into a separate library
 const getTimeSincePost = (postTime) => {
   let postDateMilliseconds = new Date(postTime).getTime();
   let currentDateMilliseconds = new Date().getTime();
