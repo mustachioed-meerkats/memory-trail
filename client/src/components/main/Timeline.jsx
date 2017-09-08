@@ -72,15 +72,15 @@ class Timeline extends React.Component {
     this.StoryListClick = this.StoryListClick.bind(this);
   }
 
-// Eventually we will need to fix this so that we get actual posts from the appropriate story. 
-// We may have an eventual issue with the postList page, as it looks for the storyPosts state, which is set by 
-// the following component. This needs to be investigated later on. 
+  // Eventually we will need to fix this so that we get actual posts from the appropriate story. 
+  // We may have an eventual issue with the postList page, as it looks for the storyPosts state, which is set by 
+  // the following component. This needs to be investigated later on. 
 
-// We will also need to have a story that loads on default with the page. 
-// This can be looked at later, probably qualifies as techinical debt. 
-  componentDidMount () {
-    this.props.handleStoryLoad(storyID);
-  }
+  // We will also need to have a story that loads on default with the page. 
+  // This can be looked at later, probably qualifies as techinical debt. 
+  // componentDidMount () {
+  //   this.props.handleStoryLoad(storyID);
+  // }
 
 
   StoryListClick(post) {
@@ -135,7 +135,7 @@ const mapDispatchToProps = dispatch => bindActionCreators({
   handlePlacesChanged,
   handleBoundsChanged,
   handleSearchArea,
-  handleStoryLoad,
+  // handleStoryLoad,
 }, dispatch);
 
 

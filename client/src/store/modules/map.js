@@ -10,6 +10,7 @@ export const HANDLE_BOUNDS_CHANGED = 'map/HANDLE_BOUNDS_CHANGED';
 export const HANDLE_SEARCH_AREA = 'map/HANDLE_SEARCH_AREA';
 export const HANDLE_MARKER_CLICK = 'map/HANDLE_MARKER_CLICK';
 export const HANDLE_MARKER_CLOSE = 'map/HANDLE_MARKER_CLOSE';
+export const HANDLE_STORY_LOAD = 'map/HANDLE_STORY_LOAD';
 
 /** ============================================================
  * Define Initial State
@@ -147,12 +148,12 @@ export const handleSearchArea = (center) => {
 export const handleStoryLoad = (storyID) => {
   return dispatch => {
     return getPostsByStory(userID, title)
-    .then(results => {
-      dispatch({
-        type: HANDLE_STORY_LOAD,
-        storyPosts: results.data,
+      .then(results => {
+        dispatch({
+          type: HANDLE_STORY_LOAD,
+          storyPosts: results.data,
+        });
       });
-    });
   };
 };
 
