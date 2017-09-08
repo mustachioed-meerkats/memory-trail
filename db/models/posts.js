@@ -6,6 +6,12 @@ const Post = db.Model.extend({
   tableName: 'posts',
   profile: function() {
     return this.belongsTo('Profile');
+  },
+  story: function() {
+    return this.belongsTo('Story');
+  },
+  landmark: function() {
+    return this.belongsTo('Landmark');
   }
 });
 
