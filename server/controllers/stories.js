@@ -8,7 +8,7 @@ module.exports.createStory = (req, res) => {
 };
 
 module.exports.getStoryById = (req, res) => {
-  models.Story.getStoryById()
+  models.Story.getStoryById(req.params.id)
     .then(results => {
       res.status(200).send(results);
     });

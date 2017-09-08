@@ -9,6 +9,10 @@ const Story = db.Model.extend({
   posts: function() {
     return this.hasMany('Post');
   }
+}, {
+  getStoryById: function(id) {
+    return this.where({id}).fetch();
+  }
 });
 
 module.exports = db.model('Story', Story);
