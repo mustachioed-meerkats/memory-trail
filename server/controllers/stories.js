@@ -1,21 +1,21 @@
 const models = require('../../db/models');
 
 module.exports.createStory = (req, res) => {
-  models.Stories.createStory()
+  models.Story.createStory()
     .then(result => {
       res.status(200).send(result);
     });
 };
 
 module.exports.getStoryById = (req, res) => {
-  models.Stories.getStoryById()
+  models.Story.getStoryById()
     .then(results => {
       res.status(200).send(results);
     });
 };
 
 module.exports.getStoriesByUserId = (req, res) => {
-  models.Stories.getStoriesByUserId()
+  models.Story.getStoriesByUserId()
     .then(results => {
       res.status(200).send(results);
     });

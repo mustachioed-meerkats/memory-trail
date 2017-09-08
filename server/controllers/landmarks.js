@@ -1,21 +1,21 @@
 const models = require('../../db/models');
 
 module.exports.createLandmark = (req, res) => {
-  models.Landmarks.createLandmark()
+  models.Landmark.createLandmark()
     .then(result => {
       res.status(200).send(result);
     });
 };
 
 module.exports.getLandmarkById = (req, res) => {
-  models.Landmarks.getLandmarkById()
+  models.Landmark.getLandmarkById()
     .then(results => {
       res.status(200).send(results);
     });
 };
 
 module.exports.getStoriesByUserId = (req, res) => {
-  models.Landmarks.getPostsWithinRadius()
+  models.Landmark.getPostsWithinRadius()
     .then(results => {
       res.status(200).send(results);
     });

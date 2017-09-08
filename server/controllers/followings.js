@@ -1,14 +1,14 @@
 const models = require('../../db/models');
 
 module.exports.createFollowing = (req, res) => {
-  models.Followings.createFollowing()
+  models.Following.createFollowing()
     .then(result => {
       res.status(200).send(result);
     });
 };
 
 module.exports.getAllFollowings = (req, res) => {
-  models.Followings.getAllFollowings()
+  models.Following.getAllFollowings()
     .then(results => {
       res.status(200).send(results);
     });
