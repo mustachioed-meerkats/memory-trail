@@ -7,6 +7,9 @@ const Profile = db.Model.extend({
   },
   posts: function() {
     return this.hasMany('Post');
+  },
+  stories: function() {
+    return this.hasMany('Story');
   }
 });
 
