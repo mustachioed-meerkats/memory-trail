@@ -10,7 +10,7 @@ import Upload from './Upload.jsx';
  * =============================================================
  */
 import { Grid, Row, Col } from 'react-bootstrap';
-import { Button, ButtonToolbar, ControlLabel, Form, FormGroup, FormControl, Radio, ButtonGroup } from 'react-bootstrap';
+import { Modal, Button, ButtonToolbar, ControlLabel, Form, FormGroup, FormControl, Radio, ButtonGroup } from 'react-bootstrap';
 
 /** ============================================================
  * Define Store Modules
@@ -47,7 +47,7 @@ class CreateNewPost extends React.Component {
       .catch((err) => {
         console.log('(Client) Error calling Google Geocoding API');
       });
-    };
+  }
 
   // Autocomplete feature for the form's location input field
   initializeAutocomplete = () => {
@@ -110,10 +110,64 @@ class CreateNewPost extends React.Component {
         console.log('(Client) Error! CREATING NEW POST');
         console.log(err);
       });
-    };
+    }
+    showModal () {
+      console.log('WORKING');
+      this.setState({show: true});
+    }
+  
+    hideModal () {
+      this.setState({show: false});
+    }
   render() {
     return (
       <Grid>
+        <Row> 
+          <Col sm={4}>
+          </Col>
+          <Col sm={4}>
+            <ButtonToolbar>
+              <Button bsStyle="primary" onClick={this.showModal.bind(this)}>
+                Add a story!
+              </Button>
+              <Modal
+                {...this.props}
+                show={this.state.show}
+                onHide={this.hideModal.bind(this)}
+              >
+                <Modal.Header closeButton>
+                  <Modal.Title id="contained-modal-title-lg">Tell us about your adventure!!</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                  <FormGroup> 
+                    <FormControl
+                      type = 'text'
+                      onChange = {'Fill_me_in'}
+                      placeholder = 'Title'
+                    />
+                  </FormGroup>
+                  <FormGroup>
+                    <FormControl
+                      type = 'text'
+                      onChange = {'fill-me-in'}
+                      placeholder = 'Tell us about your story!'
+                      bsSize = 'lg'
+                      componentClass="textarea"
+                      rows={8} 
+                      maxLength={4000} 
+                    />
+                  </FormGroup>
+                </Modal.Body>
+                <Modal.Footer>
+                  <Button onClick={this.hideModal.bind(this)}>Close</Button>
+                </Modal.Footer>
+              </Modal>
+            </ButtonToolbar>
+
+          </Col>
+          <Col sm={4}>
+          </Col>
+        </Row> 
         <Row>
           <Col sm={4}>
           </Col>
@@ -132,7 +186,7 @@ class CreateNewPost extends React.Component {
                   id="locationInput"
                   placeholder="Search for places"
                   style={{width: '100%'}}
-                  onChange={this.initializeAutocomplete}
+                  onChange={this.initializeAutocomplete.bind(this)}
                 />
               </FormGroup>
               <FormGroup>
