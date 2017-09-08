@@ -13,6 +13,10 @@ const Post = db.Model.extend({
   landmark: function() {
     return this.belongsTo('Landmark');
   }
+}, {
+  getPostsByStoryId: function(story_id) {
+    return this.where({story_id: null}).fetchAll();
+  }
 });
 
 module.exports = db.model('Post', Post);

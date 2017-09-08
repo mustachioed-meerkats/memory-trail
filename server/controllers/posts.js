@@ -24,7 +24,7 @@ module.exports.getPostsWithinRadius = (req, res) => {
 
 
 module.exports.getPostsByStoryId = (req, res) => {
-  models.Post.getPostsByStoryId(req.body)
+  models.Post.getPostsByStoryId(req.params.id)
     .then(results => {
       res.status(200).send(results);
     });
