@@ -27,7 +27,8 @@ class CreateNewPost extends React.Component {
     super(props);
     this.state = {
       landmark: '',
-      postObject: ''
+      postObject: '',
+      show: false,
     }
     this.geocodeLocationInput = this.geocodeLocationInput.bind(this);
     this.initializeAutocomplete = this.initializeAutocomplete.bind(this);
@@ -46,7 +47,7 @@ class CreateNewPost extends React.Component {
       .catch((err) => {
         console.log('(Client) Error calling Google Geocoding API');
       });
-  };
+    };
 
   // Autocomplete feature for the form's location input field
   initializeAutocomplete = () => {
@@ -110,7 +111,6 @@ class CreateNewPost extends React.Component {
         console.log(err);
       });
     };
-
   render() {
     return (
       <Grid>
