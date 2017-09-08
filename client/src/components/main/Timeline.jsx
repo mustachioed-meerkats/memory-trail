@@ -11,12 +11,27 @@ import {
   handlePlacesChanged,
   handleBoundsChanged,
   handleSearchArea,
+  handleStoryLoad,
 } from '../../store/modules/map';
 
-//The strategy utilized here only works with posts coming from the server organized by timestamp,
-//it cannot use the same routes as the home page.
+//For right now, handleSearchArea will be used.
+//After the backend is built out, handleStoryLoad will be used. 
 
+// Implement once everything is hooked up. 
 
+/*
+
+  props.storyPosts.forEach(function (post) {
+    var obj = {'lat': parseFloat(post.lat), 'lng': parseFloat(post.lng)};
+    path.push(obj);
+  });
+
+{props.storyPosts.map((marker, index) => (
+  <Marker
+    position={{lat: parseFloat(marker.lat), lng: parseFloat(marker.lng)}} key={index}
+  >
+  </Marker>
+*/
 const TimelineComponent = withGoogleMap(props => {
   const path = [];
   props.markers.forEach(function (post) {
@@ -57,6 +72,17 @@ class Timeline extends React.Component {
     this.StoryListClick = this.StoryListClick.bind(this);
   }
 
+// Eventually we will need to fix this so that we get actual posts from the appropriate story. 
+// We may have an eventual issue with the postList page, as it looks for the storyPosts state, which is set by 
+// the following component. This needs to be investigated later on. 
+
+// We will also need to have a story that loads on default with the page. 
+// This can be looked at later, probably qualifies as techinical debt. 
+  componentDidMount () {
+    this.props.handleStoryLoad(storyID);
+  }
+
+
   StoryListClick(post) {
     console.log('STORYLIST CLICK WORKING', post);
     this.setState({
@@ -93,6 +119,7 @@ class Timeline extends React.Component {
   }
 }
 
+//Markers will need to be moved out later. They will be replaced with StoryPosts. 
 
 const mapStateToProps = state => ({
   center: state.map.center,
@@ -100,12 +127,15 @@ const mapStateToProps = state => ({
   containerElement: <div style={{height: '100%'}} />,
   mapElement: <div style={{height: '100%'}} />,
   markers: state.map.markers,
+  storyPosts: state.map.storyPosts,
+  user: state.user,
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
   handlePlacesChanged,
   handleBoundsChanged,
   handleSearchArea,
+  handleStoryLoad,
 }, dispatch);
 
 
