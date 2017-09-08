@@ -107,7 +107,7 @@ class ExploreMap extends React.Component {
         handleSearchArea={this.props.handleSearchArea}
         handleSearchBoxMounted={this.handleSearchBoxMounted}
         bounds={this.props.bounds}
-        handlePlacesChanged={this.handlePlacesChanged}
+        handlePlacesChanged={this.props.handlePlacesChanged}
         searchBox={this.state._searchBox}
         inputStyle={this.props.inputStyle}
         handleMarkerClick={this.props.handleMarkerClick}
