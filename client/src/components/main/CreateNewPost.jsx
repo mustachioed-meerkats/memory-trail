@@ -10,7 +10,7 @@ import Upload from './Upload.jsx';
  * =============================================================
  */
 import { Grid, Row, Col } from 'react-bootstrap';
-import { Button, ButtonToolbar, ControlLabel, Form, FormGroup, FormControl, Radio, ButtonGroup } from 'react-bootstrap';
+import { Modal, Button, ButtonToolbar, ControlLabel, Form, FormGroup, FormControl, Radio, ButtonGroup } from 'react-bootstrap';
 
 /** ============================================================
  * Define Store Modules
@@ -28,60 +28,115 @@ class CreateNewPost extends React.Component {
     this.state = {
       show: false,
     };
-    const geocodeLocationInput = (location) => {
-      // calls google geocoding API to fetch lat/lng from address selected in autocomplete form
-      let url = `https://maps.googleapis.com/maps/api/geocode/json?address=${location}&key=AIzaSyDXLOMgs19AOUHeizaMnRwjVyzxcTGWmJ8`;
-      return axios.get(url)
-        .then((res) => {
-          console.log('response from geocoding API: ', res);
-          // action handler to update location value in state
-          this.props.handleLocationInput(res.data.results[0].geometry.location);
-        })
-        .catch((err) => {
-          console.log('(Client) Error calling Google Geocoding API');
-        });
-    };
-
-    // Autocomplete feature for the form's location input field
-    const initializeAutocomplete = () => {
-      let input = document.getElementById('locationInput');
-      // render predictions from google autocomplete using input from location field
-      let autocomplete = new google.maps.places.Autocomplete(input);
-      let place;
-      // listen for location selection from the dropdown
-      google.maps.event.addListener(autocomplete, 'place_changed', () => {
-        place = autocomplete.getPlace();
-        // when a place is selected, use its address property to call google geocoding API
-        geocodeLocationInput(place.formatted_address);
+  }
+  geocodeLocationInput (location) {
+    // calls google geocoding API to fetch lat/lng from address selected in autocomplete form
+    let url = `https://maps.googleapis.com/maps/api/geocode/json?address=${location}&key=AIzaSyDXLOMgs19AOUHeizaMnRwjVyzxcTGWmJ8`;
+    return axios.get(url)
+      .then((res) => {
+        console.log('response from geocoding API: ', res);
+        // action handler to update location value in state
+        this.props.handleLocationInput(res.data.results[0].geometry.location);
+      })
+      .catch((err) => {
+        console.log('(Client) Error calling Google Geocoding API');
       });
-    };
-
-    const handleSubmit = () => {
-      const post = {
-        title: this.props.title,
-        content: this.props.content,
-        lat: this.props.location.lat,
-        lng: this.props.location.lng,
-        profile_id: this.props.user.id
-      };
-
-      console.log('(Client) Intiating POST Request! CREATING NEW POST');
-      console.log(post);
-      return axios.post('/api/posts/new', post)
-        .then(result => {
-          console.log('(Client) Success! CREATING NEW POST');
-          // TODO: Add redirection to Explore Map
-        })
-        .catch((err) => {
-          console.log('(Client) Error! CREATING NEW POST');
-          console.log(err);
-        });
-    };
   }
 
+  // Autocomplete feature for the form's location input field
+  initializeAutocomplete () {
+    let input = document.getElementById('locationInput');
+    // render predictions from google autocomplete using input from location field
+    let autocomplete = new google.maps.places.Autocomplete(input);
+    let place;
+    // listen for location selection from the dropdown
+    google.maps.event.addListener(autocomplete, 'place_changed', () => {
+      place = autocomplete.getPlace();
+      // when a place is selected, use its address property to call google geocoding API
+      this.geocodeLocationInput(place.formatted_address);
+    });
+  }
+
+  handleSubmit () {
+    console.log('submitting');
+    const post = {
+      title: this.props.title,
+      content: this.props.content,
+      lat: this.props.location.lat,
+      lng: this.props.location.lng,
+      profile_id: this.props.user.id
+    };
+    console.log(post);
+
+    console.log('(Client) Intiating POST Request! CREATING NEW POST');
+    console.log(post);
+    return axios.post('/api/posts/new', post)
+      .then(result => {
+        console.log('(Client) Success! CREATING NEW POST');
+        // TODO: Add redirection to Explore Map
+      })
+      .catch((err) => {
+        console.log('(Client) Error! CREATING NEW POST');
+        console.log(err);
+      });
+  }
+  showModal () {
+    console.log('WORKING');
+    this.setState({show: true});
+  }
+
+  hideModal () {
+    this.setState({show: false});
+  }
   render () {
     return (
       <Grid>
+        <Row> 
+          <Col sm={4}>
+          </Col>
+          <Col sm={4}>
+            <ButtonToolbar>
+              <Button bsStyle="primary" onClick={this.showModal.bind(this)}>
+                Add a story!
+              </Button>
+              <Modal
+                {...this.props}
+                show={this.state.show}
+                onHide={this.hideModal.bind(this)}
+              >
+                <Modal.Header closeButton>
+                  <Modal.Title id="contained-modal-title-lg">Tell us about your adventure!!</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                  <FormGroup> 
+                    <FormControl
+                      type = 'text'
+                      onChange = {'Fill_me_in'}
+                      placeholder = 'Title'
+                    />
+                  </FormGroup>
+                  <FormGroup>
+                    <FormControl
+                      type = 'text'
+                      onChange = {'fill-me-in'}
+                      placeholder = 'Tell us about your story!'
+                      bsSize = 'lg'
+                      componentClass="textarea"
+                      rows={8} 
+                      maxLength={4000} 
+                    />
+                  </FormGroup>
+                </Modal.Body>
+                <Modal.Footer>
+                  <Button onClick={this.hideModal.bind(this)}>Close</Button>
+                </Modal.Footer>
+              </Modal>
+            </ButtonToolbar>
+
+          </Col>
+          <Col sm={4}>
+          </Col>
+        </Row> 
         <Row>
           <Col sm={4}>
           </Col>
@@ -100,7 +155,7 @@ class CreateNewPost extends React.Component {
                   id="locationInput"
                   placeholder="Search for places"
                   style={{width: '100%'}}
-                  onChange={this.initializeAutocomplete}
+                  onChange={this.initializeAutocomplete.bind(this)}
                 />
               </FormGroup>
               <FormGroup>
@@ -120,7 +175,7 @@ class CreateNewPost extends React.Component {
           </Col>
           <Col sm={4}>
             <ButtonToolbar style={{textAlign: 'center'}}>
-              <Button type="submit" bsStyle="success" onClick={this.handleSubmit}>Publish</Button>
+              <Button type="submit" bsStyle="success" onClick={this.handleSubmit.bind(this)}>Publish</Button>
               <Button href="/" bsStyle="danger">Cancel</Button>
             </ButtonToolbar>
           </Col>
