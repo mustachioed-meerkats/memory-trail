@@ -41,6 +41,11 @@ const Post = db.Model.extend({
   },
   getPostsByLandmarkId: function(landmark_id) {
     return this.where({landmark_id}).fetchAll({withRelated: ['profile', 'landmark']});
+  },
+  getPostsByFollowings: function(followings) {
+    return this.forge().query(function(qb) {
+      qb.havingIn(followings);
+    }).fetchAll({withRelated: ['profile']});
   }
 });
 

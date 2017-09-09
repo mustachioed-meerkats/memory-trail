@@ -33,8 +33,8 @@ router.route('/posts/landmark/:id')
   .get(controller.Posts.getPostsByLandmarkId);
 
 //return posts entries by user's followings with userinfo
-router.route('/posts/followings')
-  .get(controller.Posts.getPostsByFollowing);
+router.route('/posts/followings/:id')
+  .get(controller.Posts.getPostsByFollowings);
 
 router.route('/posts/nearby')
   .post(controller.Posts.getPostsWithinRadius);
@@ -79,7 +79,7 @@ router.route('/followings/new')
   .post(controller.Followings.createFollowing);
 
 // return list of profile entries current user is following 
-router.route('/followings')
+router.route('/followings/:id')
   .get(controller.Followings.getAllFollowings);
 
 

@@ -43,9 +43,20 @@ module.exports.getPostsByLandmarkId = (req, res) => {
     });
 };
 
-module.exports.getPostsByFollowing = (req, res) => {
-  models.Post.getPostsByFollowing(req.body)
+module.exports.getPostsByFollowings = (req, res) => {
+  //get all the people this user is following first
+  //use the array of following ids to query posts table
+  //get first 25 entries that matches the array of ids
+  models.Following.getAllFollowings(req.params.id)
     .then(results => {
-      res.status(200).send(results);
+      return results.map(following => {
+        return following.following_id;
+      });
+    })
+    .then(followingIdArray => {
+      models.Post.getPostsByFollowings(followingIdArray)
+        .then(results => {
+          res.status(200).send(results);
+        });
     });
 };
