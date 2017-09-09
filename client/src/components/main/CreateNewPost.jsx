@@ -122,13 +122,23 @@ class CreateNewPost extends React.Component {
 
   storySubmit () {
     console.log('Story submitting');
-
+    const storyInfo = {
+      title: this.props.storyTitle,
+      summary: this.props.storySummary,
+    };
+    return axios.post('/api/story/new', storyInfo)
+      .then(result => {
+        console.log('STORY CREATED');
+      })
+      .catch((err) => {
+        console.log('STORY CREATION FAILED');
+      });
   }
 
   storySelected (name) {
     this.props.stories.map(function (story) {
       if (story.title === name) {
-        this.setState({storyID: story.storyID});
+        this.setState({storyID: story.id});
       } 
     });
   }
@@ -182,7 +192,7 @@ class CreateNewPost extends React.Component {
                 </Modal.Body>
                 <Modal.Footer>
                   <Button onClick={this.hideModal.bind(this)}>Close</Button>
-                  <Button onClick={this.hideModal.bind(this)}> Submit Story </Button>
+                  <Button onClick={this.hideModal.bind(this)} onClick= {this.storySubmit.bind(this)} > Submit Story </Button>
                 </Modal.Footer>
               </Modal>
             </ButtonToolbar>
@@ -261,6 +271,8 @@ const mapStateToProps = state => ({
   map: state.map.center,
   user: state.user,
   stories: state.allUserStories,
+  storyTitle: state.storyTitle,
+  storySummary: state.storySummary
 });
 
 /** ============================================================
