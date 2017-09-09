@@ -37,7 +37,7 @@ module.exports.getPostsByStoryId = (req, res) => {
 };
 
 module.exports.getPostsByLandmarkId = (req, res) => {
-  models.Post.getPostsByLandmarkId(req.body)
+  models.Post.getPostsByLandmarkId(req.params.id)
     .then(results => {
       res.status(200).send(results);
     });

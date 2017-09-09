@@ -34,7 +34,7 @@ const Landmark = db.Model.extend({
       });
   },
   getLandmarkById: function(id) {
-    return this.where({id}).fetch({withRelated: ['posts']});
+    return this.where({id}).fetch();
   }
 });
 
