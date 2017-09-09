@@ -126,12 +126,6 @@ export const handleStoryLoad = () => {
  * ==========================================================
  */
 
-
 export const loadStoriesByUser = (profile_id) => {
-<<<<<<< HEAD
-  return axios.post('/stories/user/:id', profile_id);
+  return axios.get(`/api/stories/user/${profile_id}`);
 };
-=======
-  return axios.post(`/api/stories/user/${profile_id}`);
-};
->>>>>>> Fixed some routes.
