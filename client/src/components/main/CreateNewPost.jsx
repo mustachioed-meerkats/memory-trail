@@ -162,7 +162,7 @@ class CreateNewPost extends React.Component {
   render () {
     return (
       <Grid>
-        <Row> 
+        <Row>
           <Col sm={4}>
           </Col>
           <Col sm={4}>
@@ -179,7 +179,7 @@ class CreateNewPost extends React.Component {
                   <Modal.Title id="contained-modal-title-lg">Tell us about your adventure!!</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                  <FormGroup> 
+                  <FormGroup>
                     <FormControl
                       type = 'text'
                       onChange={(e) => { this.props.handleStoryTitle(e.target.value); }}
@@ -193,8 +193,8 @@ class CreateNewPost extends React.Component {
                       placeholder = 'Tell us about your story!'
                       bsSize = 'lg'
                       componentClass="textarea"
-                      rows={8} 
-                      maxLength={4000} 
+                      rows={8}
+                      maxLength={4000}
                     />
                   </FormGroup>
                 </Modal.Body>
@@ -211,11 +211,11 @@ class CreateNewPost extends React.Component {
                 })}
               </DropdownButton>
             </ButtonToolbar>
-            Current Story = whatever. 
+            Current Story = whatever.
           </Col>
           <Col sm={4}>
           </Col>
-        </Row> 
+        </Row>
         <Row>
           <Col sm={4}>
           </Col>
