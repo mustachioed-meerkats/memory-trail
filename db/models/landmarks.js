@@ -6,6 +6,10 @@ const Landmark = db.Model.extend({
   posts: function() {
     return this.hasMany('Post');
   }
+}, {
+  createLandmark: function(landmark) {
+    return this.forge(landmark).save();
+  }
 });
 
 module.exports = db.model('Landmark', Landmark);
