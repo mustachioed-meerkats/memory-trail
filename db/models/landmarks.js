@@ -7,6 +7,7 @@ const Landmark = db.Model.extend({
     return this.hasMany('Post');
   }
 }, {
+  //not sure if useful
   createLandmark: function(landmark) {
     return this.forge(landmark).save();
   },
@@ -31,6 +32,9 @@ const Landmark = db.Model.extend({
       .catch(landmark => {
         return landmark;
       });
+  },
+  getLandmarkById: function(id) {
+    return this.where({id}).fetch({withRelated: ['posts']});
   }
 });
 
