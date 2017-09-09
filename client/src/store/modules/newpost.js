@@ -109,7 +109,7 @@ export const handleImageUrl = (image_url) => {
 
 export const handleStoryLoad = () => {
   return dispatch => {
-    return loadStoriesByUser(this.state.profile_id)
+    return loadStoriesByUser(initialState.profile_id)
       .then(results => {
         console.log(results);
         dispatch({
