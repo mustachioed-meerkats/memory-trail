@@ -95,9 +95,9 @@ class CreateNewPost extends React.Component {
       title: this.props.storyTitle,
       summary: this.props.storySummary,
     };
-    return axios.post('/api/story/new', storyInfo)
+    return axios.post('/api/stories/new', storyInfo)
       .then(result => {
-        console.log('STORY CREATED');
+        console.log('STORY CREATED', result);
       })
       .catch((err) => {
         console.log('STORY CREATION FAILED');
@@ -113,7 +113,6 @@ class CreateNewPost extends React.Component {
   }
 
   showModal () {
-    console.log('WORKING');
     this.setState({show: true});
   }
 
@@ -126,7 +125,6 @@ class CreateNewPost extends React.Component {
   }
 
   render () {
-    console.log(this.props.allUserStories);
     return (
       <Grid>
         <Row>
