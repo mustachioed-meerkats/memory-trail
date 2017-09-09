@@ -20,11 +20,6 @@
       "directory": "db/seeds"
     }
   },
-
-  "AWS": {
-    "accessKeyId": "AKIAJYAMVT6LLGK2KISQ",
-    "secretAccessKey": "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"
-  },
   
   "passport": {
     "Google": {},
