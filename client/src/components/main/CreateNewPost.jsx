@@ -163,7 +163,6 @@ class CreateNewPost extends React.Component {
 =======
 >>>>>>> Fixed some routes.
   render () {
-    console.log(this.props.allUserStories);
     return (
       <Grid>
         <Row>
