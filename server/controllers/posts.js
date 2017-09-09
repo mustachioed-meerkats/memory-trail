@@ -44,13 +44,11 @@ module.exports.getPostsByLandmarkId = (req, res) => {
 };
 
 module.exports.getPostsByFollowings = (req, res) => {
-  //get all the people this user is following first
-  //use the array of following ids to query posts table
-  //get first 25 entries that matches the array of ids
   models.Following.getAllFollowings(req.params.id)
     .then(results => {
-      return results.map(following => {
-        return following.following_id;
+      console.log('this is res', results);
+      return results.models.map(following => {
+        return following.get('following_id');
       });
     })
     .then(followingIdArray => {

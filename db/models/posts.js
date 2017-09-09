@@ -44,7 +44,7 @@ const Post = db.Model.extend({
   },
   getPostsByFollowings: function(followings) {
     return this.forge().query(function(qb) {
-      qb.havingIn('profile_id', followings);
+      qb.havingIn('profile_id', followings).groupBy('id');
     })
       .fetchAll({withRelated: ['profile']});
   }
