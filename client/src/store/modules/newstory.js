@@ -6,7 +6,8 @@ import axios from 'axios';
  * =============================================================
  */
 
-
+export const SET_NEW_STORY_TITLE = 'newstory/SET_NEW_STORY_TITLE';
+export const SET_NEW_STORY_SUMMARY = 'newstory/SET_NEW_STORY_SUMMARY';
 
 /** ============================================================
  * Define Initial State
@@ -14,8 +15,8 @@ import axios from 'axios';
  */
 
 const initialState = {
-  title: '',
-  summary: '',
+  storyTitle: '',
+  storySummary: '',
 };
 
 /** ============================================================
@@ -27,18 +28,16 @@ export default (state = initialState, action) => {
   case SET_NEW_STORY_TITLE : 
     return ({
       ...state,
-      title: action.title,
-      summary: state.summary,
+      storyTitle: action.title,
+      storySummary: state.summary,
     });
 
   case SET_NEW_STORY_SUMMARY : 
     return ({
       ...state,
-      title: state.title,
-      summary: action.content,
+      storyTitle: state.title,
+      storySummary: action.content,
     });
-
-
   }
 };
 
