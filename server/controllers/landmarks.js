@@ -1,7 +1,7 @@
 const models = require('../../db/models');
 
 module.exports.createLandmark = (req, res) => {
-  models.Landmark.createLandmark()
+  models.Landmark.createLandmark(req.body)
     .then(result => {
       res.status(200).send(result);
     });
