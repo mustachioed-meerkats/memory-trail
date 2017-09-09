@@ -18,7 +18,6 @@ const Post = db.Model.extend({
     return this.where({story_id}).orderBy('created_at', 'ASC').fetchAll({withRelated: ['profile']});
   }, 
   createPost: function(post) {
-    post.story_id = 1;
     return this.forge(post).save();
   },
   getAllPosts: function(profile_id) {
