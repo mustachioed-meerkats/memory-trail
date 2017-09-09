@@ -19,14 +19,20 @@ import { Modal, Button, MenuItem, ButtonToolbar, ControlLabel, Form, FormGroup, 
 import {
   handleTitleInput,
   handleContentTextArea,
-  handleLocationInput
+  handleLocationInput,
+  handleStoryLoad,
 } from '../../store/modules/newpost';
 
+import {
+  handleStorySummary,
+  handleStoryTitle,
+} from '../../store/modules/newstory';
 class CreateNewPost extends React.Component {
   constructor (props) {
     super (props);
     this.state = {
       show: false,
+      storyID: ''
     };
   }
   geocodeLocationInput (location) {
@@ -64,7 +70,8 @@ class CreateNewPost extends React.Component {
       content: this.props.content,
       lat: this.props.location.lat,
       lng: this.props.location.lng,
-      profile_id: this.props.user.id
+      profile_id: this.props.user.id,
+      storyID: props.storyID
     };
     console.log(post);
 
@@ -80,6 +87,21 @@ class CreateNewPost extends React.Component {
         console.log(err);
       });
   }
+
+
+  storySubmit () {
+    console.log('Story submitting');
+
+  }
+
+  storySelected (name) {
+    this.props.stories.map(function (story) {
+      if (story.title === name) {
+        this.setState({storyID: story.storyID});
+      }
+    });
+  }
+
   showModal () {
     console.log('WORKING');
     this.setState({show: true});
@@ -91,7 +113,7 @@ class CreateNewPost extends React.Component {
   render () {
     return (
       <Grid>
-        <Row> 
+        <Row>
           <Col sm={4}>
           </Col>
           <Col sm={4}>
@@ -108,43 +130,43 @@ class CreateNewPost extends React.Component {
                   <Modal.Title id="contained-modal-title-lg">Tell us about your adventure!!</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                  <FormGroup> 
+                  <FormGroup>
                     <FormControl
                       type = 'text'
-                      onChange = {'Fill_me_in'}
+                      onChange={(e) => { this.props.handleStoryTitle(e.target.value); }}
                       placeholder = 'Title'
                     />
                   </FormGroup>
                   <FormGroup>
                     <FormControl
                       type = 'text'
-                      onChange = {'fill-me-in'}
+                      onChange={(e) => { this.props.handleStorySummary(e.target.value); }}
                       placeholder = 'Tell us about your story!'
                       bsSize = 'lg'
                       componentClass="textarea"
-                      rows={8} 
-                      maxLength={4000} 
+                      rows={8}
+                      maxLength={4000}
                     />
                   </FormGroup>
                 </Modal.Body>
                 <Modal.Footer>
                   <Button onClick={this.hideModal.bind(this)}>Close</Button>
+                  <Button onClick={this.hideModal.bind(this)}> Submit Story </Button>
                 </Modal.Footer>
               </Modal>
             </ButtonToolbar>
             <ButtonToolbar>
-              <DropdownButton bsSize="large" title="Choose A Story!!" id="dropdown-size-large">
-                <MenuItem eventKey="1">stuff</MenuItem>
-                <MenuItem eventKey="2">Another action</MenuItem>
-                <MenuItem eventKey="3">Something else here</MenuItem>
-                <MenuItem eventKey="4">link</MenuItem>
+              <DropdownButton bsSize="large" title="Choose A Story!!" id="dropdown-size-large" onSelect = {(e) => { this.storySelected(e.target.value); }} >
+                {this.props.stories.map(function (story) {
+                  return <MenuItem>{story.title}</MenuItem>;
+                })}
               </DropdownButton>
             </ButtonToolbar>
-            Current Story = whatever. 
+            Current Story = whatever.
           </Col>
           <Col sm={4}>
           </Col>
-        </Row> 
+        </Row>
         <Row>
           <Col sm={4}>
           </Col>
@@ -205,6 +227,7 @@ const mapStateToProps = state => ({
   location: state.newpost.location,
   map: state.map.center,
   user: state.user,
+  stories: state.allUserStories,
 });
 
 /** ============================================================
@@ -214,7 +237,10 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => bindActionCreators({
   handleTitleInput: handleTitleInput,
   handleContentTextArea: handleContentTextArea,
-  handleLocationInput: handleLocationInput
+  handleLocationInput: handleLocationInput,
+  handleStoryLoad: handleStoryLoad,
+  handleStoryTitle: handleStoryTitle,
+  handleStorySummary: handleStorySummary,
 }, dispatch);
 
 export default connect(

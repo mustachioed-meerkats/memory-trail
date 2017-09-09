@@ -181,6 +181,6 @@ export const getPostsWithinRadius = (center) => {
   return axios.post('/api/posts/nearby', center);
 };
 
-export const getPostsByStory = (title) => {
-  return axios.post('/api/posts/story', title);
+export const getPostsByStory = (storyID) => {
+  return axios.post('/api/posts/story', storyID);
 };
