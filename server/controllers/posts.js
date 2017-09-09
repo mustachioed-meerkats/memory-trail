@@ -1,7 +1,13 @@
 const models = require('../../db/models');
 
 module.exports.createPost = (req, res) => {
-  models.Post.createPost(req.body)
+  var post = req.body;
+  models.Landmark.findOrCreateLandmark(post)
+    .then(landmark => {
+      var landmark_id = landmark.id;
+      post.landmark_id = landmark_id;
+      return models.Post.createPost(post);
+    })
     .then(result => {
       res.status(200).send(result);
     });

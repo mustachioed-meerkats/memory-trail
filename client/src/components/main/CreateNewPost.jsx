@@ -46,6 +46,7 @@ const CreateNewPost = (props) => {
     // listen for location selection from the dropdown
     google.maps.event.addListener(autocomplete, 'place_changed', () => {
       place = autocomplete.getPlace();
+      console.log(place);
       // when a place is selected, use its address property to call google geocoding API
       geocodeLocationInput(place.formatted_address);
     });
