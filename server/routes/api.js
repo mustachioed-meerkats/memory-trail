@@ -53,7 +53,7 @@ router.route('/stories/:id')
   .get(controller.Stories.getStoryById);
 
 // get all story entries by a certain userId
-router.route('/stories/user/:user_id')
+router.route('/stories/user/:id')
   .get(controller.Stories.getStoriesByUserId);
 
 /** ============================================================

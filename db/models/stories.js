@@ -12,6 +12,12 @@ const Story = db.Model.extend({
 }, {
   getStoryById: function(id) {
     return this.where({id}).fetch();
+  },
+  createStory: function(story) {
+    return this.forge(story).save();
+  },
+  getStoriesByUserId: function(profile_id) {
+    return this.where({profile_id}).fetchAll();
   }
 });
 
