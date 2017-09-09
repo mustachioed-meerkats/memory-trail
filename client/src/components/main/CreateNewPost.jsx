@@ -126,6 +126,7 @@ class CreateNewPost extends React.Component {
   }
 
   render () {
+    console.log(this.props.allUserStories);
     return (
       <Grid>
         <Row>
@@ -242,7 +243,7 @@ const mapStateToProps = state => ({
   location: state.newpost.location,
   map: state.map.center,
   user: state.user,
-  stories: state.allUserStories,
+  stories: state.newpost.allUserStories,
   storyTitle: state.storyTitle,
   storySummary: state.storySummary
 });

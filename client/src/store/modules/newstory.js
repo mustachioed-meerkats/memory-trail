@@ -15,8 +15,8 @@ export const SET_NEW_STORY_SUMMARY = 'newstory/SET_NEW_STORY_SUMMARY';
  */
 
 const initialState = {
-  storyTitle: '',
-  storySummary: '',
+  storyTitle: 'dummy',
+  storySummary: 'dummy',
 };
 
 /** ============================================================

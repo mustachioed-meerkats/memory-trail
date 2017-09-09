@@ -19,7 +19,7 @@ const initialState = {
   story: '',
   landmark: '',
   profile_id: __PRELOADED_STATE__.user.id,
-  allUserStories: []
+  allUserStories: [{Test: 'Data'}]
 };
 
 /** ============================================================
@@ -89,7 +89,7 @@ export const handleLocationInput = (location) => {
 
 export const handleStoryLoad = () => {
   return dispatch => {
-    return loadStoriesByUser(this.state.profile_id)
+    return loadStoriesByUser(initialState.profile_id)
       .then(results => {
         console.log(results);
         dispatch({
