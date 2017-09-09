@@ -3,6 +3,7 @@ import axios from 'axios';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import Autocomplete from 'react-google-autocomplete';
+import Upload from './Upload.jsx';
 
 /** ============================================================
  * Define React Bootstrap Components
@@ -108,6 +109,9 @@ const CreateNewPost = (props) => {
         </Col>
         <Col sm={4}>
         </Col>
+      </Row>
+      <Row>
+        <Upload/>
       </Row>
       <Row>
         <Col sm={4}>

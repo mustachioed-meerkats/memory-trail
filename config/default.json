@@ -21,6 +21,11 @@
     }
   },
 
+  "AWS": {
+    "accessKeyId": "AKIAIPFOIPPPCE3RNKAQ",
+    "secretAccessKey": "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"
+  },
+  
   "passport": {
     "Google": {},
     "Facebook": {},

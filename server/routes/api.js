@@ -82,6 +82,4 @@ router.route('/followings/new')
 router.route('/followings/:id')
   .get(controller.Followings.getAllFollowings);
 
-
-
 module.exports = router;
