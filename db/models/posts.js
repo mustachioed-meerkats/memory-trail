@@ -38,6 +38,15 @@ const Post = db.Model.extend({
       .where('lng', '<', maxLng)
       .where('lng', '>', minLng)
       .fetchAll({withRelated: ['profile']});
+  },
+  getPostsByLandmarkId: function(landmark_id) {
+    return this.where({landmark_id}).fetchAll({withRelated: ['profile', 'landmark']});
+  },
+  getPostsByFollowings: function(followings) {
+    return this.forge().query(function(qb) {
+      qb.havingIn('profile_id', followings).groupBy('id');
+    })
+      .fetchAll({withRelated: ['profile']});
   }
 });
 

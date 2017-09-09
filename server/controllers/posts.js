@@ -1,7 +1,13 @@
 const models = require('../../db/models');
 
 module.exports.createPost = (req, res) => {
-  models.Post.createPost(req.body)
+  var post = req.body;
+  models.Landmark.findOrCreateLandmark(post)
+    .then(landmark => {
+      var landmark_id = landmark.id;
+      post.landmark_id = landmark_id;
+      return models.Post.createPost(post);
+    })
     .then(result => {
       res.status(200).send(result);
     });
@@ -31,15 +37,24 @@ module.exports.getPostsByStoryId = (req, res) => {
 };
 
 module.exports.getPostsByLandmarkId = (req, res) => {
-  models.Post.getPostsByLandmarkId(req.body)
+  models.Post.getPostsByLandmarkId(req.params.id)
     .then(results => {
       res.status(200).send(results);
     });
 };
 
-module.exports.getPostsByFollowing = (req, res) => {
-  models.Post.getPostsByFollowing(req.body)
+module.exports.getPostsByFollowings = (req, res) => {
+  models.Following.getAllFollowings(req.params.id)
     .then(results => {
-      res.status(200).send(results);
+      console.log('this is res', results);
+      return results.models.map(following => {
+        return following.get('following_id');
+      });
+    })
+    .then(followingIdArray => {
+      models.Post.getPostsByFollowings(followingIdArray)
+        .then(results => {
+          res.status(200).send(results);
+        });
     });
 };
