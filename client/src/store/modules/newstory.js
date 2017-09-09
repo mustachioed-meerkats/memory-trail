@@ -56,7 +56,7 @@ export const handleStoryTitle = (title) => {
   };
 };
 
-export const handleStorySummary = (content) => {
+export const handleStorySummary = (summary) => {
   return {
     type: SET_NEW_STORY_SUMMARY,
     summary
