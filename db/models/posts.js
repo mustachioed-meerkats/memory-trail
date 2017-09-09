@@ -16,40 +16,30 @@ const Post = db.Model.extend({
 }, {
   getPostsByStoryId: function(story_id) {
     return this.where({story_id}).orderBy('created_at', 'ASC').fetchAll({withRelated: ['profile']});
+  }, 
+  createPost: function(post) {
+    post.story_id = 1;
+    return this.forge(post).save();
+  },
+  getAllPosts: function(profile_id) {
+    return this.fetchAll({withRelated: ['profile']});
+  },
+  getPostsByUserId: function(profile_id) {
+    return this.where({profile_id}).fetchAll({withRelated: ['profile']});
+  },
+  getPostsWithinRadius: function(center, radius = 13) {
+    var {lat, lng} = center;
+    var degreesPerMile = 0.0144722856;
+    var maxLat = lat + degreesPerMile * radius;
+    var minLat = lat - degreesPerMile * radius;
+    var maxLng = lng + degreesPerMile * radius;
+    var minLng = lng - degreesPerMile * radius;
+    return this.where('lat', '<', maxLat)
+      .where('lat', '>', minLat)
+      .where('lng', '<', maxLng)
+      .where('lng', '>', minLng)
+      .fetchAll({withRelated: ['profile']});
   }
 });
 
 module.exports = db.model('Post', Post);
-
-module.exports.createPost = (post) => {
-  // uncomment line below to insert dummy story id until story feature is avail
-  // post.story_id = 2;
-  return knex('posts').insert(post);
-};
-
-module.exports.getPostById = (id) => {
-  return knex('posts').where('id', id);
-};
-
-module.exports.getAllPosts = () => {
-  return knex('posts');
-};
-
-module.exports.getPostsByUserId = (profile_id) => {
-  return knex('posts').where('profile_id', profile_id);
-};
-
-module.exports.getPostsWithinRadius = (center, radius = 13) => {
-  // rough calculation
-  var {lat, lng} = center;
-  var degreesPerMile = 0.0144722856;
-  var maxLat = lat + degreesPerMile * radius;
-  var minLat = lat - degreesPerMile * radius;
-  var maxLng = lng + degreesPerMile * radius;
-  var minLng = lng - degreesPerMile * radius;
-  return knex('posts')
-    .where('lat', '<', maxLat)
-    .andWhere('lat', '>', minLat)
-    .andWhere('lng', '<', maxLng)
-    .andWhere('lng', '>', minLng);
-};
