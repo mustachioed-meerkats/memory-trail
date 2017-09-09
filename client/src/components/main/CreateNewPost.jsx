@@ -19,9 +19,14 @@ import { Modal, Button, MenuItem, ButtonToolbar, ControlLabel, Form, FormGroup, 
 import {
   handleTitleInput,
   handleContentTextArea,
-  handleLocationInput
+  handleLocationInput,
+  handleStoryLoad,
 } from '../../store/modules/newpost';
 
+import {
+  handleStorySummary,
+  handleStoryTitle,
+} from '../../store/modules/newstory';
 class CreateNewPost extends React.Component {
   constructor(props) {
     super(props);
@@ -29,11 +34,12 @@ class CreateNewPost extends React.Component {
       landmark: '',
       postObject: '',
       show: false,
+      storyID: ''
     }
     this.geocodeLocationInput = this.geocodeLocationInput.bind(this);
     this.initializeAutocomplete = this.initializeAutocomplete.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-  }
+    }
 
   geocodeLocationInput = (location) => {
     // calls google geocoding API to fetch lat/lng from address selected in autocomplete form
@@ -89,7 +95,8 @@ class CreateNewPost extends React.Component {
       lng: this.props.location.lng,
       profile_id: this.props.user.id,
       image_url: this.props.image_url,
-      landmark_id: landmark.id
+      landmark_id: landmark.id,
+      storyID: props.storyID
     };
 
     console.log('(Client) Intiating POST Request! CREATING NEW POST');
@@ -110,16 +117,31 @@ class CreateNewPost extends React.Component {
         console.log('(Client) Error! CREATING NEW POST');
         console.log(err);
       });
-    }
-    showModal () {
-      console.log('WORKING');
-      this.setState({show: true});
-    }
-  
-    hideModal () {
-      this.setState({show: false});
-    }
-  render() {
+  }
+
+
+  storySubmit () {
+    console.log('Story submitting');
+
+  }
+
+  storySelected (name) {
+    this.props.stories.map(function (story) {
+      if (story.title === name) {
+        this.setState({storyID: story.storyID});
+      } 
+    });
+  }
+
+  showModal () {
+    console.log('WORKING');
+    this.setState({show: true});
+  }
+
+  hideModal () {
+    this.setState({show: false});
+  }
+  render () {
     return (
       <Grid>
         <Row> 
@@ -142,14 +164,14 @@ class CreateNewPost extends React.Component {
                   <FormGroup> 
                     <FormControl
                       type = 'text'
-                      onChange = {'Fill_me_in'}
+                      onChange={(e) => { this.props.handleStoryTitle(e.target.value); }}
                       placeholder = 'Title'
                     />
                   </FormGroup>
                   <FormGroup>
                     <FormControl
                       type = 'text'
-                      onChange = {'fill-me-in'}
+                      onChange={(e) => { this.props.handleStorySummary(e.target.value); }}
                       placeholder = 'Tell us about your story!'
                       bsSize = 'lg'
                       componentClass="textarea"
@@ -160,15 +182,15 @@ class CreateNewPost extends React.Component {
                 </Modal.Body>
                 <Modal.Footer>
                   <Button onClick={this.hideModal.bind(this)}>Close</Button>
+                  <Button onClick={this.hideModal.bind(this)}> Submit Story </Button>
                 </Modal.Footer>
               </Modal>
             </ButtonToolbar>
             <ButtonToolbar>
-              <DropdownButton bsSize="large" title="Choose A Story!!" id="dropdown-size-large">
-                <MenuItem eventKey="1">stuff</MenuItem>
-                <MenuItem eventKey="2">Another action</MenuItem>
-                <MenuItem eventKey="3">Something else here</MenuItem>
-                <MenuItem eventKey="4">link</MenuItem>
+              <DropdownButton bsSize="large" title="Choose A Story!!" id="dropdown-size-large" onSelect = {(e) => { this.storySelected(e.target.value); }} >  
+                {this.props.stories.map(function (story) {
+                  return <MenuItem>{story.title}</MenuItem>;                  
+                })}
               </DropdownButton>
             </ButtonToolbar>
             Current Story = whatever. 
@@ -237,7 +259,8 @@ const mapStateToProps = state => ({
   content: state.newpost.content,
   location: state.newpost.location,
   map: state.map.center,
-  user: state.user
+  user: state.user,
+  stories: state.allUserStories,
 });
 
 /** ============================================================
@@ -247,7 +270,10 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => bindActionCreators({
   handleTitleInput: handleTitleInput,
   handleContentTextArea: handleContentTextArea,
-  handleLocationInput: handleLocationInput
+  handleLocationInput: handleLocationInput,
+  handleStoryLoad: handleStoryLoad,
+  handleStoryTitle: handleStoryTitle,
+  handleStorySummary: handleStorySummary,
 }, dispatch);
 
 export default connect(
