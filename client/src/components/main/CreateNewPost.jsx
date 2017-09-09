@@ -59,7 +59,7 @@ const CreateNewPost = (props) => {
       content: props.content,
       lat: props.location.lat,
       lng: props.location.lng,
-      profile_id: props.user.id
+      profile_id: props.user.id,
     };
 
     console.log('(Client) Intiating POST Request! CREATING NEW POST');

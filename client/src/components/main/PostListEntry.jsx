@@ -91,9 +91,6 @@ const PostListEntry = (props) => {
         </div>
         <div style={style.card.stats}>Submitted {getTimeSincePost(props.post.created_at)} by {props.post.profile_id}</div>
         <div style={style.card.content}>{props.post.content.slice(0, 64) + ' ...'}</div>
-        <Button bsStyle="link" bsSize="small">
-          <Link to={`/landmark/${props.post.landmark_id}`}>View Landmark</Link>
-        </Button>
         <Button style={style.card.button}><Glyphicon glyph="bookmark" /></Button>
       </div>
     </div>

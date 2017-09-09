@@ -75,8 +75,3 @@ class Upload extends React.Component {
 };
 
 export default Upload;
-
-{/* <form onSubmit={this.handleSubmit} encType="multipart/form-data">
-            <input type="file" onChange={this.handleFile} />
-            {this.state.processing ? <input disabled className='btn btn-primary' type="submit" value="Upload" /> : <input className='btn btn-primary' type="submit" value="Upload" />}
-          </form> */}
