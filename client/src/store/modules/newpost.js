@@ -108,5 +108,5 @@ export const handleStoryLoad = () => {
 
 
 export const loadStoriesByUser = (profile_id) => {
-  return axios.post(`/api/stories/user/${profile_id}`);
+  return axios.get(`/api/stories/user/${profile_id}`);
 };
