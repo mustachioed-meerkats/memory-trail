@@ -119,6 +119,11 @@ class CreateNewPost extends React.Component {
   hideModal () {
     this.setState({show: false});
   }
+
+  componentDidMount() {
+    this.props.handleStoryLoad();
+  }
+
   render () {
     return (
       <Grid>

@@ -87,10 +87,11 @@ export const handleLocationInput = (location) => {
   };
 };
 
-export const handleStoryLoad = (storyID) => {
+export const handleStoryLoad = () => {
   return dispatch => {
-    return loadStoriesByUser(profile_id)
+    return loadStoriesByUser(this.state.profile_id)
       .then(results => {
+        console.log(results);
         dispatch({
           type: HANDLE_STORY_LOAD,
           allUserStories: results.data,
@@ -107,5 +108,5 @@ export const handleStoryLoad = (storyID) => {
 
 
 export const loadStoriesByUser = (profile_id) => {
-  return axios.post('/stories/user/:id', profile_id);
+  return axios.post(`/api/stories/user/${profile_id}`);
 };
