@@ -20,8 +20,12 @@ app.use(middleware.flash());
 
 app.use(express.static(path.join(__dirname, '../public')));
 
+var upload = middleware.multer();
+app.use(upload.any());
+
 app.use('/', routes.auth);
 app.use('/api', routes.api);
 app.use('/api/profiles', routes.profiles);
+app.use('/upload', routes.upload);
 
 module.exports = app;

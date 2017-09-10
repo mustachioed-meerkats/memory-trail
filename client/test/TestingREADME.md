@@ -38,7 +38,6 @@ sum.js && sum.test.js are just boilerplate tests to ensure that Jest is running.
 -Added "modulePaths": [ "/shared/vendor/modules"], to package.JSON. These need to be pointed at our react modules.  
 -Added "presets": [ ["es2015", {"modules": false}]], "env": { "test": { "plugins": ["transform-es2015-modules-commonjs"]}} to .babelrc
 -Added "transform:{}" under "jest" in the package.JSON.
--Added file __test__ to place Jest files inside of. 
 This should set up Jest.
 
 To add enzyme...

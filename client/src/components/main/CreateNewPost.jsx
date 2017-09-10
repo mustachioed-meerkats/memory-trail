@@ -3,6 +3,7 @@ import axios from 'axios';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import Autocomplete from 'react-google-autocomplete';
+import Upload from './Upload.jsx';
 
 /** ============================================================
  * Define React Bootstrap Components
@@ -42,8 +43,8 @@ const CreateNewPost = (props) => {
     let input = document.getElementById('locationInput');
     // render predictions from google autocomplete using input from location field
     let autocomplete = new google.maps.places.Autocomplete(input);
-    let place;
     // listen for location selection from the dropdown
+    let place;
     google.maps.event.addListener(autocomplete, 'place_changed', () => {
       place = autocomplete.getPlace();
       console.log(place);
@@ -53,7 +54,7 @@ const CreateNewPost = (props) => {
   };
 
   const handleSubmit = () => {
-    const post = {
+    let post = {
       title: props.title,
       content: props.content,
       lat: props.location.lat,
@@ -62,7 +63,7 @@ const CreateNewPost = (props) => {
     };
 
     console.log('(Client) Intiating POST Request! CREATING NEW POST');
-    console.log(post);
+    
     return axios.post('/api/posts/new', post)
       .then(result => {
         console.log('(Client) Success! CREATING NEW POST');
@@ -110,6 +111,9 @@ const CreateNewPost = (props) => {
         </Col>
       </Row>
       <Row>
+        <Upload/>
+      </Row>
+      <Row>
         <Col sm={4}>
         </Col>
         <Col sm={4}>
@@ -134,7 +138,7 @@ const mapStateToProps = state => ({
   content: state.newpost.content,
   location: state.newpost.location,
   map: state.map.center,
-  user: state.user
+  user: state.user,
 });
 
 /** ============================================================
