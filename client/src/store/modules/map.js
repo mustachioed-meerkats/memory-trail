@@ -11,18 +11,15 @@ export const HANDLE_SEARCH_AREA = 'map/HANDLE_SEARCH_AREA';
 export const HANDLE_MARKER_CLICK = 'map/HANDLE_MARKER_CLICK';
 export const HANDLE_MARKER_CLOSE = 'map/HANDLE_MARKER_CLOSE';
 export const HANDLE_STORY_LOAD = 'map/HANDLE_STORY_LOAD';
-export const HANDLE_STORY_LIST_CLICK = 'map/HANDLE_STORY_LIST_CLICK';
-
 /** ============================================================
  * Define Initial State
  * =============================================================
  */
 const initialState = {
-  center: __PRELOADED_STATE__.map,
+  center: {lat: 36.209681, lng: -115.093977},
   bounds: null,
   markers: [],
   storyPosts: [],
-  zoom: 10,
 };
 /** ============================================================
  * Define Reducer
@@ -36,13 +33,6 @@ export default (state = initialState, action) => {
       center: action.center,
       markers: action.markers
     };
-  case HANDLE_STORY_LIST_CLICK:
-    return {
-      ...state, 
-      center: action.center,
-      zoom: action.zoom,
-    };
-
   case HANDLE_PLACES_CHANGED:
     return {
       ...state,
@@ -113,17 +103,6 @@ export const setCenter = (lat, lng) => {
   };
 };
 
-export const storyListClick = (post) => {
-  console.log('AT STORYLIST CLICK', post);
-  return dispatch => {
-    dispatch ({
-      type: HANDLE_STORY_LIST_CLICK,
-      center: {lat: parseFloat(post.lat), lng: parseFloat(post.lng)},
-      zoom: 15
-    });
-  };
-};
-
 export const handlePlacesChanged = (searchBox, oldCenter) => {
   var places = searchBox.getPlaces().map(place => ({
     position: place.geometry.location
@@ -165,9 +144,9 @@ export const handleSearchArea = (center) => {
   };
 };
 
-export const handleSingleStory = (storyID) => {
+export const handleStoryLoad = (storyID) => {
   return dispatch => {
-    return getPostsByStory(storyID)
+    return getPostsByStory(userID, title)
       .then(results => {
         dispatch({
           type: HANDLE_STORY_LOAD,
@@ -201,6 +180,6 @@ export const getPostsWithinRadius = (center) => {
   return axios.post('/api/posts/nearby', center);
 };
 
-export const getPostsByStory = (storyID) => {
-  return axios.post(`api/posts/story/${storyID}`);
+export const getPostsByStory = (title) => {
+  return axios.post('/api/posts/story', title);
 };
