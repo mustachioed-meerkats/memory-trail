@@ -155,13 +155,10 @@ class CreateNewPost extends React.Component {
     this.props.handleStoryLoad();
   }
 
-<<<<<<< HEAD
   hideModal () {
     this.setState({show: false});
     
   }
-=======
->>>>>>> Fixed some routes.
   render () {
     return (
       <Grid>
