@@ -62,21 +62,8 @@ const CreateNewPost = (props) => {
       profile_id: props.user.id
     };
 
-    let landmark = {
-      name: place.name,
-      description: '',
-      image_url: place.photos[0].getUrl(),
-      lat: props.location.lat,
-      lng: props.location.lng
-    }
-    console.log('LANDMARK: ', landmark)
-
     console.log('(Client) Intiating POST Request! CREATING NEW POST');
-    console.log(post);
-    let postObject = {
-      post: post,
-      landmark: landmark
-    }
+    
     return axios.post('/api/posts/new', postObject)
       .then(result => {
         console.log('(Client) Success! CREATING NEW POST');
