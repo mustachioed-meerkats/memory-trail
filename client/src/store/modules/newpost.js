@@ -91,7 +91,6 @@ export const handleStoryLoad = () => {
   return dispatch => {
     return loadStoriesByUser(initialState.profile_id)
       .then(results => {
-        console.log('LOADING STORIES FROM SERVER', results);
         dispatch({
           type: HANDLE_STORY_LOAD,
           allUserStories: results.data,

@@ -26,12 +26,14 @@ import {
   handleStorySummary,
   handleStoryTitle,
 } from '../../store/modules/newstory';
+
 class CreateNewPost extends React.Component {
   constructor (props) {
     super (props);
     this.state = {
       show: false,
-      storyID: ''
+      storyID: 0,
+      storyName: 'None Selected',
     };
   }
   geocodeLocationInput (location) {
@@ -70,7 +72,7 @@ class CreateNewPost extends React.Component {
       lat: this.props.location.lat,
       lng: this.props.location.lng,
       profile_id: this.props.user.id,
-      storyID: props.storyID
+      storyID: this.storyID
     };
     console.log(post);
 
@@ -89,11 +91,12 @@ class CreateNewPost extends React.Component {
 
 
   storySubmit () {
-    console.log('Story submitting');
     const storyInfo = {
       title: this.props.storyTitle,
       summary: this.props.storySummary,
+      profile_id: this.props.user.id,
     };
+    console.log('Story Submitting', storyInfo);
     return axios.post('/api/stories/new', storyInfo)
       .then(result => {
         console.log('STORY CREATED', result);
@@ -104,9 +107,11 @@ class CreateNewPost extends React.Component {
   }
 
   storySelected (name) {
-    this.props.stories.map(function (story) {
+    let localID = 0;
+    this.props.stories.map((story) => {
       if (story.title === name) {
-        this.setState({storyID: story.id});
+        localID = story.id;
+        this.setState({storyID: localID, storyName: story.title});
       } 
     });
   }
@@ -119,10 +124,11 @@ class CreateNewPost extends React.Component {
     this.setState({show: false});
   }
 
-  componentDidMount() {
+  componentWillMount() {
     this.props.handleStoryLoad();
   }
 
+  //TODO modularize this!
   render () {
     return (
       <Grid>
@@ -169,13 +175,13 @@ class CreateNewPost extends React.Component {
               </Modal>
             </ButtonToolbar>
             <ButtonToolbar>
-              <DropdownButton bsSize="large" title="Choose A Story!!" id="dropdown-size-large" onSelect = {(e) => { this.storySelected(e.target.value); }} >  
-                {this.props.stories.map(function (story) {
-                  return <MenuItem>{story.title}</MenuItem>;                  
+              <DropdownButton bsSize="large" title="Choose A Story!!" id="dropdown-size-large" >  
+                {this.props.stories.map((story, i) => {
+                  return <MenuItem key={i} eventKey= {story.title} onSelect={(eventKey) => { this.storySelected(eventKey); }} >{story.title}</MenuItem>;                  
                 })}
               </DropdownButton>
             </ButtonToolbar>
-            Current Story = whatever. 
+            Current Story {this.state.storyName}. 
           </Col>
           <Col sm={4}>
           </Col>
@@ -241,8 +247,8 @@ const mapStateToProps = state => ({
   map: state.map.center,
   user: state.user,
   stories: state.newpost.allUserStories,
-  storyTitle: state.storyTitle,
-  storySummary: state.storySummary
+  storyTitle: state.newstory.storyTitle,
+  storySummary: state.newstory.storySummary
 });
 
 /** ============================================================
