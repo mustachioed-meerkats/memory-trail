@@ -25,21 +25,21 @@ const TimelineComponent = withGoogleMap(props => {
   });
   console.log(path);
   return (
-  <GoogleMap
-    ref={props.handleMapMounted}
-    defaultZoom={10}
-    center={props.center}
-  >
-    {props.markers.map((marker, index) => (
-      <Marker
-        position={{lat: parseFloat(marker.lat), lng: parseFloat(marker.lng)}} key={index}
-      >
-      </Marker>
-    ))}
-    <Polyline
-      path={path}
-    />
-  </GoogleMap>
+    <GoogleMap
+      ref={props.handleMapMounted}
+      defaultZoom={10}
+      center={props.center}
+    >
+      {props.markers.map((marker, index) => (
+        <Marker
+          position={{lat: parseFloat(marker.lat), lng: parseFloat(marker.lng)}} key={index}
+        >
+        </Marker>
+      ))}
+      <Polyline
+        path={path}
+      />
+    </GoogleMap>
   );
 });
 
@@ -98,7 +98,3 @@ export default connect(
   mapStateToProps,
   mapDispatchToProps
 )(Timeline);
-
-
-
-
