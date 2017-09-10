@@ -64,7 +64,7 @@ const CreateNewPost = (props) => {
 
     console.log('(Client) Intiating POST Request! CREATING NEW POST');
     
-    return axios.post('/api/posts/new', postObject)
+    return axios.post('/api/posts/new', post)
       .then(result => {
         console.log('(Client) Success! CREATING NEW POST');
         // TODO: Add redirection to Explore Map
