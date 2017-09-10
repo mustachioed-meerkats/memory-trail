@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { Button, ButtonGroup, Glyphicon } from 'react-bootstrap';
-import {storyListClick} from '../../store/modules/map';
 
 //TODO: Refactor into seperate style
 const style = {
@@ -82,14 +81,9 @@ const getTimeSincePost = (postTime) => {
   return 0;
 };
 
-//No clue as to why the storylistclick doesn't work. Right now the map zoom is just going to be disabled. 
-
-//Will TODO this feature. 
-
-
 const StoryListEntry = (props) => {
   return (
-    <div style={style.card} onClick = {props.storyListClick.bind(this, props.post)} >
+    <div style={style.card}>
       <div style={style.card.container}>
         <div style={style.card.title}>
           <Link to={`/post/${props.post.id}`}>{props.post.title}</Link>
@@ -102,10 +96,4 @@ const StoryListEntry = (props) => {
   );
 };
 
-const mapDispatchToProps = dispatch => bindActionCreators({
-  storyListClick
-}, dispatch);
-
-export default connect(
-  mapDispatchToProps
-)(StoryListEntry);
+export default StoryListEntry;
