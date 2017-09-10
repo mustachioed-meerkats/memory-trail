@@ -43,8 +43,8 @@ const CreateNewPost = (props) => {
     let input = document.getElementById('locationInput');
     // render predictions from google autocomplete using input from location field
     let autocomplete = new google.maps.places.Autocomplete(input);
-    let place;
     // listen for location selection from the dropdown
+    let place;
     google.maps.event.addListener(autocomplete, 'place_changed', () => {
       place = autocomplete.getPlace();
       console.log(place);
@@ -54,17 +54,30 @@ const CreateNewPost = (props) => {
   };
 
   const handleSubmit = () => {
-    const post = {
+    let post = {
       title: props.title,
       content: props.content,
       lat: props.location.lat,
       lng: props.location.lng,
-      profile_id: props.user.id,
+      profile_id: props.user.id
     };
+
+    let landmark = {
+      name: place.name,
+      description: '',
+      image_url: place.photos[0].getUrl(),
+      lat: props.location.lat,
+      lng: props.location.lng
+    }
+    console.log('LANDMARK: ', landmark)
 
     console.log('(Client) Intiating POST Request! CREATING NEW POST');
     console.log(post);
-    return axios.post('/api/posts/new', post)
+    let postObject = {
+      post: post,
+      landmark: landmark
+    }
+    return axios.post('/api/posts/new', postObject)
       .then(result => {
         console.log('(Client) Success! CREATING NEW POST');
         // TODO: Add redirection to Explore Map
@@ -138,7 +151,7 @@ const mapStateToProps = state => ({
   content: state.newpost.content,
   location: state.newpost.location,
   map: state.map.center,
-  user: state.user
+  user: state.user,
 });
 
 /** ============================================================
