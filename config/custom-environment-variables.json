@@ -23,6 +23,10 @@
     //   "consumerSecret": "TWITTER_CLIENT_SECRET",
     //   "callbackURL": "TWITTER_CALLBACK_URL"
     // }
+  },
+  "AWS": {
+    "accessKeyId": "AWS_ACCESS_KEY_ID",
+    "secretAccessKey": "AWS_SECRET_ACCESS_KEY"
   }
 }
 
