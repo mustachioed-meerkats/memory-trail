@@ -180,6 +180,11 @@ export const getPostsWithinRadius = (center) => {
   return axios.post('/api/posts/nearby', center);
 };
 
+<<<<<<< HEAD
 export const getPostsByStory = (storyID) => {
   return axios.post('/api/posts/story', storyID);
+=======
+export const getPostsByStory = (title) => {
+  return axios.post('/api/posts/story', title);
+>>>>>>> Changed the timeline back to the original.
 };

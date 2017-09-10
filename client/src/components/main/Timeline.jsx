@@ -11,52 +11,35 @@ import {
   handlePlacesChanged,
   handleBoundsChanged,
   handleSearchArea,
-  handleStoryLoad,
 } from '../../store/modules/map';
 
-//For right now, handleSearchArea will be used.
-//After the backend is built out, handleStoryLoad will be used. 
+//The strategy utilized here only works with posts coming from the server organized by timestamp,
+//it cannot use the same routes as the home page.
 
-// Implement once everything is hooked up. 
 
-/*
-
-  props.storyPosts.forEach(function (post) {
-    var obj = {'lat': parseFloat(post.lat), 'lng': parseFloat(post.lng)};
-    path.push(obj);
-  });
-
-{props.storyPosts.map((marker, index) => (
-  <Marker
-    position={{lat: parseFloat(marker.lat), lng: parseFloat(marker.lng)}} key={index}
-  >
-  </Marker>
-*/
 const TimelineComponent = withGoogleMap(props => {
   const path = [];
   props.markers.forEach(function (post) {
     var obj = {'lat': parseFloat(post.lat), 'lng': parseFloat(post.lng)};
     path.push(obj);
   });
+  console.log(path);
   return (
-    <div>
-      <GoogleMap
-        ref={props.handleMapMounted}
-        zoom={props.zoom}
-        center={props.center}
-      >
-        {props.markers.map((marker, index) => (
-          <Marker
-            position={{lat: parseFloat(marker.lat), lng: parseFloat(marker.lng)}} key={index}
-          >
-          </Marker>
-        ))}
-        <Polyline
-          path={path}
-        />
-      </GoogleMap>
-      <PostList type={'TYPE_STORY'} StoryListClick={props.StoryListClick} />
-    </div>
+    <GoogleMap
+      ref={props.handleMapMounted}
+      defaultZoom={10}
+      center={props.center}
+    >
+      {props.markers.map((marker, index) => (
+        <Marker
+          position={{lat: parseFloat(marker.lat), lng: parseFloat(marker.lng)}} key={index}
+        >
+        </Marker>
+      ))}
+      <Polyline
+        path={path}
+      />
+    </GoogleMap>
   );
 });
 
@@ -65,8 +48,6 @@ class Timeline extends React.Component {
     super(props);
     this.state = {
       _map: null,
-      center: this.props.center,
-      zoom: 10
     };
     this.handleMapMounted = this.handleMapMounted.bind(this);
     this.StoryListClick = this.StoryListClick.bind(this);
@@ -108,17 +89,14 @@ class Timeline extends React.Component {
         containerElement={this.props.containerElement}
         mapElement={this.props.mapElement}
         handleMapMounted={this.handleMapMounted}
-        center={this.state.center}
+        center={this.props.center}
         map={this.state._map}
         markers={this.props.markers}
-        zoom={this.state.zoom}
-        StoryListClick={this.StoryListClick}
       />
     );
   }
 }
 
-//Markers will need to be moved out later. They will be replaced with StoryPosts. 
 
 const mapStateToProps = state => ({
   center: state.map.center,
@@ -126,15 +104,12 @@ const mapStateToProps = state => ({
   containerElement: <div style={{height: '100%'}} />,
   mapElement: <div style={{height: '100%'}} />,
   markers: state.map.markers,
-  storyPosts: state.map.storyPosts,
-  user: state.user,
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
   handlePlacesChanged,
   handleBoundsChanged,
   handleSearchArea,
-  // handleStoryLoad,
 }, dispatch);
 
 
