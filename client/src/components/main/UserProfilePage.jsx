@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
@@ -35,6 +36,7 @@ const UserProfilePage = (props) => {
       <Row style={{height: '500px'}}>
         <Timeline />
       </Row>
+      <PostList type={'TYPE_STORY'} />
     </div>
   );
 };
