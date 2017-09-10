@@ -11,6 +11,7 @@ export const HANDLE_SEARCH_AREA = 'map/HANDLE_SEARCH_AREA';
 export const HANDLE_MARKER_CLICK = 'map/HANDLE_MARKER_CLICK';
 export const HANDLE_MARKER_CLOSE = 'map/HANDLE_MARKER_CLOSE';
 export const HANDLE_STORY_LOAD = 'map/HANDLE_STORY_LOAD';
+export const HANDLE_STORY_LIST_CLICK = 'map/HANDLE_STORY_LIST_CLICK';
 
 /** ============================================================
  * Define Initial State
@@ -21,6 +22,7 @@ const initialState = {
   bounds: null,
   markers: [],
   storyPosts: [],
+  zoom: 10,
 };
 /** ============================================================
  * Define Reducer
@@ -34,6 +36,13 @@ export default (state = initialState, action) => {
       center: action.center,
       markers: action.markers
     };
+  case HANDLE_STORY_LIST_CLICK:
+    return {
+      ...state, 
+      center: action.center,
+      zoom: action.zoom,
+    };
+
   case HANDLE_PLACES_CHANGED:
     return {
       ...state,
@@ -104,6 +113,17 @@ export const setCenter = (lat, lng) => {
   };
 };
 
+export const storyListClick = (post) => {
+  console.log('AT STORYLIST CLICK', post);
+  return dispatch => {
+    dispatch ({
+      type: HANDLE_STORY_LIST_CLICK,
+      center: {lat: parseFloat(post.lat), lng: parseFloat(post.lng)},
+      zoom: 15
+    });
+  };
+};
+
 export const handlePlacesChanged = (searchBox, oldCenter) => {
   var places = searchBox.getPlaces().map(place => ({
     position: place.geometry.location
@@ -145,9 +165,9 @@ export const handleSearchArea = (center) => {
   };
 };
 
-export const handleStoryLoad = (storyID) => {
+export const handleSingleStory = (storyID) => {
   return dispatch => {
-    return getPostsByStory(userID, title)
+    return getPostsByStory(storyID)
       .then(results => {
         dispatch({
           type: HANDLE_STORY_LOAD,
@@ -182,5 +202,5 @@ export const getPostsWithinRadius = (center) => {
 };
 
 export const getPostsByStory = (storyID) => {
-  return axios.post('/api/posts/story', storyID);
+  return axios.post(`api/posts/story/${storyID}`);
 };

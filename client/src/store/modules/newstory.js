@@ -15,8 +15,8 @@ export const SET_NEW_STORY_SUMMARY = 'newstory/SET_NEW_STORY_SUMMARY';
  */
 
 const initialState = {
-  storyTitle: 'dummy',
-  storySummary: 'dummy',
+  storyTitle: '',
+  storySummary: '',
 };
 
 /** ============================================================
@@ -25,19 +25,22 @@ const initialState = {
  */
 export default (state = initialState, action) => {
   switch (action.type) {
-  case SET_NEW_STORY_TITLE : 
+  case SET_NEW_STORY_TITLE :
     return ({
       ...state,
       storyTitle: action.title,
-      storySummary: state.summary,
+      storySummary: state.storySummary,
     });
 
   case SET_NEW_STORY_SUMMARY : 
     return ({
       ...state,
-      storyTitle: state.title,
-      storySummary: action.content,
+      storyTitle: state.storyTitle,
+      storySummary: action.summary,
     });
+
+  default:
+    return state;
   }
 };
 

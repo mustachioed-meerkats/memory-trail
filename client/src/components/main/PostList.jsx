@@ -6,12 +6,12 @@ import StoryListEntry from './StoryListEntry.jsx';
 
 //Eventually, we will be using storyPosts.map
 
-const PostList = ({posts, userPosts, StoryListClick, type, storyPosts}) => {
+const PostList = ({posts, userPosts, type, storyPosts}) => {
   if (type === 'TYPE_STORY') {
     return (
       <div style = {{display: 'flex', flexDirection: 'row', flexWrap: 'nowrap', justifyContent: 'space-evenly', overflowX: 'scroll'}}>     
-        {userPosts.map((post, i) => { 
-          return <StoryListEntry StoryListClick = {StoryListClick} post={post} id={i} key={i}/>; 
+        {storyPosts.map((post, i) => { 
+          return <StoryListEntry post={post} id={i} key={i}/>; 
         })}
       </div>
     );
@@ -37,7 +37,7 @@ const PostList = ({posts, userPosts, StoryListClick, type, storyPosts}) => {
 const mapStateToProps = (state) => ({
   posts: state.map.markers,
   userPosts: state.userPosts,
-  // storyPosts: state.map.storyPosts
+  storyPosts: state.map.storyPosts
 });
 
 
