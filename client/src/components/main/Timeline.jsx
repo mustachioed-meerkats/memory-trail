@@ -89,7 +89,6 @@ class Timeline extends React.Component {
     this.handleMapMounted = this.handleMapMounted.bind(this);
   }
 
-
   handleMapMounted(map) {
     this.setState({
       _map: map
