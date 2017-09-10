@@ -111,14 +111,9 @@ class CreateNewPost extends React.Component {
     let localID = 0;
     this.props.stories.map((story) => {
       if (story.title === name) {
-<<<<<<< HEAD
-        this.setState({storyID: story.id});
-      }
-=======
         localID = story.id;
         this.setState({storyID: localID, storyName: story.title});
       }
->>>>>>> Added a lot more stuff. Ready to be worked on by Talis.
     });
   }
 
