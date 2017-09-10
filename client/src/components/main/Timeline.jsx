@@ -82,7 +82,6 @@ class Timeline extends React.Component {
   //   this.props.handleStoryLoad(storyID);
   // }
 
-
   StoryListClick(post) {
     console.log('STORYLIST CLICK WORKING', post);
     this.setState({
