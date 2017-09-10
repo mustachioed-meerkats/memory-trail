@@ -47,7 +47,7 @@ describe('Posts API', function () {
             };
           })
           .expect(200, {
-            length: 1
+            length: 2
           });
       });
   });

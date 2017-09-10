@@ -51,8 +51,8 @@ exports.seed = function (knex, Promise) {
     })
     .then(profile => {
       return models.Following.forge({
-        profile_id: profile.get('id'),
-        following_id: profile_id
+        profile_id: profile_id,
+        following_id: profile.get('id')
       }).save();
     })
     .error(err => {
