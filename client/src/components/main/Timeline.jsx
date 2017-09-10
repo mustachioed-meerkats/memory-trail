@@ -6,13 +6,19 @@ import { Link } from 'react-router-dom';
 import Markers from './maps/Markers.jsx';
 import Search from './maps/Search.jsx';
 import PostList from './PostList.jsx';
+import { Modal, Button, MenuItem, ButtonToolbar, ControlLabel, Form, FormGroup, DropdownButton, FormControl, Radio, ButtonGroup } from 'react-bootstrap';
+
 
 import { 
   handlePlacesChanged,
   handleBoundsChanged,
   handleSearchArea,
-  handleStoryLoad,
+  handleSingleStory,
 } from '../../store/modules/map';
+
+import {
+  handleStoryLoad,
+} from '../../store/modules/newpost';
 
 //For right now, handleSearchArea will be used.
 //After the backend is built out, handleStoryLoad will be used. 
@@ -20,7 +26,6 @@ import {
 // Implement once everything is hooked up. 
 
 /*
-
   props.storyPosts.forEach(function (post) {
     var obj = {'lat': parseFloat(post.lat), 'lng': parseFloat(post.lng)};
     path.push(obj);
@@ -32,20 +37,31 @@ import {
   >
   </Marker>
 */
+
+
+
 const TimelineComponent = withGoogleMap(props => {
   const path = [];
-  props.markers.forEach(function (post) {
+  props.storyPosts.forEach(function (post) {
     var obj = {'lat': parseFloat(post.lat), 'lng': parseFloat(post.lng)};
     path.push(obj);
   });
   return (
     <div>
+      <ButtonToolbar>
+        <DropdownButton bsSize="large" title="Choose A Story!!" id="dropdown-size-large" >  
+          {props.stories.map((story, i) => {
+            return <MenuItem key={i} eventKey= {story.title} onSelect={(eventKey) => { props.storySelected(eventKey); }} >{story.title}</MenuItem>;                  
+          })}
+        </DropdownButton>
+      </ButtonToolbar>
+
       <GoogleMap
         ref={props.handleMapMounted}
         zoom={props.zoom}
         center={props.center}
       >
-        {props.markers.map((marker, index) => (
+        {props.storyPosts.map((marker, index) => (
           <Marker
             position={{lat: parseFloat(marker.lat), lng: parseFloat(marker.lng)}} key={index}
           >
@@ -55,7 +71,7 @@ const TimelineComponent = withGoogleMap(props => {
           path={path}
         />
       </GoogleMap>
-      <PostList type={'TYPE_STORY'} StoryListClick={props.StoryListClick} />
+      <PostList type={'TYPE_STORY'} />
     </div>
   );
 });
@@ -66,30 +82,13 @@ class Timeline extends React.Component {
     this.state = {
       _map: null,
       center: this.props.center,
-      zoom: 10
+      zoom: this.props.zoom,
+      storyID: 0,
+      stories: this.props.stories,
     };
     this.handleMapMounted = this.handleMapMounted.bind(this);
-    this.StoryListClick = this.StoryListClick.bind(this);
   }
 
-  // Eventually we will need to fix this so that we get actual posts from the appropriate story. 
-  // We may have an eventual issue with the postList page, as it looks for the storyPosts state, which is set by 
-  // the following component. This needs to be investigated later on. 
-
-  // We will also need to have a story that loads on default with the page. 
-  // This can be looked at later, probably qualifies as techinical debt. 
-  // componentDidMount () {
-  //   this.props.handleStoryLoad(storyID);
-  // }
-
-
-  StoryListClick(post) {
-    console.log('STORYLIST CLICK WORKING', post);
-    this.setState({
-      center: {lat: parseFloat(post.lat), lng: parseFloat(post.lng)},
-      zoom: 15
-    });
-  }
 
   handleMapMounted(map) {
     this.setState({
@@ -103,6 +102,20 @@ class Timeline extends React.Component {
     });
   }
 
+  storySelected (name) {
+    let localID = 0;
+    this.stories.map((story) => {
+      if (story.title === name) {
+        localID = story.id;
+      }
+    });
+    this.props.handleSingleStory(localID); 
+  }
+
+  componentDidMount() {
+    this.props.handleStoryLoad();
+  }
+
   render() {
     return (
       <TimelineComponent 
@@ -112,8 +125,10 @@ class Timeline extends React.Component {
         center={this.state.center}
         map={this.state._map}
         markers={this.props.markers}
-        zoom={this.state.zoom}
-        StoryListClick={this.StoryListClick}
+        zoom={this.props.zoom}
+        storyPosts={this.props.storyPosts}
+        stories={this.props.stories}
+        storySelected={this.storySelected}
       />
     );
   }
@@ -123,19 +138,22 @@ class Timeline extends React.Component {
 
 const mapStateToProps = state => ({
   center: state.map.center,
+  zoom: state.map.zoom,
   bounds: state.map.bounds,
   containerElement: <div style={{height: '100%'}} />,
   mapElement: <div style={{height: '100%'}} />,
   markers: state.map.markers,
   storyPosts: state.map.storyPosts,
   user: state.user,
+  stories: state.newpost.allUserStories,
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
   handlePlacesChanged,
   handleBoundsChanged,
   handleSearchArea,
-  // handleStoryLoad,
+  handleStoryLoad,
+  handleSingleStory,
 }, dispatch);
 
 

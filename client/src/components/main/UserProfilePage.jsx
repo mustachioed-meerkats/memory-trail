@@ -35,7 +35,6 @@ const UserProfilePage = (props) => {
       <Row style={{height: '500px'}}>
         <Timeline />
       </Row>
-      <PostList type={'TYPE_STORY'} />
     </div>
   );
 };
