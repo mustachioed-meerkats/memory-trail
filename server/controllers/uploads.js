@@ -2,10 +2,10 @@ const s3 = require('../middleware/s3.js').s3;
 
 module.exports.upload = (req, res) => {
 
-  var filename = req.files[0].originalname.split('.')[0];
-  var key = filename + '_' + Date.now().toString();
-  var region = 'us-west-1';
-  var bucket = 'memorytrail';
+  let filename = req.files[0].originalname.split('.')[0];
+  let key = filename + '_' + Date.now().toString();
+  let region = 'us-west-1';
+  let bucket = 'memorytrail';
   
   let params = {
     ACL: 'public-read',

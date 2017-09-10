@@ -1,7 +1,14 @@
 import React from'react';
 import axios from 'axios';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import { Grid, Row, Col } from 'react-bootstrap';
 import { Button, ButtonToolbar, ControlLabel, Form, FormGroup, FormControl, Radio, ButtonGroup } from 'react-bootstrap';
+
+
+import {
+  handleImageUrl
+} from '../../store/modules/newpost';
 
 class Upload extends React.Component {
   constructor(props) {
@@ -25,6 +32,8 @@ class Upload extends React.Component {
         this.setState({
           processing: false
         });
+        let image_url = res.data.Location;
+        this.props.handleImageUrl(image_url);
         console.log('Upload successful');
       })
       .catch(err => {
@@ -74,4 +83,23 @@ class Upload extends React.Component {
   }
 };
 
-export default Upload;
+/** ============================================================
+ * Define State Subscriptions
+ * =============================================================
+ */
+const mapStateToProps = state => ({
+  image_url: state.newpost.image_url
+});
+
+/** ============================================================
+ * Define Dispatches Subscriptions
+ * =============================================================
+ */
+const mapDispatchToProps = dispatch => bindActionCreators({
+  handleImageUrl: handleImageUrl
+}, dispatch);
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Upload);
