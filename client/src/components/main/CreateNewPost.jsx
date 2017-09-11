@@ -27,7 +27,7 @@ class CreateNewPost extends React.Component {
     super(props);
     this.state = {
       landmark: '',
-      postObject: ''
+      // postObject: ''
     }
     this.geocodeLocationInput = this.geocodeLocationInput.bind(this);
     this.initializeAutocomplete = this.initializeAutocomplete.bind(this);
@@ -69,7 +69,7 @@ class CreateNewPost extends React.Component {
       }
       this.setState({
         landmark: {
-          goole_id: place.place_id,
+          google_id: place.place_id,
           name: place.name,
           image_url: image_url,
           lat: place.geometry.location.lat(),
@@ -95,14 +95,18 @@ class CreateNewPost extends React.Component {
 
     console.log('(Client) Intiating POST Request! CREATING NEW POST');
 
-    this.setState({
-      postObject: {
-        post: post,
-        landmark: this.state.landmark
-      }
-    })
-
-    return axios.post('/api/posts/new', this.state.postObject)
+    // this.setState({
+    //   postObject: {
+    //     post: post,
+    //     landmark: this.state.landmark
+    //   }
+    // })
+    var postObject = {
+      post: post,
+      landmark: this.state.landmark
+    };
+    console.log('postobject', postObject);
+    return axios.post('/api/posts/new', postObject)
       .then(result => {
         console.log('(Client) Success! CREATING NEW POST');
         // TODO: Add redirection to Explore Map
