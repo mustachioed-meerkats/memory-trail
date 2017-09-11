@@ -8,7 +8,7 @@ export const SET_NEW_POST_TITLE_INPUT = 'newpost/SET_NEW_POST_TITLE_INPUT';
 export const SET_NEW_POST_CONTENT_TEXTAREA = 'newpost/SET_NEW_POST_CONTENT_TEXTAREA';
 export const SET_NEW_POST_LOCATION_INPUT = 'newpost/SET_NEW_POST_LOCATION_INPUT';
 export const SET_NEW_POST_IMAGEURL = 'newpost/SET_NEW_POST_IMAGEURL';
-
+export const HANDLE_STORY_LOAD = 'newpost/HANDLE_STORY_LOAD';
 /** ============================================================
  * Define Initial State
  * =============================================================
@@ -17,9 +17,13 @@ const initialState = {
   title: '',
   content: '',
   location: '',
+  story: '',
+  landmark: '',
   profile_id: __PRELOADED_STATE__.user.id,
-  image_url: ''
+  allUserStories: [{Test: 'Data'}],
+  image_url: '',
 };
+
 
 /** ============================================================
  * Define Reducer
@@ -58,7 +62,12 @@ export default (state = initialState, action) => {
       content: state.content,
       location: state.location,
       image_url: action.image_url
-    })
+    });
+  case HANDLE_STORY_LOAD :
+    return ({
+      ...state,
+      allUserStories: action.allUserStories,
+    });
   default:
     return state;
   }
@@ -90,9 +99,33 @@ export const handleLocationInput = (location) => {
   };
 };
 
+export const handleStoryLoad = () => {
+  return dispatch => {
+    return loadStoriesByUser(initialState.profile_id)
+      .then(results => {
+        dispatch({
+          type: HANDLE_STORY_LOAD,
+          allUserStories: results.data,
+        });
+      });
+  };
+};
+
 export const handleImageUrl = (image_url) => {
   return {
     type: SET_NEW_POST_IMAGEURL,
     image_url
   };
+};
+
+
+/**
+ * ==========================================================
+ * API Calls
+ * ==========================================================
+ */
+
+
+export const loadStoriesByUser = (profile_id) => {
+  return axios.get(`/api/stories/user/${profile_id}`);
 };
