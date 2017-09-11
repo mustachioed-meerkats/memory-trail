@@ -16,7 +16,7 @@ export const HANDLE_STORY_LOAD = 'map/HANDLE_STORY_LOAD';
  * =============================================================
  */
 const initialState = {
-  center: {lat: 36.209681, lng: -115.093977},
+  center: __PRELOADED_STATE__.map,
   bounds: null,
   markers: [],
   storyPosts: [],
