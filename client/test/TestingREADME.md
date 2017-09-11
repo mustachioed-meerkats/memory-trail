@@ -15,7 +15,6 @@ Enzyme is used to test React Components. It is good for doing things such as ens
 
 Both of these packages will be set up to run via npm test. 
 
-sum.js && sum.test.js are just boilerplate tests to ensure that Jest is running. 
 
 #Relevant file touches/setup.
 
@@ -67,7 +66,7 @@ If there are DOM issues, add jsdom to enzyme.
 
 #How to test.
 
-Place Jest Snapshot Tests within the __test__ folder. 
+Place Jest Snapshot Tests within the src/test folder. 
 
 Jest can run regular mocha/chai tests on the server side. 
 
