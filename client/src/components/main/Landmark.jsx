@@ -5,6 +5,7 @@ import { bindActionCreators } from 'redux';
 import { Grid, Row, Col } from 'react-bootstrap';
 import { Button, ButtonToolbar, ControlLabel, Form, FormGroup, FormControl, Radio, ButtonGroup } from 'react-bootstrap';
 import following from '../../styles/following';
+import PostListEntry from './PostListEntry'
 
 // populate the page with landmarks data
 class Landmark extends React.Component {
@@ -47,10 +48,14 @@ class Landmark extends React.Component {
 
   render() {
     return (
-      <div> Landmark Name </div>
+      <div>
+        <div style={{textAlign:'center'}}> Landmark Name </div>
+        {this.props.posts.map((post, index) => {
+          return <PostListEntry post={post} key={index} />
+        })}
+      </div>
     )
   }
 }
 
 export default Landmark;
-

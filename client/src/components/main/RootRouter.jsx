@@ -6,8 +6,12 @@ import CreateNewPost from './CreateNewPost.jsx';
 import FollowingFeed from './FollowingFeed.jsx';
 import FollowingsPage from './FollowingsPage.jsx';
 import UserProfilePage from './UserProfilePage.jsx';
+<<<<<<< HEAD
 import CurrentUserProfilePage from './CurrentUserProfilePage.jsx';
 import Timeline from './Timeline.jsx';
+=======
+import Landmark from './Landmark.jsx';
+>>>>>>> Commits before merging
 
 const RootRouter = () => (
   <Switch>

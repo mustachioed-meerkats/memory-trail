@@ -5,6 +5,7 @@ import { bindActionCreators } from 'redux';
 import { Grid, Row, Col } from 'react-bootstrap';
 import { Button, ButtonToolbar, ControlLabel, Form, FormGroup, FormControl, Radio, ButtonGroup } from 'react-bootstrap';
 
+
 import {
   handleImageUrl
 } from '../../store/modules/newpost';
@@ -56,21 +57,21 @@ class Upload extends React.Component {
       <Grid>
         <Row>
           <form onSubmit={this.handleSubmit} encType="multipart/form-data">
-            <Row>
+            <Row style={{marginBottom: '10px'}}>
               <Col sm={4}>
               </Col>
               <Col sm={2}>
                 <label>Upload Image</label>
               </Col>
               <Col sm={3}>
-                {this.state.processing ? <input disabled className='btn btn-primary' type="submit" value="Upload" /> : <input className='btn btn-primary' type="submit" value="Upload" />}
+                {this.state.processing ? <input disabled className='btn btn-info btn-sm btn-disabled' type="submit" value="Upload" /> : <input className='btn btn-info btn-sm' type="submit" value="Upload" />}
               </Col>
             </Row>
             <Row>
               <Col sm={4}>
               </Col>
               <Col sm={4}>
-                <input type="file" onChange={this.handleFile} />
+                <input style={{marginBottom: '10px'}} type="file" onChange={this.handleFile} />
               </Col>
               <Col sm={4}>
               </Col>
@@ -102,3 +103,5 @@ export default connect(
   mapStateToProps,
   mapDispatchToProps
 )(Upload);
+
+{/* className='btn btn-info' */}
