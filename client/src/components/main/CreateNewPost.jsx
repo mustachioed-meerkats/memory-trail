@@ -88,7 +88,7 @@ class CreateNewPost extends React.Component {
       lng: this.props.location.lng,
       profile_id: this.props.user.id,
       image_url: this.props.image_url,
-      landmark_id: landmark.id
+      // landmark_id: landmark.id
     };
 
     console.log('(Client) Intiating POST Request! CREATING NEW POST');
