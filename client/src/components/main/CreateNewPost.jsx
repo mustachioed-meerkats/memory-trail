@@ -78,9 +78,11 @@ class CreateNewPost extends React.Component {
       }
       this.setState({
         landmark: {
-          id: place.place_id,
+          google_id: place.place_id,
           name: place.name,
-          image_url: image_url
+          image_url: image_url,
+          lat: place.geometry.location.lat(),
+          lng: place.geometry.location.lng()
         }
       });
       console.log('landmark object: ', this.state.landmark);
