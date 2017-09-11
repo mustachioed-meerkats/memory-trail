@@ -27,6 +27,7 @@ import {
   handleStorySummary,
   handleStoryTitle,
 } from '../../store/modules/newstory';
+
 class CreateNewPost extends React.Component {
   constructor(props) {
     super(props);
@@ -35,13 +36,13 @@ class CreateNewPost extends React.Component {
       postObject: '',
       show: false,
       storyID: ''
-    }
+    };
     this.geocodeLocationInput = this.geocodeLocationInput.bind(this);
     this.initializeAutocomplete = this.initializeAutocomplete.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-    }
+  }
 
-  geocodeLocationInput = (location) => {
+  geocodeLocationInput (location) {
     // calls google geocoding API to fetch lat/lng from address selected in autocomplete form
     let url = `https://maps.googleapis.com/maps/api/geocode/json?address=${location}&key=AIzaSyDXLOMgs19AOUHeizaMnRwjVyzxcTGWmJ8`;
     return axios.get(url)
@@ -56,12 +57,12 @@ class CreateNewPost extends React.Component {
   }
 
   // Autocomplete feature for the form's location input field
-  initializeAutocomplete = () => {
+  initializeAutocomplete () {
     let input = document.getElementById('locationInput');
     // render predictions from google autocomplete using input from location field
     let autocomplete = new google.maps.places.Autocomplete(input);
-    // listen for location selection from the dropdown
     let place;
+    // listen for location selection from the dropdown
     google.maps.event.addListener(autocomplete, 'place_changed', () => {
       place = autocomplete.getPlace();
       console.log(place);
@@ -85,9 +86,9 @@ class CreateNewPost extends React.Component {
       // when a place is selected, use its address property to call google geocoding API
       this.geocodeLocationInput(place.formatted_address);
     });
-  };
+  }
 
-  handleSubmit = (landmark) => {
+  handleSubmit (landmark) {
     let post = {
       title: this.props.title,
       content: this.props.content,
@@ -98,6 +99,7 @@ class CreateNewPost extends React.Component {
       landmark_id: landmark.id,
       storyID: props.storyID
     };
+    console.log(post);
 
     console.log('(Client) Intiating POST Request! CREATING NEW POST');
 
@@ -106,7 +108,7 @@ class CreateNewPost extends React.Component {
         post: post,
         landmark: this.state.landmark
       }
-    })
+    });
 
     return axios.post('/api/posts/new', this.state.postObject)
       .then(result => {
@@ -279,8 +281,8 @@ const mapStateToProps = state => ({
   map: state.map.center,
   user: state.user,
   stories: state.newpost.allUserStories,
-  storyTitle: state.storyTitle,
-  storySummary: state.storySummary
+  storyTitle: state.newstory.storyTitle,
+  storySummary: state.newstory.storySummary
 });
 
 /** ============================================================
