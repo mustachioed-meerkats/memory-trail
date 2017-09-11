@@ -138,6 +138,12 @@ class CreateNewPost extends React.Component {
       });
   }
 
+  submitClick () {
+    this.storySubmit();
+    this.hideModal();
+    this.props.handleStoryLoad();
+  }
+
   storySelected (name) {
     let localID = 0;
     this.props.stories.map((story) => {
@@ -203,7 +209,7 @@ class CreateNewPost extends React.Component {
                 </Modal.Body>
                 <Modal.Footer>
                   <Button onClick={this.hideModal.bind(this)}>Close</Button>
-                  <Button onClick={this.hideModal.bind(this)} onClick= {this.storySubmit.bind(this)} > Submit Story </Button>
+                  <Button onClick={this.submitClick.bind(this)} > Submit Story </Button>
                 </Modal.Footer>
               </Modal>
             </ButtonToolbar>
