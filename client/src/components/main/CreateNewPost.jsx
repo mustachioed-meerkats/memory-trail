@@ -105,15 +105,14 @@ class CreateNewPost extends React.Component {
     console.log(post);
 
     console.log('(Client) Intiating POST Request! CREATING NEW POST');
-
-    this.setState({
-      postObject: {
-        post: post,
-        landmark: this.state.landmark
-      }
-    });
-
-    return axios.post('/api/posts/new', this.state.postObject)
+    var postObject = {
+      post: post,
+      landmark: this.state.landmark
+    };
+    
+    console.log('postobject', postObject);
+        
+    return axios.post('/api/posts/new', postObject)
       .then(result => {
         console.log('(Client) Success! CREATING NEW POST');
         // TODO: Add redirection to Explore Map
