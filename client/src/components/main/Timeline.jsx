@@ -25,21 +25,21 @@ const TimelineComponent = withGoogleMap(props => {
   });
   console.log(path);
   return (
-  <GoogleMap
-    ref={props.handleMapMounted}
-    defaultZoom={10}
-    center={props.center}
-  >
-    {props.markers.map((marker, index) => (
-      <Marker
-        position={{lat: parseFloat(marker.lat), lng: parseFloat(marker.lng)}} key={index}
-      >
-      </Marker>
-    ))}
-    <Polyline
-      path={path}
-    />
-  </GoogleMap>
+    <GoogleMap
+      ref={props.handleMapMounted}
+      defaultZoom={10}
+      center={props.center}
+    >
+      {props.markers.map((marker, index) => (
+        <Marker
+          position={{lat: parseFloat(marker.lat), lng: parseFloat(marker.lng)}} key={index}
+        >
+        </Marker>
+      ))}
+      <Polyline
+        path={path}
+      />
+    </GoogleMap>
   );
 });
 
@@ -50,6 +50,25 @@ class Timeline extends React.Component {
       _map: null,
     };
     this.handleMapMounted = this.handleMapMounted.bind(this);
+    this.StoryListClick = this.StoryListClick.bind(this);
+  }
+
+  // Eventually we will need to fix this so that we get actual posts from the appropriate story. 
+  // We may have an eventual issue with the postList page, as it looks for the storyPosts state, which is set by 
+  // the following component. This needs to be investigated later on. 
+
+  // We will also need to have a story that loads on default with the page. 
+  // This can be looked at later, probably qualifies as techinical debt. 
+  // componentDidMount () {
+  //   this.props.handleStoryLoad(storyID);
+  // }
+
+  StoryListClick(post) {
+    console.log('STORYLIST CLICK WORKING', post);
+    this.setState({
+      center: {lat: parseFloat(post.lat), lng: parseFloat(post.lng)},
+      zoom: 15
+    });
   }
 
   handleMapMounted(map) {
@@ -98,7 +117,3 @@ export default connect(
   mapStateToProps,
   mapDispatchToProps
 )(Timeline);
-
-
-
-
