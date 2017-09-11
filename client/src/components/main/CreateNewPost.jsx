@@ -97,6 +97,7 @@ class CreateNewPost extends React.Component {
       lat: this.props.location.lat,
       lng: this.props.location.lng,
       profile_id: this.props.user.id,
+      profile_display: this.props.user.display,
       image_url: this.props.image_url,
       storyID: this.storyID
     };

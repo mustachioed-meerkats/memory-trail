@@ -35,13 +35,15 @@ export default (state = initialState, action) => {
       ...state,
       center: action.center,
       userLocationAvailable: true,
-      markers: action.markers
+      markers: action.markers,
+      landmarks: action.landmarks
     };
   case HANDLE_PLACES_CHANGED:
     return {
       ...state,
       center: action.center,
-      markers: action.markers
+      markers: action.markers,
+      landmarks: action.landmarks
     };
   case HANDLE_BOUNDS_CHANGED:
     return {
@@ -57,7 +59,8 @@ export default (state = initialState, action) => {
   case HANDLE_SEARCH_AREA:
     return {
       ...state,
-      markers: action.markers
+      markers: action.markers,
+      landmarks: action.landmarks
     };
   case HANDLE_MARKER_CLICK:
     return {
@@ -96,12 +99,14 @@ export default (state = initialState, action) => {
  */
 export const setCenter = (lat, lng) => {
   return dispatch => {
-    return getPostsWithinRadius({lat, lng})
+    return getLandmarksWithinRadius({lat, lng})
       .then(results => {
+        var posts = getPostsFromLandmarks(results.data);
         dispatch({
           type: SET_CENTER,
           center: {lat, lng},
-          markers: results.data
+          markers: posts,
+          landmarks: results.data
         });
       });
   };
@@ -113,12 +118,13 @@ export const handlePlacesChanged = (searchBox, oldCenter) => {
   }));
   const center = places.length > 0 ? places[0].position : oldCenter;
   return dispatch => {
-    return getPostsWithinRadius({lat: center.lat(), lng: center.lng()})
+    return getLandmarksWithinRadius({lat: center.lat(), lng: center.lng()})
       .then(results => {
-        console.log('results: ', results);
+        var posts = getPostsFromLandmarks(results.data);
         dispatch({
           type: HANDLE_PLACES_CHANGED,
-          markers: results.data,
+          markers: posts,
+          landmarks: results.data,
           center: {lat: center.lat(), lng: center.lng()}
         });
       });
@@ -138,11 +144,13 @@ export const handleBoundsChanged = (map) => {
 
 export const handleSearchArea = (center) => {
   return dispatch => {
-    return getPostsWithinRadius(center)
+    return getLandmarksWithinRadius(center)
       .then(results => {
+        var posts = getPostsFromLandmarks(results.data);
         dispatch({
           type: HANDLE_SEARCH_AREA,
-          markers: results.data
+          markers: posts,
+          landmarks: results.data,
         });
       });
   };
@@ -184,6 +192,18 @@ export const getPostsWithinRadius = (center) => {
   return axios.post('/api/posts/nearby', center);
 };
 
+export const getLandmarksWithinRadius = (center) => {
+  return axios.post('/api/landmarks/nearby', center);
+};
+
 export const getPostsByStory = (title) => {
   return axios.post('/api/posts/story', title);
+};
+
+export const getPostsFromLandmarks = (landmarks) => {
+  var posts = [];
+  landmarks.forEach(landmark => {
+    posts = posts.concat(landmark.posts);
+  });
+  return posts;
 };
