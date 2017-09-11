@@ -27,7 +27,6 @@ class CreateNewPost extends React.Component {
     super(props);
     this.state = {
       landmark: '',
-      // postObject: ''
     }
     this.geocodeLocationInput = this.geocodeLocationInput.bind(this);
     this.initializeAutocomplete = this.initializeAutocomplete.bind(this);
@@ -95,12 +94,6 @@ class CreateNewPost extends React.Component {
 
     console.log('(Client) Intiating POST Request! CREATING NEW POST');
 
-    // this.setState({
-    //   postObject: {
-    //     post: post,
-    //     landmark: this.state.landmark
-    //   }
-    // })
     var postObject = {
       post: post,
       landmark: this.state.landmark
