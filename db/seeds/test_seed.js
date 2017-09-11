@@ -23,10 +23,10 @@ exports.seed = function (knex, Promise) {
       story_id = story.get('id');
       return models.Landmark.forge({
         name: 'Union Square',
-        description: 'Most touristy spot in SF.',
         image_url: 'www.google.com',
         lat: 37.7997456,
         lng: -122.408456,
+        google_id: 'thisisafakegoogleid'
       }).save();
     })
     .then(landmark => {

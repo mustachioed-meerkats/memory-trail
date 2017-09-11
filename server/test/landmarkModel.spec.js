@@ -16,7 +16,7 @@ describe('Landmark model test', function() {
     return Landmark.getLandmarkById(1)
       .then(model => {
         expect(model.get('name')).to.equal('Union Square');
-        expect(model.get('description')).to.equal('Most touristy spot in SF.');
+        expect(model.get('google_id')).to.equal('thisisafakegoogleid');
       });
   });
 
