@@ -35,7 +35,8 @@ class CreateNewPost extends React.Component {
       landmark: '',
       postObject: '',
       show: false,
-      storyID: ''
+      storyID: 0, 
+      storyName: 'None Selected',
     };
     this.geocodeLocationInput = this.geocodeLocationInput.bind(this);
     this.initializeAutocomplete = this.initializeAutocomplete.bind(this);
@@ -97,7 +98,7 @@ class CreateNewPost extends React.Component {
       profile_id: this.props.user.id,
       image_url: this.props.image_url,
       landmark_id: landmark.id,
-      storyID: props.storyID
+      storyID: this.storyID
     };
     console.log(post);
 
@@ -127,6 +128,7 @@ class CreateNewPost extends React.Component {
     const storyInfo = {
       title: this.props.storyTitle,
       summary: this.props.storySummary,
+      profile_id: this.props.user.id,
     };
     return axios.post('/api/stories/new', storyInfo)
       .then(result => {
@@ -138,13 +140,14 @@ class CreateNewPost extends React.Component {
   }
 
   storySelected (name) {
-    this.props.stories.map(function (story) {
+    let localID = 0;
+    this.props.stories.map((story) => {
       if (story.title === name) {
-        this.setState({storyID: story.id});
-      } 
+        localID = story.id;
+        this.setState({storyID: localID, storyName: story.title});
+      }
     });
   }
-
   showModal () {
     this.setState({show: true});
   }
@@ -207,13 +210,13 @@ class CreateNewPost extends React.Component {
               </Modal>
             </ButtonToolbar>
             <ButtonToolbar>
-              <DropdownButton bsSize="large" title="Choose A Story!!" id="dropdown-size-large" onSelect = {(e) => { this.storySelected(e.target.value); }} >  
-                {this.props.stories.map(function (story) {
-                  return <MenuItem>{story.title}</MenuItem>;                  
+              <DropdownButton bsSize="large" title="Choose A Story!!" id="dropdown-size-large" >
+                {this.props.stories.map((story, i) => {
+                  return <MenuItem key={i} eventKey= {story.title} onSelect={(eventKey) => { this.storySelected(eventKey); }} >{story.title}</MenuItem>;
                 })}
               </DropdownButton>
             </ButtonToolbar>
-            Current Story = whatever.
+            Current Story {this.state.storyName}.
           </Col>
           <Col sm={4}>
           </Col>
