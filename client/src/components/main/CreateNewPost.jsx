@@ -33,7 +33,6 @@ class CreateNewPost extends React.Component {
     super(props);
     this.state = {
       landmark: '',
-      postObject: '',
       show: false,
       storyID: 0, 
       storyName: 'None Selected',
@@ -98,22 +97,20 @@ class CreateNewPost extends React.Component {
       lat: this.props.location.lat,
       lng: this.props.location.lng,
       profile_id: this.props.user.id,
+      profile_display: this.props.user.display,
       image_url: this.props.image_url,
-      landmark_id: landmark.id,
       storyID: this.storyID
     };
     console.log(post);
 
     console.log('(Client) Intiating POST Request! CREATING NEW POST');
 
-    this.setState({
-      postObject: {
-        post: post,
-        landmark: this.state.landmark
-      }
-    });
+    var postObject = {
+      post: post,
+      landmark: this.state.landmark
+    };
 
-    return axios.post('/api/posts/new', this.state.postObject)
+    return axios.post('/api/posts/new', postObject)
       .then(result => {
         console.log('(Client) Success! CREATING NEW POST');
         // TODO: Add redirection to Explore Map
@@ -139,6 +136,12 @@ class CreateNewPost extends React.Component {
       .catch((err) => {
         console.log('STORY CREATION FAILED');
       });
+  }
+
+  submitClick () {
+    this.storySubmit();
+    this.hideModal();
+    this.props.handleStoryLoad();
   }
 
   storySelected (name) {
@@ -178,7 +181,6 @@ class CreateNewPost extends React.Component {
                 Add a story!
               </Button>
               <Modal
-                {...this.props}
                 show={this.state.show}
                 onHide={this.hideModal.bind(this)}
               >
@@ -207,7 +209,7 @@ class CreateNewPost extends React.Component {
                 </Modal.Body>
                 <Modal.Footer>
                   <Button onClick={this.hideModal.bind(this)}>Close</Button>
-                  <Button onClick={this.hideModal.bind(this)} onClick= {this.storySubmit.bind(this)} > Submit Story </Button>
+                  <Button onClick={this.submitClick.bind(this)} > Submit Story </Button>
                 </Modal.Footer>
               </Modal>
             </ButtonToolbar>
@@ -241,7 +243,7 @@ class CreateNewPost extends React.Component {
                   id="locationInput"
                   placeholder="Search for places"
                   style={{width: '100%'}}
-                  onChange={this.initializeAutocomplete.bind(this)}
+                  onChange={this.initializeAutocomplete}
                 />
               </FormGroup>
               <FormGroup>

@@ -35,6 +35,19 @@ const Landmark = db.Model.extend({
   },
   getLandmarkById: function(id) {
     return this.where({id}).fetch();
+  },
+  getLandmarksWithinRadius: function(center, radius = 13) {
+    var {lat, lng} = center;
+    var degreesPerMile = 0.0144722856;
+    var maxLat = lat + degreesPerMile * radius;
+    var minLat = lat - degreesPerMile * radius;
+    var maxLng = lng + degreesPerMile * radius;
+    var minLng = lng - degreesPerMile * radius;
+    return this.where('lat', '<', maxLat)
+      .where('lat', '>', minLat)
+      .where('lng', '<', maxLng)
+      .where('lng', '>', minLng)
+      .fetchAll({withRelated: ['posts']});
   }
 });
 

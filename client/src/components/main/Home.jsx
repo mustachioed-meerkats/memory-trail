@@ -29,11 +29,13 @@ const exploreMapStyle = {
 };
 
 const Home = (props) => {
-  navigator.geolocation.getCurrentPosition(function(location) {
-    var lat = location.coords.latitude;
-    var lng = location.coords.longitude;
-    props.setCenter(lat, lng);
-  });
+  if (!props.userLocationAvailable) {
+    navigator.geolocation.getCurrentPosition(function(location) {
+      var lat = location.coords.latitude;
+      var lng = location.coords.longitude;
+      props.setCenter(lat, lng);
+    });
+  }
 
   return (
     <div>
@@ -48,6 +50,7 @@ const Home = (props) => {
 };
 
 const mapStateToProps = state => ({
+  userLocationAvailable: state.map.userLocationAvailable
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({

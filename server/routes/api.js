@@ -69,6 +69,9 @@ router.route('/landmarks/new')
 router.route('/landmarks/:id')
   .get(controller.Landmarks.getLandmarkById);
 
+router.route('/landmarks/nearby')
+  .post(controller.Landmarks.getLandmarksWithinRadius);
+
 /** ============================================================
  * FOLLOWING ROUTES
  * =============================================================
