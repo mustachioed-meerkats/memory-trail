@@ -14,3 +14,10 @@ module.exports.getLandmarkById = (req, res) => {
       res.status(200).send(results);
     });
 };
+
+module.exports.getLandmarksWithinRadius = (req, res) => {
+  models.Landmark.getLandmarksWithinRadius(req.body)
+    .then(results => {
+      res.status(200).send(results);
+    });
+};

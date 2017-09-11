@@ -18,8 +18,10 @@ export const HANDLE_STORY_LOAD = 'map/HANDLE_STORY_LOAD';
 const initialState = {
   center: __PRELOADED_STATE__.map,
   bounds: null,
+  landmarks: [],
   markers: [],
   storyPosts: [],
+  userLocationAvailable: false
 };
 
 /** ============================================================
@@ -32,6 +34,7 @@ export default (state = initialState, action) => {
     return {
       ...state,
       center: action.center,
+      userLocationAvailable: true,
       markers: action.markers
     };
   case HANDLE_PLACES_CHANGED:
