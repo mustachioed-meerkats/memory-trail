@@ -11,19 +11,20 @@ const Landmark = db.Model.extend({
   createLandmark: function(landmark) {
     return this.forge(landmark).save();
   },
-  findOrCreateLandmark: function(postInfo) {
-    var {lat, lng} = postInfo;
-    return this.where({lat, lng}).fetch()
+  findOrCreateLandmark: function(landmarkInfo) {
+    var {google_id} = landmarkInfo;
+    return this.where({google_id}).fetch()
       .then(landmark => {
         if (landmark) {
           throw landmark;
         }
         return {
-          name: 'dummy landmark',
-          description: 'this is a dummy landmark',
-          image_url: 'www.google.com',
-          lat,
-          lng
+          name: landmarkInfo.name,
+          description: landmarkInfo.description,
+          image_url: landmarkInfo.image_url,
+          lat: landmarkInfo.lat,
+          lng: landmarkInfo.lng,
+          google_id: landmarkInfo.google_id,
         };
       })
       .then(landmarkInfo => {
