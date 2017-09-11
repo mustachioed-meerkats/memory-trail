@@ -175,7 +175,6 @@ class CreateNewPost extends React.Component {
                 Add a story!
               </Button>
               <Modal
-                {...this.props}
                 show={this.state.show}
                 onHide={this.hideModal.bind(this)}
               >
