@@ -65,7 +65,7 @@ export default (state = initialState, action) => {
   case HANDLE_MARKER_CLICK:
     return {
       ...state,
-      markers: state.markers.map(marker => {
+      landmarks: state.landmarks.map(marker => {
         if (marker === action.targetMarker) {
           return {
             ...marker,
@@ -78,7 +78,7 @@ export default (state = initialState, action) => {
   case HANDLE_MARKER_CLOSE:
     return {
       ...state,
-      markers: state.markers.map(marker => {
+      landmarks: state.landmarks.map(marker => {
         if (marker === action.targetMarker) {
           return {
             ...marker,

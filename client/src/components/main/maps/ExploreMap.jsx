@@ -56,14 +56,14 @@ const ExploreMapComponent = withGoogleMap(props => (
       inputPlaceholder='Search for a place!'
       inputStyle={props.inputStyle}
     />
-    {props.markers.map((marker, index) => (
+    {props.landmarks.map((marker, index) => (
       <Marker 
         position={{lat: parseFloat(marker.lat), lng: parseFloat(marker.lng)}} key={index} 
         onClick={() => props.handleMarkerClick(marker)}
       >
         {marker.showInfo && (
           <InfoWindow onCloseClick={() => props.handleMarkerClose(marker)}>
-            <div><Link to={`/post/${marker.id}`}>{marker.title}</Link></div>
+            <div><Link to={`/landmark/${marker.id}`}>{marker.name}</Link></div>
           </InfoWindow>
         )}
       </Marker>
@@ -113,6 +113,7 @@ class ExploreMap extends React.Component {
         handleMarkerClick={this.props.handleMarkerClick}
         handleMarkerClose={this.props.handleMarkerClose}
         markers={this.props.markers}
+        landmarks={this.props.landmarks}
       />
     );
   }
@@ -125,6 +126,7 @@ const mapStateToProps = state => ({
   containerElement: <div style={{height: '100%'}} />,
   mapElement: <div style={{height: '100%'}} />,
   markers: state.map.markers,
+  landmarks: state.map.landmarks
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
