@@ -20,7 +20,6 @@ const Landmark = db.Model.extend({
         }
         return {
           name: landmarkInfo.name,
-          description: landmarkInfo.description,
           image_url: landmarkInfo.image_url,
           lat: landmarkInfo.lat,
           lng: landmarkInfo.lng,
