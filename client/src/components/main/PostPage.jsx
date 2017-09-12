@@ -6,6 +6,8 @@ import { connect } from 'react-redux';
 import PostListEntry from './PostListEntry.jsx';
 import { Grid, Row, Col, Button, ButtonGroup, ListGroupItem, Glyphicon, Tooltip, OverlayTrigger } from 'react-bootstrap';
 
+import getTimeSincePost from '../../../lib/getTimeSincePost';
+
 const PostPage = (props) => {
 
   // TODO: Refactor into Styles
@@ -57,33 +59,6 @@ const PostPage = (props) => {
       }
     }
   };
-  
-  // TODO: Refactor into a library 
-  const getTimeSincePost = (postTime) => {
-    let postDateMilliseconds = new Date(postTime).getTime();
-    let currentDateMilliseconds = new Date().getTime();
-  
-    let diff = Math.abs(currentDateMilliseconds - postDateMilliseconds);
-    let seconds = (diff / 1000).toFixed(0);
-  
-    if (seconds < 60) {
-      return seconds + ' seconds ago ';
-    } else {
-      let minutes = Math.floor(seconds / 60);
-      if (minutes < 60) {
-        return minutes + ' minutes ago ';
-      } else {
-        let hours = Math.floor(minutes / 60);
-        if (hours < 24) {
-          return hours + ' hours ago';
-        } else {
-          let days = Math.floor(hours / 24);
-          return days + ' days ago ';
-        }
-      }
-    }
-    return 0;
-  };
 
   const currentPost = props.posts.filter((post) => { return post.id === parseInt(props.match.params.id); })[0];
 
@@ -95,9 +70,11 @@ const PostPage = (props) => {
           <div style={style.card.header}></div>
           <div style={style.card.container}>
             <div style={style.card.title}>
-              <Link to={`/post/${currentPost.id}`}>{currentPost.title}</Link>
+              <Link to={`/post/${currentPost.profile_id}`}>{currentPost.title}</Link>
             </div>
-            <div style={style.card.stats}>Submitted {getTimeSincePost('2015-03-25')} by {currentPost.profile_id}</div>
+            <div style={style.card.stats}>
+              Submitted {getTimeSincePost(currentPost.created_at)} by <Link to={`/profile/${currentPost.profile_id}`}> {currentPost.profile_display}</Link>
+            </div>
             <div style={style.card.content}>{currentPost.content}</div>
             <Button style={style.card.button}><Glyphicon glyph="bookmark" /></Button>
           </div>

@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { Button, ButtonGroup, Glyphicon } from 'react-bootstrap';
+import getTimeSincePost from '../../../../lib/getTimeSincePost';
 
 //TODO: Refactor into seperate style
 const style = {
@@ -55,34 +56,7 @@ const style = {
   }
 };
 
-// TODO: Refactor into a separate library
-const getTimeSincePost = (postTime) => {
-  let postDateMilliseconds = new Date(postTime).getTime();
-  let currentDateMilliseconds = new Date().getTime();
-
-  let diff = Math.abs(currentDateMilliseconds - postDateMilliseconds);
-  let seconds = (diff / 1000).toFixed(0);
-
-  if (seconds < 60) {
-    return seconds + ' seconds ago ';
-  } else {
-    let minutes = Math.floor(seconds / 60);
-    if (minutes < 60) {
-      return minutes + ' minutes ago ';
-    } else {
-      let hours = Math.floor(minutes / 60);
-      if (hours < 24) {
-        return hours + ' hours ago';
-      } else {
-        let days = Math.floor(hours / 24);
-        return days + ' days ago ';
-      }
-    }
-  }
-  return 0;
-};
-
-const PostListEntry = (props) => {
+const CurrentUserPostListEntry = (props) => {
   return (
     <div style={style.card}>
       <div style={style.card.container}>
@@ -90,8 +64,7 @@ const PostListEntry = (props) => {
           <Link to={`/post/${props.post.id}`}>{props.post.title}</Link>
         </div>
         <div style={style.card.stats}>
-          Submitted {getTimeSincePost(props.post.created_at)} by <Link to={`/profile/${props.post.profile_id}`}> {props.post.profile_display}</Link>
-        </div>
+          Submitted {getTimeSincePost(props.post.created_at)} by <Link to={`/profile/${props.post.profile.id}`}> {props.post.profile.display}</Link></div>
         <div style={style.card.content}>{props.post.content.slice(0, 64) + ' ...'}</div>
         <Button style={style.card.button}><Glyphicon glyph="bookmark" /></Button>
       </div>
@@ -99,4 +72,4 @@ const PostListEntry = (props) => {
   );
 };
 
-export default PostListEntry;
+export default CurrentUserPostListEntry;

@@ -1,9 +1,13 @@
 const profile = {
   defaultAvatar: 'http://www.skyovnis.com/wp-content/uploads/2014/12/Profile-sky-ovnis.jpg',
   avatar: {
+    width: '50%',
     display: 'block',
     padding: '0 0 0 2rem',
     margin: '0px auto'
+  },
+  follow: {
+    margin: '1rem'
   },
   container: {
     boxShadow: '0 1px 2px #aaa',

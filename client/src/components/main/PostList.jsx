@@ -35,7 +35,6 @@ const PostList = ({posts, userPosts, type}) => {
 
 const mapStateToProps = (state) => ({
   posts: state.map.markers,
-  userPosts: state.userPosts
 });
 
 

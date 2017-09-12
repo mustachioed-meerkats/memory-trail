@@ -4,8 +4,8 @@ import map from './map';
 import posts from './posts';
 import user from './user';
 import newpost from './newpost';
-import userPosts from './userPosts';
 import newstory from './newstory';
+import following from './following';
 
 export default combineReducers({
   routing: routerReducer,
@@ -14,5 +14,5 @@ export default combineReducers({
   newpost,
   posts,
   newstory,
-  userPosts
+  following
 });
