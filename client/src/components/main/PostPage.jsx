@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import PostListEntry from './PostListEntry.jsx';
 import { Grid, Row, Col, Button, ButtonGroup, ListGroupItem, Glyphicon, Tooltip, OverlayTrigger } from 'react-bootstrap';
 
-import getTimeSincePost from '../../../lib/getTimeSincePost'
+import getTimeSincePost from '../../../lib/getTimeSincePost';
 
 const PostPage = (props) => {
 

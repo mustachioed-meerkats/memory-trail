@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { Button, ButtonGroup, Glyphicon } from 'react-bootstrap';
-import getTimeSincePost from '../../../../lib/getTimeSincePost'
+import getTimeSincePost from '../../../../lib/getTimeSincePost';
 
 //TODO: Refactor into seperate style
 const style = {

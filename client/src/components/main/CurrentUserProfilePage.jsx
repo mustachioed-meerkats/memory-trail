@@ -56,8 +56,10 @@ class CurrentUserProfilePage extends React.Component {
               </div>
             </Col>
             <Col sm={9} md={9} style={{padding: '0 2rem 0 0'}}>
-              <div style={profile.container.title}>{this.props.user.display}</div>
-                <CurrentUserPostList/>
+              <div style={profile.container.title}>
+                {this.props.user.display}
+              </div>
+              <CurrentUserPostList/>
               <div className="pull-right">
                 <a href="#">Load more ...</a>
               </div>

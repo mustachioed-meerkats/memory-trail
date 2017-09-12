@@ -24,14 +24,14 @@ class FollowingsPage extends React.Component {
   }
 
   render() {
-    return(
+    return (
       <div style={following.container}>
         <div style={following.container.header}>
           <div style={following.container.header.title}>Memory Feed</div>
         </div>
-          <div style={following.container.feed}>
-            <FollowingsPageList />
-          </div>
+        <div style={following.container.feed}>
+          <FollowingsPageList />
+        </div>
       </div>
     );
   }

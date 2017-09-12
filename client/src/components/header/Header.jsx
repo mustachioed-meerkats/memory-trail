@@ -19,18 +19,18 @@ const Header = (props) => {
         <Navbar.Toggle />
       </Navbar.Header>
       <Navbar.Collapse>
-      <Nav pullRight>
-        <LinkContainer to='/post/new'>
-          <NavItem eventKey="1">Write a Story</NavItem>
-        </LinkContainer>
-        <LinkContainer to='/feed'>
-          <NavItem eventKey="2">Feed</NavItem>
-        </LinkContainer>
-        <LinkContainer to='/profile'>
-          <NavItem eventKey="3">{props.user.display}</NavItem>
-        </LinkContainer>
-        <NavItem href="/logout" eventKey="4">Logout</NavItem>
-      </Nav>
+        <Nav pullRight>
+          <LinkContainer to='/post/new'>
+            <NavItem eventKey="1">Write a Story</NavItem>
+          </LinkContainer>
+          <LinkContainer to='/feed'>
+            <NavItem eventKey="2">Feed</NavItem>
+          </LinkContainer>
+          <LinkContainer to='/profile'>
+            <NavItem eventKey="3">{props.user.display}</NavItem>
+          </LinkContainer>
+          <NavItem href="/logout" eventKey="4">Logout</NavItem>
+        </Nav>
       </Navbar.Collapse>
     </Navbar>
   );

@@ -43,7 +43,7 @@ export default (state = initialState, action) => {
 
 export const followNewUser = (profile_id, following_id) => {
   return dispatch => {
-    return axios.post(`/api/followings/new`, {profile_id, following_id})
+    return axios.post('/api/followings/new', {profile_id, following_id})
       .then(results => {
         dispatch({
           type: FOLLOW_NEW_USER

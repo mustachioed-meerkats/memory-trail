@@ -13,17 +13,17 @@ router.route('/')
       //models.Post.getPostsByUserId(req.user.id),
       //models.Following.getAllFollowings(req.user.id)
     ])
-    .then((results) => {
-      preloadedState.posts = results[0];
+      .then((results) => {
+        preloadedState.posts = results[0];
       //preloadedState.userPosts = results[1];
       //preloadedState.following.posts = results[2];
-    })
-    .then(() => { 
-      res.render('index', {preloadedState});
-    })
-    .catch((err) => {
-      console.log('(Server) Error! Preloading State');
-    });
+      })
+      .then(() => { 
+        res.render('index', {preloadedState});
+      })
+      .catch((err) => {
+        console.log('(Server) Error! Preloading State');
+      });
 
   });
 

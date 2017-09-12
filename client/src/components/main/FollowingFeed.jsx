@@ -25,10 +25,10 @@ class FollowingFeed extends React.Component {
         <div style={following.container.header}>
           <div style={following.container.header.title}>Memory Feed</div>
         </div>
-          <div style={following.container.feed}>
-            <Link to={'/followings'}>View Followings</Link>
-            <FollowingFeedList />
-          </div>
+        <div style={following.container.feed}>
+          <Link to={'/followings'}>View Followings</Link>
+          <FollowingFeedList />
+        </div>
       </div>  
     );
   }
