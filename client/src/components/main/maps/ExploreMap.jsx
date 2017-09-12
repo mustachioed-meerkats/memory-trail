@@ -37,7 +37,8 @@ var inputStyle = {
 
 // TODO: Refactor into styles
 const buttonStyle = {
-  margin: '1rem'
+  position: 'fixed',
+  bottom: 0,
 };
 
 const ExploreMapComponent = withGoogleMap(props => (
@@ -47,7 +48,12 @@ const ExploreMapComponent = withGoogleMap(props => (
     center={props.center}
     onDragEnd={() => props.handleBoundsChanged(props.map)}
   >
-    <RaisedButton label="Search this area" primary={true} style={buttonStyle} onClick={() => props.handleSearchArea(props.center)}/>
+    <RaisedButton 
+      label="Search this area" 
+      primary={true} 
+      style={buttonStyle} 
+      onClick={() => props.handleSearchArea(props.center)}
+    />
     <SearchBox
       ref={props.handleSearchBoxMounted}
       bounds={props.bounds}

@@ -5,8 +5,7 @@ import { connect } from 'react-redux';
 
 /** ============================================================
  * Define Store Modules
- * =============================================================
- */
+ * ========================================================== */
 
 import {setCenter} from '../../store/modules/map';
 import ExploreMap from './maps/ExploreMap.jsx';
@@ -24,7 +23,7 @@ const postListStyle = {
 };
 
 const exploreMapStyle = {
-  height: window.innerHeight,
+  height: window.innerHeight - 20,
   marginTop: '-20px'
 };
 
