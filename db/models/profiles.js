@@ -13,6 +13,13 @@ const Profile = db.Model.extend({
   },
   followings: function() {
     return this.hasMany('Following');
+  },
+  landmarks: function() {
+    return this.belongsToMany('Landmark', 'landmarks_profiles');
+  }
+}, {
+  getProfileById: function(id) {
+    return this.where({id}).fetch();
   }
 });
 
