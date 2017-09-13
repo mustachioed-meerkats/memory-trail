@@ -42,7 +42,6 @@ const following = {
     borderRadius: '3px',
     paddingBottom: '1em',
     profile: {
-
     },
     contentContainer: {
       fontSize: '1.25rem',
@@ -75,6 +74,5 @@ const following = {
     }
   },
 };
-
 
 export default following;

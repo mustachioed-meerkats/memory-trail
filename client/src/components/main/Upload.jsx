@@ -5,7 +5,6 @@ import { bindActionCreators } from 'redux';
 import { Grid, Row, Col } from 'react-bootstrap';
 import { Button, ButtonToolbar, ControlLabel, Form, FormGroup, FormControl, Radio, ButtonGroup } from 'react-bootstrap';
 
-
 import {
   handleImageUrl
 } from '../../store/modules/newpost';
