@@ -10,10 +10,6 @@ const Landmark = db.Model.extend({
     return this.belongsToMany('Profile', 'landmarks_profiles');
   }
 }, {
-  //not sure if useful
-  createLandmark: function(landmark) {
-    return this.forge(landmark).save();
-  },
   findOrCreateLandmark: function(landmarkInfo) {
     var {google_id} = landmarkInfo;
     return this.where({google_id}).fetch()

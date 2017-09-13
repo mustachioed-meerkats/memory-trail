@@ -61,16 +61,15 @@ router.route('/stories/user/:id')
  * =============================================================
  */
 
-// create new entry in landmarks
-router.route('/landmarks/new')
-  .post(controller.Landmarks.createLandmark);
-
 // return landmark entry by landmark id
 router.route('/landmarks/:id')
   .get(controller.Landmarks.getLandmarkById);
 
 router.route('/landmarks/nearby')
   .post(controller.Landmarks.getLandmarksWithinRadius);
+
+router.route('landmarks/guestbook/:id')
+  .get(controller.Landmarks.getGuestbookByLandmarkId);
 
 /** ============================================================
  * FOLLOWING ROUTES
