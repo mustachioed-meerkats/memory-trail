@@ -12,7 +12,7 @@ router.route('/:id')
   .put(ProfileController.update);
 //.delete(ProfileController.deleteOne)
 
-router.route('passport/:id')
+router.route('/passport/:id')
   .get(ProfileController.getPassportByUserId);
 
 module.exports = router;
