@@ -76,3 +76,11 @@ module.exports.likePost = (req, res) => {
       res.send(result);
     });
 };
+
+module.exports.commentPost = (req, res) => {
+  var {profile_id, post_id, text} = req.body;
+  models.Comment.createComment(profile_id, post_id, text)
+    .then(comment => {
+      res.send(result);
+    });
+};

@@ -42,6 +42,9 @@ router.route('/posts/nearby')
 router.route('/posts/like')
   .post(controller.Posts.likePost);
 
+router.route('/posts/comment')
+  .post(controller.Posts.commentPost);
+
 /** ============================================================
  * STORY ROUTES
  * =============================================================

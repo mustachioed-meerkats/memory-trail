@@ -14,6 +14,9 @@ const Post = db.Model.extend({
   },
   profiles_likes: function() {
     return this.belongsToMany('Profile', 'posts_likes');
+  },
+  comments: function() {
+    return this.hasMany('Comment');
   }
 }, {
   getPostsByStoryId: function(story_id) {

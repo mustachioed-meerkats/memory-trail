@@ -19,6 +19,9 @@ const Profile = db.Model.extend({
   },
   posts_likes: function() {
     return this.belongsToMany('Post', 'posts_likes');
+  },
+  comments: function() {
+    return this.hasMany('Comment');
   }
 }, {
   getProfileById: function(id) {
