@@ -65,3 +65,14 @@ module.exports.getPostsByFollowings = (req, res) => {
         });
     });
 };
+
+module.exports.likePost = (req, res) => {
+  var {profile_id, post_id} = req.body;
+  models.Post.getPostById(post_id)
+    .then(post => {
+      post.profiles_likes().attach(profile_id);
+    })
+    .then(result => {
+      res.send(result);
+    });
+};

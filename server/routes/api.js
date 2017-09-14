@@ -39,6 +39,9 @@ router.route('/posts/followings/:id')
 router.route('/posts/nearby')
   .post(controller.Posts.getPostsWithinRadius);
 
+router.route('/posts/like')
+  .post(controller.Posts.likePost);
+
 /** ============================================================
  * STORY ROUTES
  * =============================================================

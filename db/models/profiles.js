@@ -16,6 +16,9 @@ const Profile = db.Model.extend({
   },
   landmarks: function() {
     return this.belongsToMany('Landmark', 'landmarks_profiles');
+  },
+  posts_likes: function() {
+    return this.belongsToMany('Post', 'posts_likes');
   }
 }, {
   getProfileById: function(id) {
