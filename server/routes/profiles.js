@@ -13,6 +13,6 @@ router.route('/:id')
 //.delete(ProfileController.deleteOne)
 
 router.route('passport/:id')
-  .get(controller.Profile.getPassportByUserId);
+  .get(ProfileController.getPassportByUserId);
 
 module.exports = router;
