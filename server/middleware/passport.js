@@ -53,6 +53,15 @@ passport.use('local-signup', new LocalStrategy({
         profile_id: profile.get('id')
       }).save();
     })
+    .tap(profile => {
+      return models.Story.createStory({
+        profile_id: profile.get('id'),
+        title: 'default story',
+        summary: 'default summary',
+        default_post: true,
+        default_display: true
+      });
+    })
     .then(profile => {
       // serialize profile for session
       done(null, profile.serialize());
