@@ -68,7 +68,7 @@ router.route('/landmarks/:id')
 router.route('/landmarks/nearby')
   .post(controller.Landmarks.getLandmarksWithinRadius);
 
-router.route('landmarks/guestbook/:id')
+router.route('/landmarks/guestbook/:id')
   .get(controller.Landmarks.getGuestbookByLandmarkId);
 
 /** ============================================================

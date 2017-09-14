@@ -16,7 +16,9 @@ module.exports.getLandmarksWithinRadius = (req, res) => {
 
 module.exports.getGuestbookByLandmarkId = (req, res) => {
   models.Landmark.getLandmarkById(req.params.id)
-    .profiles()
+    .then(landmark => {
+      return landmark.profiles().fetch();
+    })
     .then(results => {
       res.status(200).send(results);
     });

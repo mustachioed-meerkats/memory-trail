@@ -81,7 +81,9 @@ module.exports.update = (req, res) => {
 
 module.exports.getPassportByUserId = (req, res) => {
   models.Profile.getProfileById(req.params.id)
-    .landmarks()
+    .then(profile => {
+      return profile.landmarks();
+    })
     .then(results => {
       res.status(200).send(results);
     });
