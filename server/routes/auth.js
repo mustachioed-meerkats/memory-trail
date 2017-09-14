@@ -37,6 +37,16 @@ router.route('/login')
     failureFlash: true
   }));
 
+router.route('/signup')
+  .get((req, res) => {
+    res.render('signup.ejs', { message: req.flash('signupMessage') });
+  })
+  .post(middleware.passport.authenticate('local-signup', {
+    successRedirect: '/',
+    failureRedirect: '/signup',
+    failureFlash: true
+  }));
+
 router.route('/logout')
   .get((req, res) => {
     req.logout();
