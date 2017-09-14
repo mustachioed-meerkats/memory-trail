@@ -80,7 +80,7 @@ module.exports.likePost = (req, res) => {
 module.exports.commentPost = (req, res) => {
   var {profile_id, post_id, text} = req.body;
   models.Comment.createComment(profile_id, post_id, text)
-    .then(comment => {
+    .then(result => {
       res.send(result);
     });
 };
