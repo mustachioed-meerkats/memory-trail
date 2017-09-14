@@ -84,4 +84,13 @@ router.route('/followings/new')
 router.route('/followings/:id')
   .get(controller.Followings.getAllFollowings);
 
+/** ============================================================
+ * FOLLOWING ROUTES
+ * =============================================================
+ */
+
+router.route('/mailgun')
+  .post(controller.Mailgun);
+
+
 module.exports = router;

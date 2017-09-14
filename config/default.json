@@ -25,5 +25,8 @@
     "Google": {},
     "Facebook": {},
     "Twitter": {}
+  },
+
+  "mailgun": {
   }
 }
