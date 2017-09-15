@@ -58,7 +58,7 @@ class CreateNewPost extends React.Component {
       dropdownVisible: false,
       landmark: '',
       show: false,
-      storyID: 0, 
+      storyID: 0,
       storyName: 'None Selected',
     };
     this.geocodeLocationInput = this.geocodeLocationInput.bind(this);
@@ -183,9 +183,9 @@ class CreateNewPost extends React.Component {
       console.log('story is: ', story);
       if (story.title === name) {
         console.log('story ID is: ', story.id)
-        localID = story.id;
+        let localID = story.id;
         console.log(this);
-        this.setState({storyID: story.id, storyName: story.title});
+        this.setState({storyID: localID, storyName: story.title});
       }
     });
   }
@@ -233,8 +233,8 @@ class CreateNewPost extends React.Component {
             <Transition.Group animation='slide down' duration='500ms'>
               {this.state.dropdownVisible &&
               <Card fluid={true}>
-                <List 
-                  relaxed 
+                <List
+                  relaxed
                   selection
                   size='big'
                   >
@@ -250,9 +250,9 @@ class CreateNewPost extends React.Component {
         <Grid.Row>
           <Grid.Column fluid={true}>
             <Form>
-              <TextArea 
-                fluid={true} 
-                style={{fontSize: '20px'}} 
+              <TextArea
+                fluid={true}
+                style={{fontSize: '20px'}}
                 placeholder='Record a Memory!'
                 onChange={(e) => { this.props.handleContentTextArea(e.target.value); }}
                 />
