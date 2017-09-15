@@ -29,7 +29,7 @@ const Post = db.Model.extend({
     return this.fetchAll({withRelated: ['profile']});
   },
   getPostsByUserId: function(profile_id) {
-    return this.where({profile_id}).fetchAll({withRelated: ['profile']});
+    return this.where({profile_id}).fetchAll({withRelated: ['comments.profile']});
   },
   getPostsWithinRadius: function(center, radius = 13) {
     var {lat, lng} = center;
