@@ -40,7 +40,7 @@ const FollowingFeedListEntry = ({post}) => {
 
   let postContent = '';
   if (post.content.length > 255) {
-    postContent = post.content.slice(0,255) + ' ...';
+    postContent = post.content.slice(0, 255) + ' ...';
   } else {
     postContent = post.content;
   }
@@ -57,8 +57,8 @@ const FollowingFeedListEntry = ({post}) => {
   return (
     <Card fluid raised={true}> 
       <Card.Content>
-          <div style={hmm.card}>
-          </div >
+        <div style={hmm.card}>
+        </div >
         <Card.Meta>
           <div>
             <a><Icon name='heart' /> # Likes</a>
@@ -105,26 +105,3 @@ const FollowingFeedListEntry = ({post}) => {
 };
 
 export default FollowingFeedListEntry;
-
-{/* <div style={style.card}>
-<div>
-  <img style={style.card.image} src={post.image} /> 
-</div>
-<div style={style.card.contentContainer}/>
-<div style={style.card.profile}>
-  <Col md={1}>
-    <img style={style.card.avatar} src={post.user.avatar} />
-  </Col>
-  <Col md={11}>
-    <div>
-      <Link to={`/profile/${post.profile_id}`}>{post.profile.display}</Link>
-    </div>
-    <div>
-      Submitted {getTimeSincePost(post.created_at)}
-    </div>
-  </Col>
-</div>
-<div style={style.card.content}>
-  {postContent}
-</div>
-</div> */}

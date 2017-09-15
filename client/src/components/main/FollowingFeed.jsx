@@ -49,7 +49,7 @@ class FollowingFeed extends React.Component {
         <Segment.Group>
           <Segment>Memory Feed</Segment>
         </Segment.Group>
-          <Link to='/followings'>View Followings</Link>
+        <Link to='/followings'>View Followings</Link>
         <FollowingFeedList />
       </Container>
     );

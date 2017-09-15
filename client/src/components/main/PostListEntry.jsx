@@ -81,8 +81,8 @@ const PostListEntry = (props) => {
   return (
     <Card raised={true}> 
       <Card.Content>
-          <div style={hmm.card}>
-          </div >
+        <div style={hmm.card}>
+        </div >
         <Card.Meta>
           <div>
             <a><Icon name='heart' /># </a>

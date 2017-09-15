@@ -41,8 +41,8 @@ const LandmarkMapListListEntry = (props) => {
   return (
     <Card raised={true}> 
       <Card.Content>
-          <div style={style.card}>
-          </div >
+        <div style={style.card}>
+        </div >
         <Card.Meta>
           <div>
             <a><Icon name='heart' /># </a>

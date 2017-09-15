@@ -44,11 +44,11 @@ class FollowingsPage extends React.Component {
 
   render() {
     return (
-    <Grid columns={3} container doubling stackable>
-      <Grid.Column>
-        <FollowingsPageList />
-      </Grid.Column>
-    </Grid>
+      <Grid columns={3} container doubling stackable>
+        <Grid.Column>
+          <FollowingsPageList />
+        </Grid.Column>
+      </Grid>
     );
   }
 }

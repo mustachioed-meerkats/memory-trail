@@ -3,6 +3,6 @@ const router = express.Router();
 const UploadsController = require('../controllers').Uploads;
 
 router.route('/')
-.post(UploadsController.upload);
+  .post(UploadsController.upload);
 
 module.exports = router;

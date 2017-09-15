@@ -39,7 +39,7 @@ import {
   setCenter,
   handleSearchArea,
   handlePlacesChanged
- } from '../../store/modules/map';
+} from '../../store/modules/map';
 import { openSideBar } from '../../store/modules/sidebar';
 
 // TODO: Refactor into styles

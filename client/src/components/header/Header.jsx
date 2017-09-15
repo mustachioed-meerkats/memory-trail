@@ -48,33 +48,33 @@ class NavHeader extends React.Component {
     
   render() {
     return (
-        <Sidebar side='left' isVisible={ this.props.toggleSideBar} onHide={ () => this.props.closeSideBar() }>
-          <Menu fluid vertical icon='labeled'>
-            <Menu.Item as={Link} to='/' name='explore' onClick={this.handleItemClick}>
-              <Icon name='map outline' />
-              Explore
-            </Menu.Item>
-            <Menu.Item as={Link} to='/post/new' name='newstory' onClick={this.handleItemClick}>
-              <Icon name='pencil' />
-              Write a Story
-            </Menu.Item>
-            <Menu.Item as={Link} to='/feed' name='feed' onClick={this.handleItemClick}>
-              <Icon name='feed' />
-              Feed
-            </Menu.Item>
-            <Menu.Item as={Link} to='/profile' name='profile' onClick={this.handleItemClick}>
-              <Icon name='user circle outline' />
-              {this.props.user.display}
-            </Menu.Item>
-            <Menu.Item as={Link} to='/testpage' name='test' onClick={this.handleItemClick}>
-              TEST_PAGE
-            </Menu.Item>
-            <Menu.Item as={Link} to='/logout' name='logout' onClick={this.handleItemClick}>
-              <Icon name='log out' />
-              Logout
-            </Menu.Item>
-          </Menu>
-        </Sidebar>
+      <Sidebar side='left' isVisible={ this.props.toggleSideBar} onHide={ () => this.props.closeSideBar() }>
+        <Menu fluid vertical icon='labeled'>
+          <Menu.Item as={Link} to='/' name='explore' onClick={this.handleItemClick}>
+            <Icon name='map outline' />
+            Explore
+          </Menu.Item>
+          <Menu.Item as={Link} to='/post/new' name='newstory' onClick={this.handleItemClick}>
+            <Icon name='pencil' />
+            Write a Story
+          </Menu.Item>
+          <Menu.Item as={Link} to='/feed' name='feed' onClick={this.handleItemClick}>
+            <Icon name='feed' />
+            Feed
+          </Menu.Item>
+          <Menu.Item as={Link} to='/profile' name='profile' onClick={this.handleItemClick}>
+            <Icon name='user circle outline' />
+            {this.props.user.display}
+          </Menu.Item>
+          <Menu.Item as={Link} to='/testpage' name='test' onClick={this.handleItemClick}>
+            TEST_PAGE
+          </Menu.Item>
+          <Menu.Item as={Link} to='/logout' name='logout' onClick={this.handleItemClick}>
+            <Icon name='log out' />
+            Logout
+          </Menu.Item>
+        </Menu>
+      </Sidebar>
     );
   }
 }
@@ -93,7 +93,7 @@ class Sidebar extends React.Component {
       >
         <Modal.Header closeButton>
           <Modal.Title>
-              <Icon name='home' />
+            <Icon name='home' />
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>

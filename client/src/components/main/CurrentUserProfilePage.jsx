@@ -58,16 +58,16 @@ class CurrentUserProfilePage extends React.Component {
       );
     } else {
       return (
-      <Container>
-        <Grid columns={2} stackable>
-          <Grid.Column>
-            <Segment><CurrentUserPostList/></Segment>
-          </Grid.Column>
-          <Grid.Column>
-            <Segment>Content</Segment>
-          </Grid.Column>
-        </Grid>
-      </Container>
+        <Container>
+          <Grid columns={2} stackable>
+            <Grid.Column>
+              <Segment><CurrentUserPostList/></Segment>
+            </Grid.Column>
+            <Grid.Column>
+              <Segment>Content</Segment>
+            </Grid.Column>
+          </Grid>
+        </Container>
       );
     }
   }
@@ -88,35 +88,3 @@ export default connect(
   mapStateToProps,
   mapDispatchToProps
 )(CurrentUserProfilePage);
-
-
-// <div style={profile.container}>
-//           <div style={profile.container.header}/>
-//           <Row>
-//             <Col sm={3} md={3}>
-//               <div style={profile.container.bio}>
-//                 <Image
-//                   responsive
-//                   style={profile.avatar}
-//                   src={this.props.user.avatar || profile.defaultAvatar}
-//                   alt={this.props.user.display}
-//                 />
-//                 <div style={profile.container.bio.contact}>
-//                   <Glyphicon glyph="envelope" bsSize="small"/>{this.props.user.email}
-//                 </div>
-//                 <div>
-//                   Following: <Link to={'/followings'}>{this.props.followings.length || 0 }</Link>
-//                 </div>
-//               </div>
-//             </Col>
-//             <Col sm={9} md={9} style={{padding: '0 2rem 0 0'}}>
-//               <div style={profile.container.title}>
-//                 {this.props.user.display}
-//               </div>
-//               <CurrentUserPostList/>
-//               <div className="pull-right">
-//                 <a href="#">Load more ...</a>
-//               </div>
-//             </Col>
-//           </Row>
-//         </div>
