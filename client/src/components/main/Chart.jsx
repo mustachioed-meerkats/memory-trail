@@ -10,13 +10,16 @@ import {
   helpers, DropShadow, Gradient
 } from 'rumble-charts';
 import _ from 'lodash';
+import axios from 'axios';
 
 const series = [{
-    data: [1, 2, 3]
+    data: [1, 2, 3, 5]
 }, {
-    data: [5, 7, 11]
+    data: [5, 7, 11, 17]
 }, {
-    data: [13, 17, 19]
+    data: [13, 17, 19, 23]
+}, {
+    data: [21, 23, 25, 34]
 }];
 
 class Demo extends React.Component {
@@ -73,9 +76,15 @@ class Demo extends React.Component {
     super();
     this.state = {series};
     this.updateSeries = () => {
-      const series = _.map(_.range(3), index => ({
-        data: _.map(_.range(3), index => Math.random() * 100)
+      const series = _.map(_.range(1), index => ({
+        data: _.map(_.range(6), index => Math.random() * 100)
       }));
+      // const arr = _.range(this.state.series.length);
+      // arr.push(this.state.series.length);
+      // const series = [{
+      //   data: arr
+      // }];
+
       this.setState({series});
     };
 
@@ -113,6 +122,20 @@ class Demo extends React.Component {
     this.handleMouseLeave = () => {
       hideHovered();
     };
+  }
+
+  componentDidMount() {
+    axios.get('/api/posts/user/6')
+      .then(results => {
+        console.log(results);
+        var arr = results.data.map(post => {
+          return parseFloat(post.magnitude);
+        });
+        var dataz = [{
+          data: arr
+        }];
+        this.setState({series: dataz});
+      });
   }
 }
 
