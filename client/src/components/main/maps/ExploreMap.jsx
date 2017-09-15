@@ -3,8 +3,36 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import RaisedButton from 'material-ui/RaisedButton';
 import { Link } from 'react-router-dom';
-import {withGoogleMap, GoogleMap, Marker, InfoWindow} from 'react-google-maps';
+import { withGoogleMap, GoogleMap, Marker, InfoWindow } from 'react-google-maps';
 import SearchBox from 'react-google-maps/lib/places/SearchBox';
+import Markers from './Markers.jsx';
+import Search from './Search.jsx';
+import PostList from '../PostList.jsx';
+
+/** ============================================================
+ * Import Semantic UI Components
+ * ========================================================== */
+import {
+  Button, 
+  Container,
+  Grid, 
+  Header, 
+  Icon,
+  Image, 
+  Item, 
+  Label, 
+  Menu, 
+  Segment, 
+  Step,
+  Table,
+  Card,
+  Dimmer,
+  Loader
+} from 'semantic-ui-react';
+
+/** ============================================================
+ * Import Redux Action Creators
+ * ========================================================== */
 import {
   handleMapMounted, 
   handleSearchBoxMounted,
@@ -15,18 +43,14 @@ import {
   handleMarkerClose
 } from '../../../store/modules/map';
 
-import Markers from './Markers.jsx';
-import Search from './Search.jsx';
-import PostList from '../PostList.jsx';
-
 // TODO: Refactor into styles
 var inputStyle = {
   boxSizing: 'border-box',
   MozBoxSizing: 'border-box',
   border: '1px solid transparent',
-  width: '240px',
-  height: '32px',
-  marginTop: '27px',
+  width: '218px',
+  height: '34px',
+  margin: '1rem 0rem 0rem 7.2rem',
   padding: '0 12px',
   borderRadius: '1px',
   boxShadow: '0 2px 6px rgba(0, 0, 0, 0.3)',
@@ -38,22 +62,35 @@ var inputStyle = {
 // TODO: Refactor into styles
 const buttonStyle = {
   position: 'fixed',
-  bottom: 0,
+  bottom: 50,
+};
+const togglebuttonStyle = {
+  position: 'fixed',
+  bottom: 100,
+};
+
+const togglebuttonSmall = {
+  position: 'fixed',
+  top: 100,
+};
+
+let mapOptions = {
+  zoomControl: true,
+  mapTypeControl: false,
+  scaleControl: false,
+  streetViewControl: false,
+  rotateControl: false,
+  fullscreenControl: false
 };
 
 const ExploreMapComponent = withGoogleMap(props => (
   <GoogleMap
     ref={props.handleMapMounted}
-    defaultZoom={10}
+    defaultZoom={12}
     center={props.center}
     onDragEnd={() => props.handleBoundsChanged(props.map)}
+    options={mapOptions}
   >
-    <RaisedButton 
-      label="Search this area" 
-      primary={true} 
-      style={buttonStyle} 
-      onClick={() => props.handleSearchArea(props.center)}
-    />
     <SearchBox
       ref={props.handleSearchBoxMounted}
       bounds={props.bounds}
@@ -120,6 +157,7 @@ class ExploreMap extends React.Component {
         handleMarkerClose={this.props.handleMarkerClose}
         markers={this.props.markers}
         landmarks={this.props.landmarks}
+        openSideBar={this.props.openSideBar}
       />
     );
   }
@@ -132,7 +170,7 @@ const mapStateToProps = state => ({
   containerElement: <div style={{height: '100%'}} />,
   mapElement: <div style={{height: '100%'}} />,
   markers: state.map.markers,
-  landmarks: state.map.landmarks
+  landmarks: state.map.landmarks,
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({

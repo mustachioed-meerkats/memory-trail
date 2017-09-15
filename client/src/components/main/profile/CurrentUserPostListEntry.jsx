@@ -4,6 +4,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { Button, ButtonGroup, Glyphicon } from 'react-bootstrap';
 import getTimeSincePost from '../../../../lib/getTimeSincePost';
+import { Card, Icon } from 'semantic-ui-react';
 
 //TODO: Refactor into seperate style
 const style = {
@@ -56,9 +57,31 @@ const style = {
   }
 };
 
+const extra = (
+  <div>
+    <a><Icon name='heart' />13 </a>
+    <a><Icon name='map pin' />Landmark</a>
+  </div>
+);
+
 const CurrentUserPostListEntry = (props) => {
   return (
-    <div style={style.card}>
+    <Card
+        centered={true}
+        style={style.card}
+        image='http://cdn-image.travelandleisure.com/sites/default/files/styles/1600x1000/public/1444253482/DG2015-san-francisco.jpg?itok=MdRJm2Zo'
+        header='TITLE_MEMORY'
+        meta={`Submitted XX hrs ago by USERNAME`}
+        description='This content is content which displays the content of the cards contents.'
+        extra={extra}
+      />
+  );
+};
+
+export default CurrentUserPostListEntry;
+
+
+{/* <div style={style.card}>
       <div style={style.card.container}>
         <div style={style.card.title}>
           <Link to={`/post/${props.post.id}`}>{props.post.title}</Link>
@@ -68,8 +91,4 @@ const CurrentUserPostListEntry = (props) => {
         <div style={style.card.content}>{props.post.content.slice(0, 64) + ' ...'}</div>
         <Button style={style.card.button}><Glyphicon glyph="bookmark" /></Button>
       </div>
-    </div>
-  );
-};
-
-export default CurrentUserPostListEntry;
+    </div> */}

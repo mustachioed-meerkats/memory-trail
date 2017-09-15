@@ -2,11 +2,17 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { Button, ButtonGroup, Glyphicon } from 'react-bootstrap';
+import { Glyphicon } from 'react-bootstrap';
+import getTimeSincePost from '../../../lib/getTimeSincePost';
+
+import { Card, Icon, Image, Button } from 'semantic-ui-react';
 
 //TODO: Refactor into seperate style
 const style = {
   card: {
+    width: '100%'
+  },
+  oldcard: {
     flex: '0 0 20%',
     boxShadow: '0 1px 2px #aaa',
     background: 'white',
@@ -55,47 +61,45 @@ const style = {
   }
 };
 
-// TODO: Refactor into a separate library
-const getTimeSincePost = (postTime) => {
-  let postDateMilliseconds = new Date(postTime).getTime();
-  let currentDateMilliseconds = new Date().getTime();
+const extra = (
+  <div>
+    <a><Icon name='heart' />13 </a>
+    <a><Icon name='map pin' />Landmark</a>
+  </div>
+);
 
-  let diff = Math.abs(currentDateMilliseconds - postDateMilliseconds);
-  let seconds = (diff / 1000).toFixed(0);
-
-  if (seconds < 60) {
-    return seconds + ' seconds ago ';
-  } else {
-    let minutes = Math.floor(seconds / 60);
-    if (minutes < 60) {
-      return minutes + ' minutes ago ';
-    } else {
-      let hours = Math.floor(minutes / 60);
-      if (hours < 24) {
-        return hours + ' hours ago';
-      } else {
-        let days = Math.floor(hours / 24);
-        return days + ' days ago ';
-      }
-    }
+const hmm = {
+  card: {
+    margin: '-1rem -1rem 0.5rem -1rem',
+    height: '5rem',
+    background: 'url(http://cdn-image.travelandleisure.com/sites/default/files/styles/1600x1000/public/1444253482/DG2015-san-francisco.jpg?itok=MdRJm2Zo)  center center',
+    backgroundSize: 'cover'
   }
-  return 0;
 };
 
 const PostListEntry = (props) => {
   return (
-    <div style={style.card}>
-      <div style={style.card.container}>
-        <div style={style.card.title}>
-          <Link to={`/post/${props.post.id}`}>{props.post.title}</Link>
-        </div>
-        <div style={style.card.stats}>
-          Submitted {getTimeSincePost(props.post.created_at)} by <Link to={`/profile/${props.post.profile_id}`}> {props.post.profile_display}</Link>
-        </div>
-        <div style={style.card.content}>{props.post.content.slice(0, 64) + ' ...'}</div>
-        <Button style={style.card.button}><Glyphicon glyph="bookmark" /></Button>
-      </div>
-    </div>
+    <Card raised={true}> 
+      <Card.Content>
+          <div style={hmm.card}>
+          </div >
+        <Card.Meta>
+          <div>
+            <a><Icon name='heart' /># </a>
+            <a><Icon name='map pin' /> LAND_MARK</a>
+          </div>
+          Submitted {getTimeSincePost(props.post.created_at)} hrs ago by <strong>{props.post.profile_display}</strong>
+        </Card.Meta>
+        <Card.Description>
+          {props.post.content.slice(0, 64) + ' ...'}
+        </Card.Description>
+      </Card.Content>
+      <Card.Content extra>
+        <Button circular icon='heart' />
+        <Button circular icon='commenting outline' />
+        <Button circular icon='share alternate' />
+      </Card.Content>
+    </Card>
   );
 };
 

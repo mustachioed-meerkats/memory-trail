@@ -8,6 +8,7 @@ import FollowingsPage from './FollowingsPage.jsx';
 import UserProfilePage from './UserProfilePage.jsx';
 import CurrentUserProfilePage from './CurrentUserProfilePage.jsx';
 import Timeline from './Timeline.jsx';
+import TestPage from './TestPage.jsx';
 
 const RootRouter = () => (
   <Switch>
@@ -19,6 +20,7 @@ const RootRouter = () => (
     <Route exact path='/post/:id' component={PostPage} />
     <Route exact path='/followings' component={FollowingsPage} />
     <Route exact path='/timeline' component={Timeline} />
+    <Route exact path='/testpage' component={TestPage} />
   </Switch>
 );
 

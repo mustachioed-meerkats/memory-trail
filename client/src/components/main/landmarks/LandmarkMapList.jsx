@@ -1,6 +1,8 @@
 import React from 'react';
+import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import FollowingFeedListEntry from './FollowingFeedListEntry.jsx';
+import LandmarkMapListEntry from './LandmarkMapListEntry.jsx';
+//import StoryListEntry from './StoryListEntry.jsx';
 
 /** ============================================================
  * Import Semantic UI Components
@@ -26,31 +28,21 @@ import {
 /** ============================================================
  * Define Component
  * ========================================================== */
-const FollowingFeedList = (props) => {
-  if (!props.posts) {
-    return (
-      <Segment>
-        <Dimmer active inverted>
-          <Loader inverted>Loading</Loader>
-        </Dimmer>
-      </Segment>
-    );
-  } else {
-    return (
-      <Segment.Group>
-        {props.posts.map((post, i) => {
-          return <FollowingFeedListEntry post={post} id={i} key={i} />;
-        })}
-      </Segment.Group>
-    );
-  }
+const LandmarkMapList = ({landmarks}) => {
+  return (
+    <div>
+      {landmarks.map((landmark, i) => { 
+        return <LandmarkMapListEntry landmark={landmark} id={i} key={i} />; 
+      })}
+    </div>
+  );
 };
 
 /** ============================================================
  * Define Class Properties
  * ========================================================== */
 const mapStateToProps = (state) => ({
-  posts: state.following.posts
+  landmarks: state.map.landmarks,
 });
 
 /** ============================================================
@@ -58,4 +50,4 @@ const mapStateToProps = (state) => ({
  * ========================================================== */
 export default connect(
   mapStateToProps
-)(FollowingFeedList);
+)(LandmarkMapList);

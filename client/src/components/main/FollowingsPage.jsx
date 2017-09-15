@@ -1,19 +1,38 @@
 import React from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { Grid, Row, Col, Panel, Image, Glyphicon } from 'react-bootstrap';
 import following from '../../styles/following';
-
 import FollowingsPageList from './follow/FollowingsPageList.jsx';
 
 /** ============================================================
+ * Import Semantic UI Components
+ * ========================================================== */
+import {
+  Button, 
+  Container,
+  Grid, 
+  Header, 
+  Icon,
+  Image, 
+  Item, 
+  Label, 
+  Menu, 
+  Segment, 
+  Step,
+  Table,
+  Card,
+  Dimmer,
+  Loader
+} from 'semantic-ui-react';
+
+/** ============================================================
  * Import Redux Action Creators
- * ============================================================= */
+ * ========================================================== */
 import { getAllFollowings } from '../../store/modules/following';
 
 /** ============================================================
  * Define Component
- * ============================================================= */
+ * ========================================================== */
 class FollowingsPage extends React.Component {
   constructor(props) {
     super(props);
@@ -25,26 +44,32 @@ class FollowingsPage extends React.Component {
 
   render() {
     return (
-      <div style={following.container}>
-        <div style={following.container.header}>
-          <div style={following.container.header.title}>Memory Feed</div>
-        </div>
-        <div style={following.container.feed}>
-          <FollowingsPageList />
-        </div>
-      </div>
+    <Grid columns={3} container doubling stackable>
+      <Grid.Column>
+        <FollowingsPageList />
+      </Grid.Column>
+    </Grid>
     );
   }
 }
 
+/** ============================================================
+ * Define Class Properties
+ * ========================================================== */
 const mapStateToProps = (state) => ({
   user: state.user,
 });
 
+/** ============================================================
+ * Import Redux Action Creators
+ * ========================================================== */
 const mapDispatchToProps = (dispatch) => bindActionCreators({
   getAllFollowings
 }, dispatch);
 
+/** ============================================================
+ * Define Redux Store Connection
+ * ========================================================== */
 export default connect(
   mapStateToProps,
   mapDispatchToProps
