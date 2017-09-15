@@ -5,10 +5,8 @@ const Language = require('@google-cloud/language');
 const language = Language();
 
 
-module.exports = (req, res) => {
+module.exports = (text) => {
   // The text to analyze
-  const {text} = req.body;
-  
   const document = {
     'content': text,
     type: 'PLAIN_TEXT'
@@ -22,7 +20,7 @@ module.exports = (req, res) => {
       console.log(`Text: ${text}`);
       console.log(`Sentiment score: ${sentiment.score}`);
       console.log(`Sentiment magnitude: ${sentiment.magnitude}`);
-      res.send(results);
+      return sentiment;
     })
     .catch((err) => {
       console.error('ERROR:', err);
