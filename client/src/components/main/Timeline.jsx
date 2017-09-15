@@ -118,7 +118,6 @@ class Timeline extends React.Component {
   }
 }
 
-
 const mapStateToProps = state => ({
   center: state.map.center,
   bounds: state.map.bounds,
