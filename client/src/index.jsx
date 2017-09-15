@@ -5,6 +5,7 @@ import { ConnectedRouter } from 'react-router-redux';
 import App from './components/App.jsx';
 import store, { history } from './store';
 import { lightBaseTheme, MuiThemeProvider, getMuiTheme } from 'material-ui/styles';
+import './styles/main.scss';
 
 render(
   <Provider store={store}>

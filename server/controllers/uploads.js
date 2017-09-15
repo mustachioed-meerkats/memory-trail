@@ -22,4 +22,4 @@ module.exports.upload = (req, res) => {
       res.send(data);
     }
   });
-}
+};

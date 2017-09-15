@@ -2,16 +2,50 @@ import React from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import style from '../../../styles/following.js';
-import { Col, Glyphicon, Button } from 'react-bootstrap';
+import getTimeSinceMembership from '../../../../lib/getTimeSinceMembership.js';
 
+/** ============================================================
+ * Import Semantic UI Components
+ * ========================================================== */
+import {
+  Button, 
+  Container,
+  Grid, 
+  Header, 
+  Icon,
+  Image, 
+  Item, 
+  Label, 
+  Menu, 
+  Segment, 
+  Step,
+  Table,
+  Card,
+  Dimmer,
+  Loader
+} from 'semantic-ui-react';
+
+/** ============================================================
+ * Define Component
+ * ========================================================== */
 const FollowingsPageListEntry = (props) => {
   return (
-    <div style={style.card}>
-      <div>{props.following.profile.display}</div>
-      <div><img style={style.card.avatar} src={props.following.profile.avatar || 'https://avatars0.githubusercontent.com/u/11849230?v=4&s=60'}/></div>
-      <div><Button>Unfollow</Button></div>
-    </div>
+    <Card> 
+      <Card.Content>
+        <Image floated='right' size='tiny' src={props.following.profile.avatar || 'https://avatars0.githubusercontent.com/u/11849230?v=4&s=60'} />
+        <Card.Header>
+          {props.following.profile.display}
+        </Card.Header>
+        <Card.Meta>
+          Member since: {getTimeSinceMembership(props.following.profile.created_at)}
+        </Card.Meta>
+      </Card.Content>
+      <Card.Content extra>
+        <div className='ui two buttons'>
+          <Button basic color='green'>Unfollow</Button>
+        </div>
+      </Card.Content>
+    </Card>
   );
 };
 

@@ -2,6 +2,30 @@ import React from 'react';
 import { connect } from 'react-redux';
 import FollowingsPageListEntry from './FollowingsPageListEntry.jsx';
 
+/** ============================================================
+ * Import Semantic UI Components
+ * ========================================================== */
+import {
+  Button, 
+  Container,
+  Grid, 
+  Header, 
+  Icon,
+  Image, 
+  Item, 
+  Label, 
+  Menu, 
+  Segment, 
+  Step,
+  Table,
+  Card,
+  Dimmer,
+  Loader
+} from 'semantic-ui-react';
+
+/** ============================================================
+ * Define Component
+ * ============================================================= */
 const FollowingsPageList = (props) => {
   if (!props.followings) {
     return (
@@ -13,20 +37,26 @@ const FollowingsPageList = (props) => {
     );
   } else {
     return (
-      <div>
+      <Segment>
         {props.followings.map((following, i) => {
           return <FollowingsPageListEntry following={following} id={i} key={i} />;
         })}
-      </div>
+      </Segment>
     );
   }
 };
 
+/** ============================================================
+ * Define Class Properties
+ * ========================================================== */
 const mapStateToProps = (state) => ({
   user: state.user,
   followings: state.following.followings
 });
 
+/** ============================================================
+ * Define Redux Store Connection
+ * ========================================================== */
 export default connect(
   mapStateToProps
 )(FollowingsPageList);
