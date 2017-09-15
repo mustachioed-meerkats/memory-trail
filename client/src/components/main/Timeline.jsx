@@ -7,6 +7,28 @@ import Markers from './maps/Markers.jsx';
 import Search from './maps/Search.jsx';
 import PostList from './PostList.jsx';
 
+/* Import Semantic UI Components */
+import {
+  Button,
+  Card,
+  Divider,
+  Dropdown,
+  Form,
+  Grid,
+  Header,
+  Icon,
+  Image,
+  Input,
+  Label,
+  List,
+  Menu,
+  Message,
+  Segment,
+  Table,
+  TextArea,
+  Transition
+} from 'semantic-ui-react';
+
 import { 
   handlePlacesChanged,
   handleBoundsChanged,
@@ -15,7 +37,6 @@ import {
 
 //The strategy utilized here only works with posts coming from the server organized by timestamp,
 //it cannot use the same routes as the home page.
-
 
 const TimelineComponent = withGoogleMap(props => {
   const path = [];

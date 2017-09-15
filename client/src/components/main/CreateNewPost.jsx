@@ -123,7 +123,6 @@ class CreateNewPost extends React.Component {
   }
 
   handleSubmit (landmark) {
-    console.log(this);
     let post = {
       title: 'Placeholder',
       content: this.props.content,
@@ -163,6 +162,9 @@ class CreateNewPost extends React.Component {
     };
     return axios.post('/api/stories/new', storyInfo)
       .then(result => {
+        this.setState({
+          storyID: result.data.id
+        })
         console.log('STORY CREATED', result);
       })
       .catch((err) => {
@@ -171,20 +173,19 @@ class CreateNewPost extends React.Component {
   }
 
   submitClick () {
-    this.storySubmit();
     this.props.handleStoryLoad();
     this.handleStoryFormVisibility();
   }
 
   storySelected (name) {
-    let localID = 0;
     console.log(name);
     this.props.stories.map((story) => {
-      console.log(story.title);
+      console.log('story is: ', story);
       if (story.title === name) {
+        console.log('story ID is: ', story.id)
         localID = story.id;
         console.log(this);
-        this.setState({storyID: localID, storyName: story.title});
+        this.setState({storyID: story.id, storyName: story.title});
       }
     });
   }
@@ -222,7 +223,7 @@ class CreateNewPost extends React.Component {
                 </Card.Content>
                 <Card.Content>
                   <Button.Group fluid={true}>
-                    <Button size='huge' color='teal' type='submit' onClick={this.handleStoryFormVisibility}>OK</Button>
+                    <Button size='huge' color='teal' type='submit' onClick={this.storySubmit}>OK</Button>
                     <Button size='huge' type='submit' onClick={this.handleStoryFormVisibility}>Cancel</Button>
                   </Button.Group>
                 </Card.Content>
