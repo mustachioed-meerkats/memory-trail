@@ -2,10 +2,17 @@ const models = require('../../db/models');
 
 module.exports.createPost = (req, res) => {
   var {post, landmark} = req.body;
+  var landmark_id;
   models.Landmark.findOrCreateLandmark(landmark)
     .then(landmarkModel => {
-      var landmark_id = landmarkModel.get('id');
+      landmark_id = landmarkModel.get('id');
       post.landmark_id = landmark_id;
+      return models.Profile.getProfileById(post.profile_id);
+    })
+    .then(profile => {
+      return profile.landmarks().attach(landmark_id);
+    })
+    .then(() => {
       return models.Post.createPost(post);
     })
     .then(result => {
@@ -56,5 +63,24 @@ module.exports.getPostsByFollowings = (req, res) => {
         .then(results => {
           res.status(200).send(results);
         });
+    });
+};
+
+module.exports.likePost = (req, res) => {
+  var {profile_id, post_id} = req.body;
+  models.Post.getPostById(post_id)
+    .then(post => {
+      post.profiles_likes().attach(profile_id);
+    })
+    .then(result => {
+      res.send(result);
+    });
+};
+
+module.exports.commentPost = (req, res) => {
+  var {profile_id, post_id, text} = req.body;
+  models.Comment.createComment(profile_id, post_id, text)
+    .then(result => {
+      res.send(result);
     });
 };

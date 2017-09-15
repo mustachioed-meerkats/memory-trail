@@ -39,6 +39,12 @@ router.route('/posts/followings/:id')
 router.route('/posts/nearby')
   .post(controller.Posts.getPostsWithinRadius);
 
+router.route('/posts/like')
+  .post(controller.Posts.likePost);
+
+router.route('/posts/comment')
+  .post(controller.Posts.commentPost);
+
 /** ============================================================
  * STORY ROUTES
  * =============================================================
@@ -61,16 +67,15 @@ router.route('/stories/user/:id')
  * =============================================================
  */
 
-// create new entry in landmarks
-router.route('/landmarks/new')
-  .post(controller.Landmarks.createLandmark);
-
 // return landmark entry by landmark id
 router.route('/landmarks/:id')
   .get(controller.Landmarks.getLandmarkById);
 
 router.route('/landmarks/nearby')
   .post(controller.Landmarks.getLandmarksWithinRadius);
+
+router.route('/landmarks/guestbook/:id')
+  .get(controller.Landmarks.getGuestbookByLandmarkId);
 
 /** ============================================================
  * FOLLOWING ROUTES
@@ -84,5 +89,14 @@ router.route('/followings/new')
 // return list of profile entries current user is following 
 router.route('/followings/:id')
   .get(controller.Followings.getAllFollowings);
+
+/** ============================================================
+ * FOLLOWING ROUTES
+ * =============================================================
+ */
+
+router.route('/mailgun')
+  .post(controller.Mailgun);
+
 
 module.exports = router;

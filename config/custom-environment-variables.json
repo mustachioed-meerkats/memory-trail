@@ -27,6 +27,10 @@
   "AWS": {
     "accessKeyId": "AWS_ACCESS_KEY_ID",
     "secretAccessKey": "AWS_SECRET_ACCESS_KEY"
+  },
+  "mailgun": {
+    "api_key": "MAILGUN_API_KEY",
+    "DOMAIN": "MAILGUN_DOMAIN"
   }
 }
 

@@ -1,6 +1,5 @@
 const db = require('../');
 const knex = db.knex;
-const haversine = require('haversine');
 
 const Post = db.Model.extend({
   tableName: 'posts',
@@ -12,6 +11,12 @@ const Post = db.Model.extend({
   },
   landmark: function() {
     return this.belongsTo('Landmark');
+  },
+  profiles_likes: function() {
+    return this.belongsToMany('Profile', 'posts_likes');
+  },
+  comments: function() {
+    return this.hasMany('Comment');
   }
 }, {
   getPostsByStoryId: function(story_id) {
@@ -24,7 +29,7 @@ const Post = db.Model.extend({
     return this.fetchAll({withRelated: ['profile']});
   },
   getPostsByUserId: function(profile_id) {
-    return this.where({profile_id}).fetchAll({withRelated: ['profile']});
+    return this.where({profile_id}).fetchAll({withRelated: ['comments.profile']});
   },
   getPostsWithinRadius: function(center, radius = 13) {
     var {lat, lng} = center;
@@ -47,6 +52,9 @@ const Post = db.Model.extend({
       qb.havingIn('profile_id', followings).groupBy('id');
     })
       .fetchAll({withRelated: ['profile']});
+  },
+  getPostById: function(id) {
+    return this.where({id}).fetch();
   }
 });
 

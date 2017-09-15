@@ -78,3 +78,13 @@ module.exports.update = (req, res) => {
 //       res.sendStatus(404);
 //     });
 // };
+
+module.exports.getPassportByUserId = (req, res) => {
+  models.Profile.getProfileById(req.params.id)
+    .then(profile => {
+      return profile.landmarks().fetch();
+    })
+    .then(results => {
+      res.status(200).send(results);
+    });
+};
