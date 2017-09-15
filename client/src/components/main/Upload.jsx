@@ -2,9 +2,7 @@ import React from'react';
 import axios from 'axios';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { Grid, Row, Col } from 'react-bootstrap';
-import { Button, ButtonToolbar, ControlLabel, Form, FormGroup, FormControl, Radio, ButtonGroup } from 'react-bootstrap';
-
+import { Button, Form, Header, Icon, Input } from 'semantic-ui-react';
 
 import {
   handleImageUrl
@@ -14,32 +12,20 @@ class Upload extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      file: null,
-      processing: false
+      file: null
     };
     this.handleFile = this.handleFile.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   handleSubmit(e) {
-    e.preventDefault();
-    this.setState({
-      processing: true
-    });
-
     axios.post('/upload', this.state.file)
       .then( res => {
-        this.setState({
-          processing: false
-        });
         let image_url = res.data.Location;
         this.props.handleImageUrl(image_url);
         console.log('Upload successful');
       })
       .catch(err => {
-        this.setState({
-          processing: false
-        });
         console.log(err);
       });
   }
@@ -49,36 +35,18 @@ class Upload extends React.Component {
     formData.append('file', e.target.files[0]);
     this.setState({
       file: formData
-    });
+    })
   }
 
   render() {
     return (
-      <Grid>
-        <Row>
-          <form onSubmit={this.handleSubmit} encType="multipart/form-data">
-            <Row style={{marginBottom: '10px'}}>
-              <Col sm={4}>
-              </Col>
-              <Col sm={2}>
-                <label>Upload Image</label>
-              </Col>
-              <Col sm={3}>
-                {this.state.processing ? <input disabled className='btn btn-info btn-sm btn-disabled' type="submit" value="Upload" /> : <input className='btn btn-info btn-sm' type="submit" value="Upload" />}
-              </Col>
-            </Row>
-            <Row>
-              <Col sm={4}>
-              </Col>
-              <Col sm={4}>
-                <input style={{marginBottom: '10px'}} type="file" onChange={this.handleFile} />
-              </Col>
-              <Col sm={4}>
-              </Col>
-            </Row>
-          </form>
-        </Row>
-      </Grid>
+      <div>
+        <label htmlFor="hidden-new-file">
+          <Icon name='photo' size='massive' color='teal' style={{cursor: 'pointer'}}/>
+        </label>
+        <input type='file' id="hidden-new-file" style={{display: 'none'}} onChange={this.handleFile}/>
+        <Button size='small' onClick={this.handleSubmit}>Upload</Button>
+      </div>
     );
   }
 };
@@ -103,5 +71,3 @@ export default connect(
   mapStateToProps,
   mapDispatchToProps
 )(Upload);
-
-{/* className='btn btn-info' */}
