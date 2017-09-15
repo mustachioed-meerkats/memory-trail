@@ -5,12 +5,34 @@ import { bindActionCreators } from 'redux';
 import Autocomplete from 'react-google-autocomplete';
 import Upload from './Upload.jsx';
 
+/* Import Semantic UI Components */
+import {
+  Button,
+  Card,
+  Divider,
+  Dropdown,
+  Form,
+  Grid,
+  Header,
+  Icon,
+  Image,
+  Input,
+  Label,
+  List,
+  Menu,
+  Message,
+  Segment,
+  Table,
+  TextArea,
+  Transition
+} from 'semantic-ui-react';
+
 /** ============================================================
  * Define React Bootstrap Components
  * =============================================================
  */
-import { Grid, Row, Col } from 'react-bootstrap';
-import { Modal, Button, MenuItem, ButtonToolbar, ControlLabel, Form, FormGroup, DropdownButton, FormControl, Radio, ButtonGroup } from 'react-bootstrap';
+// import { Grid, Row, Col } from 'react-bootstrap';
+// import { Modal, MenuItem, ButtonToolbar, ControlLabel, Form, FormGroup, DropdownButton, FormControl, Radio, ButtonGroup } from 'react-bootstrap';
 
 /** ============================================================
  * Define Store Modules
@@ -32,14 +54,24 @@ class CreateNewPost extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      storyFormVisible: false,
+      dropdownVisible: false,
       landmark: '',
       show: false,
-      storyID: 0, 
+      storyID: 0,
       storyName: 'None Selected',
     };
     this.geocodeLocationInput = this.geocodeLocationInput.bind(this);
     this.initializeAutocomplete = this.initializeAutocomplete.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleStoryFormVisibility = this.handleStoryFormVisibility.bind(this);
+    this.storySubmit = this.storySubmit.bind(this);
+    this.submitClick = this.submitClick.bind(this);
+    this.storySelected = this.storySelected.bind(this);
+  }
+
+  componentWillMount () {
+    this.props.handleStoryLoad();
   }
 
   geocodeLocationInput (location) {
@@ -92,14 +124,14 @@ class CreateNewPost extends React.Component {
 
   handleSubmit (landmark) {
     let post = {
-      title: this.props.title,
+      title: 'Placeholder',
       content: this.props.content,
       lat: this.props.location.lat,
       lng: this.props.location.lng,
       profile_id: this.props.user.id,
       profile_display: this.props.user.display,
       image_url: this.props.image_url,
-      storyID: this.storyID
+      story_id: this.state.storyID
     };
     console.log(post);
 
@@ -121,7 +153,6 @@ class CreateNewPost extends React.Component {
       });
   }
 
-
   storySubmit () {
     console.log('Story submitting');
     const storyInfo = {
@@ -131,6 +162,9 @@ class CreateNewPost extends React.Component {
     };
     return axios.post('/api/stories/new', storyInfo)
       .then(result => {
+        this.setState({
+          storyID: result.data.id
+        })
         console.log('STORY CREATED', result);
       })
       .catch((err) => {
@@ -139,140 +173,106 @@ class CreateNewPost extends React.Component {
   }
 
   submitClick () {
-    this.storySubmit();
-    this.hideModal();
     this.props.handleStoryLoad();
+    this.handleStoryFormVisibility();
   }
 
   storySelected (name) {
-    let localID = 0;
+    console.log(name);
     this.props.stories.map((story) => {
+      console.log('story is: ', story);
       if (story.title === name) {
-        localID = story.id;
+        console.log('story ID is: ', story.id)
+        let localID = story.id;
+        console.log(this);
         this.setState({storyID: localID, storyName: story.title});
       }
     });
   }
-  showModal () {
-    this.setState({show: true});
+
+  handleStoryFormVisibility = () => {
+    this.setState({ storyFormVisible: !this.state.storyFormVisible });
   }
 
-  hideModal () {
-    this.setState({show: false});
+  handleDropdownVisibility = () => {
+    this.setState({ dropdownVisible: !this.state.dropdownVisible })
   }
 
-  componentDidMount() {
-    this.props.handleStoryLoad();
-  }
-
-  hideModal () {
-    this.setState({show: false});
-    
-  }
   render () {
     return (
-      <Grid>
-        <Row>
-          <Col sm={4}>
-          </Col>
-          <Col sm={4}>
-            <ButtonToolbar>
-              <Button bsStyle="primary" onClick={this.showModal.bind(this)}>
-                Add a story!
-              </Button>
-              <Modal
-                show={this.state.show}
-                onHide={this.hideModal.bind(this)}
-              >
-                <Modal.Header closeButton>
-                  <Modal.Title id="contained-modal-title-lg">Tell us about your adventure!!</Modal.Title>
-                </Modal.Header>
-                <Modal.Body>
-                  <FormGroup>
-                    <FormControl
-                      type = 'text'
-                      onChange={(e) => { this.props.handleStoryTitle(e.target.value); }}
-                      placeholder = 'Title'
-                    />
-                  </FormGroup>
-                  <FormGroup>
-                    <FormControl
-                      type = 'text'
-                      onChange={(e) => { this.props.handleStorySummary(e.target.value); }}
-                      placeholder = 'Tell us about your story!'
-                      bsSize = 'lg'
-                      componentClass="textarea"
-                      rows={8}
-                      maxLength={4000}
-                    />
-                  </FormGroup>
-                </Modal.Body>
-                <Modal.Footer>
-                  <Button onClick={this.hideModal.bind(this)}>Close</Button>
-                  <Button onClick={this.submitClick.bind(this)} > Submit Story </Button>
-                </Modal.Footer>
-              </Modal>
-            </ButtonToolbar>
-            <ButtonToolbar>
-              <DropdownButton bsSize="large" title="Choose A Story!!" id="dropdown-size-large" >
-                {this.props.stories.map((story, i) => {
-                  return <MenuItem key={i} eventKey= {story.title} onSelect={(eventKey) => { this.storySelected(eventKey); }} >{story.title}</MenuItem>;
-                })}
-              </DropdownButton>
-            </ButtonToolbar>
-            Current Story {this.state.storyName}.
-          </Col>
-          <Col sm={4}>
-          </Col>
-        </Row>
-        <Row>
-          <Col sm={4}>
-          </Col>
-          <Col sm={4}>
-            <form>
-              <FormGroup>
-                <FormControl
-                  type="text" 
-                  onChange={(e) => { this.props.handleTitleInput(e.target.value); }}
-                  placeholder="Title"
+      <Grid centered columns={2} stackable>
+        <Grid.Row>
+          <Upload />
+        </Grid.Row>
+        <Grid.Row>
+          <Grid.Column>
+            <Button.Group size='massive' fluid={true}>
+              <Button content='New Story' onClick={this.handleStoryFormVisibility}/>
+              <Button.Or/>
+              <Button content='Select' onClick={this.handleDropdownVisibility}/>
+            </Button.Group>
+            <Transition.Group animation='slide down' duration='500ms'>
+              {this.state.storyFormVisible &&
+              <Card fluid={true}>
+                <Card.Content>
+                  <Form>
+                    <Input fluid={true} size='huge' placeholder='Name Your Story' onChange={(e) => this.props.handleStoryTitle(e.target.value)}/>
+                    <br/>
+                    <TextArea style={{fontSize: '20px'}} fluid={true} placeholder='Story Summary' onChange={(e) => this.props.handleStorySummary(e.target.value)}/>
+                  </Form>
+                </Card.Content>
+                <Card.Content>
+                  <Button.Group fluid={true}>
+                    <Button size='huge' color='teal' type='submit' onClick={this.storySubmit}>OK</Button>
+                    <Button size='huge' type='submit' onClick={this.handleStoryFormVisibility}>Cancel</Button>
+                  </Button.Group>
+                </Card.Content>
+              </Card>
+              }
+            </Transition.Group>
+            <Transition.Group animation='slide down' duration='500ms'>
+              {this.state.dropdownVisible &&
+              <Card fluid={true}>
+                <List
+                  relaxed
+                  selection
+                  size='big'
+                  >
+                  {this.props.stories.map((story, index) => {
+                    return <List.Item key={index} onClick={() => this.storySelected(story.title)} content={story.title} value={story.title}/>
+                  })}
+                </List>
+              </Card>
+              }
+            </Transition.Group>
+          </Grid.Column>
+        </Grid.Row>
+        <Grid.Row>
+          <Grid.Column fluid={true}>
+            <Form>
+              <TextArea
+                fluid={true}
+                style={{fontSize: '20px'}}
+                placeholder='Record a Memory!'
+                onChange={(e) => { this.props.handleContentTextArea(e.target.value); }}
                 />
-              </FormGroup>
-              <FormGroup>
-                <Autocomplete
-                  className="form-control"
-                  id="locationInput"
-                  placeholder="Search for places"
-                  style={{width: '100%'}}
-                  onChange={this.initializeAutocomplete}
-                />
-              </FormGroup>
-              <FormGroup>
-                <FormControl
-                  componentClass="textarea"
-                  onChange={(e) => { this.props.handleContentTextArea(e.target.value); }}
-                  placeholder="Memory..."
-                />
-              </FormGroup>
-            </form>
-          </Col>
-          <Col sm={4}>
-          </Col>
-        </Row>
-        <Row>
-          <Upload/>
-        </Row>
-        <Row>
-          <Col sm={4}>
-          </Col>
-          <Col sm={4}>
-            <ButtonToolbar style={{textAlign: 'center'}}>
-              <Button type="submit" bsStyle="success" onClick={() => this.handleSubmit(this.state.landmark)}>Publish</Button>
-              <Button href="/" bsStyle="danger">Cancel</Button>
-            </ButtonToolbar>
-          </Col>
-          <Col sm={4}>
-          </Col>
-        </Row>
+              <br/>
+              <br/>
+              <Input
+                id='locationInput'
+                fluid={true}
+                size='huge'
+                icon='compass'
+                onChange={this.initializeAutocomplete}
+                placeholder='Enter a Location...' />
+            </Form>
+          </Grid.Column>
+        </Grid.Row>
+        <Grid.Row>
+          <Grid.Column>
+            <Button fluid={true} size='massive' color='teal' onClick={() => this.handleSubmit(this.state.landmark)}>Publish</Button>
+          </Grid.Column>
+        </Grid.Row>
       </Grid>
     );
   }
@@ -282,11 +282,11 @@ class CreateNewPost extends React.Component {
  * =============================================================
  */
 const mapStateToProps = state => ({
-  title: state.newpost.title,
   content: state.newpost.content,
   location: state.newpost.location,
   map: state.map.center,
   user: state.user,
+  image_url: state.newpost.image_url,
   stories: state.newpost.allUserStories,
   storyTitle: state.newstory.storyTitle,
   storySummary: state.newstory.storySummary
@@ -297,7 +297,6 @@ const mapStateToProps = state => ({
  * =============================================================
  */
 const mapDispatchToProps = dispatch => bindActionCreators({
-  handleTitleInput: handleTitleInput,
   handleContentTextArea: handleContentTextArea,
   handleLocationInput: handleLocationInput,
   handleStoryLoad: handleStoryLoad,
