@@ -124,7 +124,7 @@ class CreateNewPost extends React.Component {
 
   handleSubmit (landmark) {
     let post = {
-      title: 'Placeholder',
+      // title: 'Placeholder',
       content: this.props.content,
       lat: this.props.location.lat,
       lng: this.props.location.lng,
