@@ -9,8 +9,8 @@
     "build": "webpack --watch"
   },
   "engines": {
-    "node": "6.11.2",
-    "npm": "3.10.10"
+    "node": "6.11.x",
+    "npm": "3.10.x"
   },
   "author": "Hack Reactor",
   "license": "MIT",
