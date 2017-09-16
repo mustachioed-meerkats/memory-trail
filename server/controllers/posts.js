@@ -1,6 +1,6 @@
 const models = require('../../db/models');
 const axios = require('axios');
-const NL_API = require('./natural_language_api.js');
+// const NL_API = require('./natural_language_api.js');
 
 module.exports.createPost = (req, res) => {
   var {post, landmark} = req.body;
@@ -14,12 +14,12 @@ module.exports.createPost = (req, res) => {
     .then(profile => {
       return profile.landmarks().attach(landmark_id);
     })
-    .then(() => {
-      return NL_API(post.content);
-    })
+    // .then(() => {
+    //   return NL_API(post.content);
+    // })
     .then(sentiment => {
-      post.score = sentiment.score;
-      post.magnitude = sentiment.magnitude;
+      // post.score = sentiment.score;
+      // post.magnitude = sentiment.magnitude;
       return models.Post.createPost(post);
     })
     .then(result => {
