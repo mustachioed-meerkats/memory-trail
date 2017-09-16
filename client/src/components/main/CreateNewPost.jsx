@@ -5,11 +5,7 @@ import { bindActionCreators } from 'redux';
 import Autocomplete from 'react-google-autocomplete';
 import Upload from './Upload.jsx';
 import { browserHistory } from 'react-router';
-<<<<<<< HEAD
 import { Link } from 'react-router-dom';
-=======
-
->>>>>>> Create New Post Work.
 
 /** ============================================================
  * Import Semantic UI Components
