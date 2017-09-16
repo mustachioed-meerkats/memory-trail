@@ -106,7 +106,7 @@ export const setCenter = (lat, lng) => {
           type: SET_CENTER,
           center: {lat, lng},
           markers: posts,
-          landmarks: results.data
+          landmarks: results.data,
         });
       });
   };
