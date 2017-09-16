@@ -25,12 +25,15 @@ const config = {
             }
           }
         ]
+      },
+      {
+        test: /\.scss$/,
+        loaders: ['style-loader', 'css-loader', 'sass-loader']
       }
     ]
   },
   devtool: 'source-map'
 };
-
 
 
 export default config;
