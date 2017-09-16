@@ -5,7 +5,7 @@ import { bindActionCreators } from 'redux';
 import Autocomplete from 'react-google-autocomplete';
 import Upload from './Upload.jsx';
 import { browserHistory } from 'react-router';
-
+import { Link } from 'react-router-dom';
 
 /** ============================================================
  * Import Semantic UI Components
@@ -41,12 +41,14 @@ import {
   handleContentTextArea,
   handleLocationInput,
   handleStoryLoad,
+  handleNewPost,
 } from '../../store/modules/newpost';
 
 import {
   handleStorySummary,
   handleStoryTitle,
 } from '../../store/modules/newstory';
+
 
 /** ============================================================
  * Define Component
@@ -144,9 +146,7 @@ This code below is designed to run the autocomplete search box for the location 
   }
 
 
-
   handlePostSubmit (landmark) {
-    console.log('FUCKYO');
     let post = {
       // title: 'Placeholder',
       content: this.props.content,
@@ -162,18 +162,7 @@ This code below is designed to run the autocomplete search box for the location 
       post: post,
       landmark: this.state.landmark
     };
-
-    return axios.post('/api/posts/new', postObject)
-      .then(result => {
-        console.log('(Client) Success! CREATING NEW POST');
-        // After creating a post, the user will be re-directed to their user page,
-        // where their last post will displayed along with others. 
-        browserHistory.push('/profile/:id');
-      })
-      .catch((err) => {
-        console.log('(Client) Error! CREATING NEW POST');
-        console.log(err);
-      });
+    return this.props.handleNewPost(postObject);
   }
 
   storySubmit () {
@@ -326,6 +315,7 @@ const mapDispatchToProps = dispatch => bindActionCreators({
   handleStoryLoad: handleStoryLoad,
   handleStoryTitle: handleStoryTitle,
   handleStorySummary: handleStorySummary,
+  handleNewPost: handleNewPost,
 }, dispatch);
 
 /** ============================================================
