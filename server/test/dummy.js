@@ -16,7 +16,7 @@ const dummyData = {
     lat: 37.7997979,
     lng: -122.408342,
     content: 'This is the best day ever!',
-    title: 'Testing Day',
+    // title: 'Testing Day',
     story_id: 1,
     landmark_id: 1
   }, 
@@ -25,7 +25,7 @@ const dummyData = {
     lat: 37.7997123,
     lng: -122.408123,
     content: 'This is the second best day ever!',
-    title: 'Testing Again Day',
+    // title: 'Testing Again Day',
     story_id: 1,
     landmark_id: 1
   }, 

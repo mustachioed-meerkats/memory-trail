@@ -39,4 +39,4 @@ bower_components/
 
 .vscode
 
-tempStore.jsx
+*.lock

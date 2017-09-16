@@ -91,12 +91,18 @@ router.route('/followings/:id')
   .get(controller.Followings.getAllFollowings);
 
 /** ============================================================
- * FOLLOWING ROUTES
+ * MAILGUN ROUTES
  * =============================================================
  */
 
 router.route('/mailgun')
   .post(controller.Mailgun);
 
+
+
+
+//testing
+router.route('/testing')
+  .post(controller.NL_API);
 
 module.exports = router;

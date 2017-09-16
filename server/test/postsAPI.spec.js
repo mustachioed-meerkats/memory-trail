@@ -20,7 +20,7 @@ describe('Posts API', function () {
     post.lat = 37.741576;
     post.lng = -122.508059;
     post.content = 'Going to the beach';
-    post.title = 'We are going to the beach yay yay yay. best day ever.';
+    // post.title = 'We are going to the beach yay yay yay. best day ever.';
     let landmark = {
       name: 'Union Square',
       image_url: 'www.google.com',
