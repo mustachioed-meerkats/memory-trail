@@ -5,7 +5,7 @@ exports.up = function(knex, Promise) {
     table.decimal('lat', 10, 8).notNullable();
     table.decimal('lng', 11, 8).notNullable();
     table.text('content').notNullable();
-    table.string('title', 100).notNullable();
+    table.string('title', 100).nullable();
   });
 };
 

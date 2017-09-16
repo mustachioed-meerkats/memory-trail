@@ -36,7 +36,7 @@ exports.seed = function (knex, Promise) {
         lat: 37.7997979,
         lng: -122.408342,
         content: 'This is the best day ever!',
-        title: 'Testing Day',
+        // title: 'Testing Day',
         story_id: story_id,
         landmark_id: landmark_id,
         image_url: 'https://cache-graphicslib.viator.com/graphicslib/thumbs360x240/2660/SITours/private-san-francisco-city-tour-in-san-francisco-164077.jpg',
