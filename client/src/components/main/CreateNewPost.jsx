@@ -4,8 +4,13 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import Autocomplete from 'react-google-autocomplete';
 import Upload from './Upload.jsx';
+import { browserHistory } from 'react-router';
 
-/* Import Semantic UI Components */
+
+/** ============================================================
+ * Import Semantic UI Components
+ * ========================================================== */
+
 import {
   Button,
   Card,
@@ -28,16 +33,9 @@ import {
 } from 'semantic-ui-react';
 
 /** ============================================================
- * Define React Bootstrap Components
- * =============================================================
- */
-// import { Grid, Row, Col } from 'react-bootstrap';
-// import { Modal, MenuItem, ButtonToolbar, ControlLabel, Form, FormGroup, DropdownButton, FormControl, Radio, ButtonGroup } from 'react-bootstrap';
+ * Import Redux Action Creators
+ * ========================================================== */
 
-/** ============================================================
- * Define Store Modules
- * =============================================================
- */
 import {
   handleTitleInput,
   handleContentTextArea,
@@ -49,6 +47,11 @@ import {
   handleStorySummary,
   handleStoryTitle,
 } from '../../store/modules/newstory';
+
+/** ============================================================
+ * Define Component
+ * ========================================================== */
+
 
 class CreateNewPost extends React.Component {
   constructor(props) {
@@ -63,17 +66,30 @@ class CreateNewPost extends React.Component {
     };
     this.geocodeLocationInput = this.geocodeLocationInput.bind(this);
     this.initializeAutocomplete = this.initializeAutocomplete.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
+    this.handlePostSubmit = this.handlePostSubmit.bind(this);
     this.handleStoryFormVisibility = this.handleStoryFormVisibility.bind(this);
+    this.handleDropdownVisibility = this.handleDropdownVisibility.bind(this);
     this.storySubmit = this.storySubmit.bind(this);
     this.submitClick = this.submitClick.bind(this);
     this.storySelected = this.storySelected.bind(this);
   }
 
+  /*
+  When our component loads, we need to load all of the stories for the current user.
+  Once this happens, we need to check for a default story, which then becomes the story that is 
+  added to on default. 
+  */
+
   componentWillMount () {
     this.props.handleStoryLoad();
+    //TODO: ADD IN OUR DEFAULT STORY LOAD. 
   }
 
+
+  /*
+  The following code is designed to run the geolocation in our search box when a user
+  selects where they made the post. 
+  */
   geocodeLocationInput (location) {
     // calls google geocoding API to fetch lat/lng from address selected in autocomplete form
     let url = `https://maps.googleapis.com/maps/api/geocode/json?address=${location}&key=AIzaSyDXLOMgs19AOUHeizaMnRwjVyzxcTGWmJ8`;
@@ -87,6 +103,11 @@ class CreateNewPost extends React.Component {
         console.log('(Client) Error calling Google Geocoding API');
       });
   }
+
+/*
+This code below is designed to run the autocomplete search box for the location search.
+*/
+
 
   // Autocomplete feature for the form's location input field
   initializeAutocomplete () {
@@ -122,7 +143,10 @@ class CreateNewPost extends React.Component {
     });
   }
 
-  handleSubmit (landmark) {
+
+
+  handlePostSubmit (landmark) {
+    console.log('FUCKYO');
     let post = {
       // title: 'Placeholder',
       content: this.props.content,
@@ -133,9 +157,6 @@ class CreateNewPost extends React.Component {
       image_url: this.props.image_url,
       story_id: this.state.storyID
     };
-    console.log(post);
-
-    console.log('(Client) Intiating POST Request! CREATING NEW POST');
 
     var postObject = {
       post: post,
@@ -145,7 +166,9 @@ class CreateNewPost extends React.Component {
     return axios.post('/api/posts/new', postObject)
       .then(result => {
         console.log('(Client) Success! CREATING NEW POST');
-        // TODO: Add redirection to Explore Map
+        // After creating a post, the user will be re-directed to their user page,
+        // where their last post will displayed along with others. 
+        browserHistory.push('/profile');
       })
       .catch((err) => {
         console.log('(Client) Error! CREATING NEW POST');
@@ -182,7 +205,7 @@ class CreateNewPost extends React.Component {
     this.props.stories.map((story) => {
       console.log('story is: ', story);
       if (story.title === name) {
-        console.log('story ID is: ', story.id)
+        console.log('story ID is: ', story.id);
         let localID = story.id;
         console.log(this);
         this.setState({storyID: localID, storyName: story.title});
@@ -190,11 +213,11 @@ class CreateNewPost extends React.Component {
     });
   }
 
-  handleStoryFormVisibility = () => {
+  handleStoryFormVisibility () {
     this.setState({ storyFormVisible: !this.state.storyFormVisible });
   }
 
-  handleDropdownVisibility = () => {
+  handleDropdownVisibility () {
     this.setState({ dropdownVisible: !this.state.dropdownVisible })
   }
 
@@ -248,10 +271,9 @@ class CreateNewPost extends React.Component {
           </Grid.Column>
         </Grid.Row>
         <Grid.Row>
-          <Grid.Column fluid={true}>
+          <Grid.Column>
             <Form>
               <TextArea
-                fluid={true}
                 style={{fontSize: '20px'}}
                 placeholder='Record a Memory!'
                 onChange={(e) => { this.props.handleContentTextArea(e.target.value); }}
@@ -270,17 +292,19 @@ class CreateNewPost extends React.Component {
         </Grid.Row>
         <Grid.Row>
           <Grid.Column>
-            <Button fluid={true} size='massive' color='teal' onClick={() => this.handleSubmit(this.state.landmark)}>Publish</Button>
+            <Button fluid={true} size='massive' color='teal' onClick={() => this.handlePostSubmit(this.state.landmark)}>Publish</Button>
           </Grid.Column>
         </Grid.Row>
       </Grid>
     );
   }
 }
+
+
 /** ============================================================
- * Define State Subscriptions
- * =============================================================
- */
+ * Define Class Properties
+ * ========================================================== */
+
 const mapStateToProps = state => ({
   content: state.newpost.content,
   location: state.newpost.location,
@@ -293,9 +317,9 @@ const mapStateToProps = state => ({
 });
 
 /** ============================================================
- * Define Dispatches Subscriptions
- * =============================================================
- */
+ * Import Redux Action Creators
+ * ========================================================== */
+
 const mapDispatchToProps = dispatch => bindActionCreators({
   handleContentTextArea: handleContentTextArea,
   handleLocationInput: handleLocationInput,
@@ -303,6 +327,10 @@ const mapDispatchToProps = dispatch => bindActionCreators({
   handleStoryTitle: handleStoryTitle,
   handleStorySummary: handleStorySummary,
 }, dispatch);
+
+/** ============================================================
+ * Define Redux Store Connection
+ * ========================================================== */
 
 export default connect(
   mapStateToProps,

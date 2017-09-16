@@ -8,6 +8,7 @@ The project description
 - Kevin Huang
 - Talis Lazdins
 - Sam Davis
+- Ian Mobley
 
 ## Roadmap
 
