@@ -168,7 +168,11 @@ This code below is designed to run the autocomplete search box for the location 
         console.log('(Client) Success! CREATING NEW POST');
         // After creating a post, the user will be re-directed to their user page,
         // where their last post will displayed along with others. 
+<<<<<<< HEAD
         browserHistory.push('/profile/:id');
+=======
+        browserHistory.push('/profile');
+>>>>>>> 2d06391f56c0ee05e74424f6f6ba97f78dcfe7b1
       })
       .catch((err) => {
         console.log('(Client) Error! CREATING NEW POST');
