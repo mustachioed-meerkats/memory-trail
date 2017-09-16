@@ -168,7 +168,7 @@ This code below is designed to run the autocomplete search box for the location 
         console.log('(Client) Success! CREATING NEW POST');
         // After creating a post, the user will be re-directed to their user page,
         // where their last post will displayed along with others. 
-        browserHistory.push('/profile');
+        browserHistory.push('/profile/:id');
       })
       .catch((err) => {
         console.log('(Client) Error! CREATING NEW POST');
@@ -241,7 +241,7 @@ This code below is designed to run the autocomplete search box for the location 
                   <Form>
                     <Input fluid={true} size='huge' placeholder='Name Your Story' onChange={(e) => this.props.handleStoryTitle(e.target.value)}/>
                     <br/>
-                    <TextArea style={{fontSize: '20px'}} fluid={true} placeholder='Story Summary' onChange={(e) => this.props.handleStorySummary(e.target.value)}/>
+                    <TextArea style={{fontSize: '20px'}} placeholder='Story Summary' onChange={(e) => this.props.handleStorySummary(e.target.value)}/>
                   </Form>
                 </Card.Content>
                 <Card.Content>
