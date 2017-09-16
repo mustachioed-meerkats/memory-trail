@@ -1,7 +1,10 @@
 import React from 'react';
-import {withGoogleMap, GoogleMap, Marker, Polyline} from 'react-google-maps';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import RaisedButton from 'material-ui/RaisedButton';
+import { Link } from 'react-router-dom';
+import { withGoogleMap, GoogleMap, Marker, InfoWindow } from 'react-google-maps';
+import Markers from './maps/Markers.jsx';
 
 // import Markers from './maps/Markers.jsx';
 // import PostList from './PostList.jsx';
@@ -37,15 +40,49 @@ import {
  * ========================================================== */
 import {
   handleMapMounted, 
-  handleSearchBoxMounted,
   handlePlacesChanged,
   handleBoundsChanged,
-  handleSearchArea,
   handleMarkerClick,
   handleMarkerClose
 } from '../../store/modules/map';
 
-class Timeline extends React.Component {
+const MapComponent = withGoogleMap(props => (
+  <GoogleMap
+    ref={props.handleMapMounted}
+    defaultZoom={12}
+    center={props.center}
+    onDragEnd={() => props.handleBoundsChanged(props.map)}
+    options={mapOptions}
+  >
+    {props.landmarks.map((marker, index) => (
+      <Marker 
+        position={{lat: parseFloat(marker.lat), lng: parseFloat(marker.lng)}} key={index} 
+        onClick={() => props.handleMarkerClick(marker)}
+      >
+        {marker.showInfo && (
+          <InfoWindow onCloseClick={() => props.handleMarkerClose(marker)}>
+            <div><Link to={`/landmark/${marker.id}`}>{marker.name}</Link></div>
+          </InfoWindow>
+        )}
+      </Marker>
+    ))}
+  </GoogleMap>
+));
+
+let mapOptions = {
+  zoomControl: true,
+  mapTypeControl: false,
+  scaleControl: false,
+  streetViewControl: false,
+  rotateControl: false,
+  fullscreenControl: false
+};
+
+const mapStyle = {
+  height: window.innerHeight
+};
+
+class TimeLine extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -53,33 +90,51 @@ class Timeline extends React.Component {
       currentStory: '',
       currentStoryPosts: [],
       currentStoryMarkers: [],
-      currentPost: ''
-    }
+      currentPost: '',
+      _map: null
+    };
+    this.handleMapMounted = this.handleMapMounted.bind(this);
   }
 
-            // <GoogleMap
-            //   ref={this.props.handleMapMounted}
-            //   defaultZoom={14}
-            //   center={{37.773972, -122.431297}}
-            // />
+  handleMapMounted(map) {
+    this.setState({
+      _map: map
+    });
+  }
 
   render() {
     return (
-      <Container>
-        <Grid fluid={true} centered columns={2}>
+      <Grid columns={2} stackable>
+        <Grid.Row>
           <Grid.Column>
-            <Card />
+            <div style={mapStyle}>
+              <MapComponent 
+                containerElement={this.props.containerElement}
+                mapElement={this.props.mapElement}
+                handleMapMounted={this.handleMapMounted}
+                center={this.props.center}
+                handleBoundsChanged={this.props.handleBoundsChanged}
+                map={this.state._map}
+                bounds={this.props.bounds}
+                handlePlacesChanged={this.props.handlePlacesChanged}
+                inputStyle={this.props.inputStyle}
+                handleMarkerClick={this.props.handleMarkerClick}
+                handleMarkerClose={this.props.handleMarkerClose}
+                markers={this.props.markers}
+                landmarks={this.props.landmarks}
+                openSideBar={this.props.openSideBar}
+              />
+            </div>
           </Grid.Column>
           <Grid.Column>
-            <Card />
+            <div> Posts Go Here </div>
           </Grid.Column>
-        </Grid>
-      </Container>
-    )
+        </Grid.Row>
+      </Grid>
+
+    );
   }
 }
-
-
 
 
 /** ============================================================
@@ -87,7 +142,12 @@ class Timeline extends React.Component {
  * =============================================================
  */
 const mapStateToProps = state => ({
-
+  center: state.map.center,
+  bounds: state.map.bounds,
+  containerElement: <div style={{height: '100%'}} />,
+  mapElement: <div style={{height: '100%'}} />,
+  markers: state.map.markers,
+  landmarks: state.map.landmarks,
 });
 
 /** ============================================================
@@ -95,11 +155,16 @@ const mapStateToProps = state => ({
  * =============================================================
  */
 const mapDispatchToProps = dispatch => bindActionCreators({
-
+  handlePlacesChanged,
+  handleBoundsChanged,
+  handleMarkerClick,
+  handleMarkerClose
 }, dispatch);
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(Timeline);
+)(TimeLine);
+
+
 

@@ -22,10 +22,9 @@ const RootRouter = () => (
     <Route exact path='/post/:id' component={PostPage} />
     <Route exact path='/landmark/:id' component={LandmarkPage} />
     <Route exact path='/followings' component={FollowingsPage} />
-    <Route exact path='/timeline' component={Timeline} />
-    <Route exact path='/testpage' component={TestPage} />
-    <Route exact path='/testing' component={Demo} />
+    <Route exact path='/testpage' component={TimeLine} />
   </Switch>
 );
 
+// <Route exact path='/timeline' component={Timeline} />
 export default RootRouter;
