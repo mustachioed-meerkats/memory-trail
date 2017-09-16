@@ -101,8 +101,8 @@ router.route('/mailgun')
 
 
 
-//testing
-router.route('/testing')
-  .post(controller.NL_API);
+// //testing
+// router.route('/testing')
+//   .post(controller.NL_API);
 
 module.exports = router;
