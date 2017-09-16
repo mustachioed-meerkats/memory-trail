@@ -62,7 +62,7 @@ class NavHeader extends React.Component {
             <Icon name='feed' />
             Feed
           </Menu.Item>
-          <Menu.Item as={Link} to='/profile' name='profile' onClick={this.handleItemClick}>
+          <Menu.Item as={Link} to={`/profile/${this.props.user.id}`} name='profile' onClick={this.handleItemClick}>
             <Icon name='user circle outline' />
             {this.props.user.display}
           </Menu.Item>
