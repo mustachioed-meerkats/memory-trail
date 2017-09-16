@@ -25,6 +25,10 @@ const config = {
             }
           }
         ]
+      },
+      {
+        test: /\.scss$/,
+        loaders: ['style-loader', 'css-loader', 'sass-loader']
       }
     ]
   },
