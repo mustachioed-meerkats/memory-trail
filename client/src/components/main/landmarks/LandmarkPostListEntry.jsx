@@ -15,7 +15,7 @@ import {
   Icon,
   Image, 
   Item, 
-  Label, 
+  Label,
   Menu, 
   Segment, 
   Step,
