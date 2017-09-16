@@ -5,6 +5,9 @@ import RaisedButton from 'material-ui/RaisedButton';
 import { Link } from 'react-router-dom';
 import { withGoogleMap, GoogleMap, Marker, InfoWindow } from 'react-google-maps';
 import Markers from './maps/Markers.jsx';
+import styles from 'react-responsive-carousel/lib/styles/carousel.min.css';
+const Carousel = require('react-responsive-carousel').Carousel;
+
 
 // import Markers from './maps/Markers.jsx';
 // import PostList from './PostList.jsx';
@@ -127,7 +130,29 @@ class TimeLine extends React.Component {
             </div>
           </Grid.Column>
           <Grid.Column>
-            <div> Posts Go Here </div>
+            <Carousel 
+              axis="horizontal|vertical" 
+              showThumbs={true|false} 
+              showArrows={true|false} 
+              onChange={onChange} 
+              onClickItem={onClickItem} 
+              onClickThumb={onClickThumb} 
+              dynamicHeight 
+              emulateTouch
+              >
+                <div>
+                  <img src="https://cdn.vox-cdn.com/uploads/chorus_asset/file/6538939/dolores_park_torbakhopper.jpg" />
+                  <p className="legend">Legend 1</p>
+                </div>
+                <div>
+                  <img src="http://bethandarcher.com/wp-content/uploads/2016/05/thumb_IMG_5929_1024.jpg" />
+                  <p className="legend">Legend 2</p>
+                </div>
+                <div>
+                  <img src="https://sfbay.ca/home/wp-content/uploads/2016/06/coit.jpg" />
+                  <p className="legend">Legend 3</p>
+                </div>
+            </Carousel>
           </Grid.Column>
         </Grid.Row>
       </Grid>

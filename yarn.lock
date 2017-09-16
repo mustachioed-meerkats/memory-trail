@@ -6829,6 +6829,12 @@ react-dropzone@^4.1.2:
     attr-accept "^1.0.3"
     prop-types "^15.5.7"
 
+react-easy-swipe@^0.0.13:
+  version "0.0.13"
+  resolved "https://registry.yarnpkg.com/react-easy-swipe/-/react-easy-swipe-0.0.13.tgz#c00e90dabed8d0878e8c8313b867e01435f0f637"
+  dependencies:
+    prop-types "^15.5.8"
+
 react-event-listener@^0.4.5:
   version "0.4.5"
   resolved "https://registry.yarnpkg.com/react-event-listener/-/react-event-listener-0.4.5.tgz#e3e895a0970cf14ee8f890113af68197abf3d0b1"
@@ -6889,6 +6895,14 @@ react-redux@^5.0.6:
     lodash-es "^4.2.0"
     loose-envify "^1.1.0"
     prop-types "^15.5.10"
+
+react-responsive-carousel@^3.1.25:
+  version "3.1.25"
+  resolved "https://registry.yarnpkg.com/react-responsive-carousel/-/react-responsive-carousel-3.1.25.tgz#a724e0a3383e3c500b3eb2f96e64221c6fb8f095"
+  dependencies:
+    classnames "^2.2.5"
+    prop-types "^15.5.8"
+    react-easy-swipe "^0.0.13"
 
 react-router-bootstrap@^0.24.3:
   version "0.24.3"
