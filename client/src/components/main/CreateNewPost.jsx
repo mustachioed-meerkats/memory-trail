@@ -44,11 +44,6 @@ import {
   handleNewPost,
 } from '../../store/modules/newpost';
 
-import {
-  handleStorySummary,
-  handleStoryTitle,
-} from '../../store/modules/newstory';
-
 
 /** ============================================================
  * Define Component
@@ -62,6 +57,8 @@ class CreateNewPost extends React.Component {
       storyFormVisible: false,
       dropdownVisible: false,
       landmark: '',
+      storyTitleForm: '',
+      storySummaryForm: '',
       show: false,
       storyID: 0,
       storyName: 'None Selected',
@@ -145,10 +142,13 @@ This code below is designed to run the autocomplete search box for the location 
     });
   }
 
+  /*
+  When a post is submitted, the relevant information is added to the postObject, 
+  then sent to the api within redux. The page is also routed from that end to the users profile page.  
+  */
 
   handlePostSubmit (landmark) {
     let post = {
-      // title: 'Placeholder',
       content: this.props.content,
       lat: this.props.location.lat,
       lng: this.props.location.lng,
@@ -166,17 +166,16 @@ This code below is designed to run the autocomplete search box for the location 
   }
 
   storySubmit () {
-    console.log('Story submitting');
     const storyInfo = {
-      title: this.props.storyTitle,
-      summary: this.props.storySummary,
+      title: this.state.storyTitleForm,
+      summary: this.props.storySummaryForm,
       profile_id: this.props.user.id,
     };
     return axios.post('/api/stories/new', storyInfo)
       .then(result => {
         this.setState({
           storyID: result.data.id
-        })
+        });
         console.log('STORY CREATED', result);
       })
       .catch((err) => {
@@ -184,30 +183,47 @@ This code below is designed to run the autocomplete search box for the location 
       });
   }
 
+    /*
+      This function exists so that we can send an api call and close the modal at the same time. 
+    */
   submitClick () {
     this.props.handleStoryLoad();
     this.handleStoryFormVisibility();
   }
 
-  storySelected (name) {
-    console.log(name);
+  /*
+    When a story is selected by a user in the dropdown box, it will simply set the story in the 
+    local state. When a post is created, it will be associated with the appropriate story. 
+  */
+
+  storySelected (selectedStory) {
     this.props.stories.map((story) => {
-      console.log('story is: ', story);
-      if (story.title === name) {
-        console.log('story ID is: ', story.id);
-        let localID = story.id;
-        console.log(this);
-        this.setState({storyID: localID, storyName: story.title});
+      if (story.title === selectedStory) {
+        this.setState({storyID: story.id, storyName: story.title});
       }
     });
+    this.handleDropdownVisibility();
   }
 
+  //Activates modal for the story creation form. 
+
   handleStoryFormVisibility () {
-    this.setState({ storyFormVisible: !this.state.storyFormVisible });
+    this.setState({storyFormVisible: !this.state.storyFormVisible});
+
   }
+
+  //Activates modal for the story selection dropbox. 
 
   handleDropdownVisibility () {
     this.setState({ dropdownVisible: !this.state.dropdownVisible })
+  }
+
+  handleStorySummary (event) {
+    this.setState({ storySummaryForm: event });
+  }
+
+  handleStoryTitle (event) {
+    this.setState({storyTitleForm: event });
   }
 
   render () {
@@ -228,9 +244,9 @@ This code below is designed to run the autocomplete search box for the location 
               <Card fluid={true}>
                 <Card.Content>
                   <Form>
-                    <Input fluid={true} size='huge' placeholder='Name Your Story' onChange={(e) => this.props.handleStoryTitle(e.target.value)}/>
+                    <Input fluid={true} size='huge' value = {this.state.storyTitleForm} placeholder='Name Your Story' onChange={(e) => this.handleStoryTitle(e.target.value)}/>
                     <br/>
-                    <TextArea style={{fontSize: '20px'}} placeholder='Story Summary' onChange={(e) => this.props.handleStorySummary(e.target.value)}/>
+                    <TextArea style={{fontSize: '20px'}} value = {this.state.storySummaryForm} placeholder='Story Summary' onChange={(e) => this.handleStorySummary(e.target.value)}/>
                   </Form>
                 </Card.Content>
                 <Card.Content>
@@ -301,8 +317,6 @@ const mapStateToProps = state => ({
   user: state.user,
   image_url: state.newpost.image_url,
   stories: state.newpost.allUserStories,
-  storyTitle: state.newstory.storyTitle,
-  storySummary: state.newstory.storySummary
 });
 
 /** ============================================================
@@ -313,8 +327,6 @@ const mapDispatchToProps = dispatch => bindActionCreators({
   handleContentTextArea: handleContentTextArea,
   handleLocationInput: handleLocationInput,
   handleStoryLoad: handleStoryLoad,
-  handleStoryTitle: handleStoryTitle,
-  handleStorySummary: handleStorySummary,
   handleNewPost: handleNewPost,
 }, dispatch);
 
