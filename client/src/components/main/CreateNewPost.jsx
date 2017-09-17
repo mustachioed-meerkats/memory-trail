@@ -5,7 +5,11 @@ import { bindActionCreators } from 'redux';
 import Autocomplete from 'react-google-autocomplete';
 import Upload from './Upload.jsx';
 import { browserHistory } from 'react-router';
+<<<<<<< HEAD
 import { Link } from 'react-router-dom';
+=======
+
+>>>>>>> d67ca73fac251d2e6eecb4d893d11a75f8ecf104
 
 /** ============================================================
  * Import Semantic UI Components
@@ -43,6 +47,11 @@ import {
   handleStoryLoad,
   handleNewPost,
 } from '../../store/modules/newpost';
+
+
+/** ============================================================
+ * Define Component
+ * ========================================================== */
 
 
 /** ============================================================
