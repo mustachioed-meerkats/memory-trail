@@ -61,7 +61,8 @@ class CreateNewPost extends React.Component {
       storySummaryForm: '',
       show: false,
       storyID: 0,
-      storyName: 'None Selected',
+      storyName: 'EveryDay Life',
+      defaultStory: 'EveryDay Life'
     };
     this.geocodeLocationInput = this.geocodeLocationInput.bind(this);
     this.initializeAutocomplete = this.initializeAutocomplete.bind(this);
@@ -86,8 +87,9 @@ class CreateNewPost extends React.Component {
       //Next, we are going to map through them and find which on is the default. 
       //The default story will be preloaded as the story that we post to. 
       this.props.stories.map((story) => {
+        console.log(story);
         if (story.default_post === true) {
-          this.setState({storyID: story.id});
+          this.setState({storyID: story.id, defaultStory: story.title, storyName: story.title});
         }
       });
     });
@@ -245,6 +247,10 @@ This code below is designed to run the autocomplete search box for the location 
         <Grid.Row>
           <Upload />
         </Grid.Row>
+        <Message positive>
+          <Message.Header>Your current story is {this.state.storyName} </Message.Header>
+            <p>FYI, {this.state.defaultStory} is your default story.</p>
+        </Message>
         <Grid.Row>
           <Grid.Column>
             <Button.Group size='massive' fluid={true}>
