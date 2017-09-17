@@ -88,3 +88,16 @@ module.exports.getPassportByUserId = (req, res) => {
       res.status(200).send(results);
     });
 };
+
+module.exports.getInfoByUserId = (res, req) => {
+  var info = [];
+  models.profile.getProfileById(req.params.id)
+    .then(profile => {
+      info.push(profile);
+      return models.Story.getStoriesByUserId(req.params.id);
+    })
+    .then(stories => {
+      info.push(stories);
+      res.send(info);
+    });
+};

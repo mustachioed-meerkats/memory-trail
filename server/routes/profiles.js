@@ -15,4 +15,7 @@ router.route('/:id')
 router.route('/passport/:id')
   .get(ProfileController.getPassportByUserId);
 
+router.route('/info/:id')
+  .get(ProfileController.getInfoByUserId);
+
 module.exports = router;
