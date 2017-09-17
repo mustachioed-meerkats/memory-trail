@@ -26,14 +26,16 @@ class ProfileRouterPage extends React.Component {
       isCurrentUser: true,
       profile_display: ''
     };
+    this.handleUserChange = this.handleUserChange.bind(this);
   }
 
   componentWillMount() {
     var user_id = Number(this.props.match.params.id);
-    console.log('visiting this user page: ', user_id);
-    console.log(this.props.user.user.id);
+    this.handleUserChange(user_id);
+  }
+
+  handleUserChange(user_id) {
     if (user_id !== this.props.user.user.id) {
-      console.log('this is not current user');
       this.props.getUserInfo(user_id)
         .then(() => {
           this.setState({
@@ -42,7 +44,6 @@ class ProfileRouterPage extends React.Component {
           });
         });
     } else {
-      console.log('this is the current user');
       this.setState({
         profile_display: this.props.user.user.display || this.props.user.user.email
       });
@@ -50,6 +51,11 @@ class ProfileRouterPage extends React.Component {
   }
 
   render() {
+    var following = (<div></div>);
+    if (this.state.isCurrentUser) {
+      following = (<li><Link to={`${this.props.match.url}/following`}>Following</Link></li>);
+    }
+
     return (
       <div>
         <div>{this.state.profile_display}</div>
@@ -57,7 +63,7 @@ class ProfileRouterPage extends React.Component {
           <ul>
             <li><Link to={`${this.props.match.url}`}>Stories</Link></li>
             <li><Link to={`${this.props.match.url}/posts`}>Posts</Link></li>
-            <li><Link to={`${this.props.match.url}/following`}>Following</Link></li>
+            {following}
           </ul>
         </nav>
         <Route exact path={`${this.props.match.url}`} render={() => (
@@ -67,7 +73,9 @@ class ProfileRouterPage extends React.Component {
           <CurrentUserPostList isCurrentUser={this.state.isCurrentUser} />
         )}/>
         <Route exact path={`${this.props.match.url}/following`} render={() => (
-          <FollowingsPageList isCurrentUser={this.state.isCurrentUser} />
+          <FollowingsPageList 
+            isCurrentUser={this.state.isCurrentUser} 
+            handleUserChange={this.handleUserChange}/>
         )}/>
       </div>
     );

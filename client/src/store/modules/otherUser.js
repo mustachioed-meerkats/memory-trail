@@ -41,7 +41,6 @@ export default (state = initialState, action) => {
  */
 
 export const getUserInfo = (userId) => {
-  console.log('getting info');
   return dispatch => {
     return axios.get(`/api/profiles/info/${userId}`)
       .then(results => {
