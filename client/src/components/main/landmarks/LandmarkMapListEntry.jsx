@@ -29,11 +29,12 @@ import {
  * Define Component
  * ========================================================== */
 const LandmarkMapListListEntry = ({landmark}) => {
+  const landMarkImage = landmark.image_url || 'https://i.imgur.com/a53MMcb.jpg';
   const style = {
     card: {
       margin: '-1rem -1rem 0.5rem -1rem',
       height: '5rem',
-      background: `url(${landmark.image_url})  center center`,
+      background: `url(${landMarkImage})  center center`,
       backgroundSize: 'cover'
     }
   };

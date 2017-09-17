@@ -39,8 +39,8 @@ const LandMarkPostList = (props) => {
   } else {
     return (
       <Segment>
-        {props.landmark.posts.sort((a, b) => { return a.created_at - b.created_at; }).map((post, i) => {
-          return <LandMarkPostListEntry post={post} id={i} key={i} />;
+        {props.landmark.posts.sort((a, b) => { return b.created_at - a.created_at; }).map((post, i) => {
+          return <LandMarkPostListEntry post={post} id={i} landmark={props.landmark} key={i} />;
         })}
       </Segment>
     );
