@@ -165,6 +165,8 @@ This code below is designed to run the autocomplete search box for the location 
     return this.props.handleNewPost(postObject);
   }
 
+
+
   storySubmit () {
     const storyInfo = {
       title: this.state.storyTitleForm,
@@ -185,6 +187,7 @@ This code below is designed to run the autocomplete search box for the location 
 
     /*
       This function exists so that we can send an api call and close the modal at the same time. 
+      This will have issues until we are able to fix the problem with the dropdown closing. 
     */
   submitClick () {
     this.props.handleStoryLoad();
@@ -207,15 +210,16 @@ This code below is designed to run the autocomplete search box for the location 
 
   //Activates modal for the story creation form. 
 
+  //NOTE: THERE IS CURRENTLY AN ERROR HERE, YOU HAVE TO CLICK THREE TIMES ON THE CANCEL BUTTON FOR THE 
+  //DROPDOWN TO CLOSE. I HAVE NO CLUE WHY. 
   handleStoryFormVisibility () {
     this.setState({storyFormVisible: !this.state.storyFormVisible});
-
   }
 
   //Activates modal for the story selection dropbox. 
 
   handleDropdownVisibility () {
-    this.setState({ dropdownVisible: !this.state.dropdownVisible })
+    this.setState({ dropdownVisible: !this.state.dropdownVisible });
   }
 
   handleStorySummary (event) {
