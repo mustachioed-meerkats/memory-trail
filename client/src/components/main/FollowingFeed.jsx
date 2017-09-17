@@ -30,7 +30,7 @@ import {
  * Import Redux Action Creators
  * ========================================================== */
 import { getPostsByFollowings } from '../../store/modules/following';
-
+import { openSideBar } from '../../store/modules/sidebar';
 
 /** ============================================================
  * Define Component
@@ -40,12 +40,25 @@ class FollowingFeed extends React.Component {
     super(props);
   }
   componentWillMount() {
-    this.props.getPostsByFollowings(this.props.user.id);
+    this.props.getPostsByFollowings(this.props.user.user.id);
   }
 
   render () {
+    const listNav = {
+      position: 'fixed',
+      padding: '1rem',
+      top: 0
+    };
+
     return (
       <Container>
+        <div style={listNav}>
+          <Button
+            style={{backgroundColor: 'white'}}
+            icon='sidebar'
+            onClick={ () => this.props.openSideBar()}
+          />
+        </div>
         <Segment.Group>
           <Segment>Memory Feed</Segment>
         </Segment.Group>
@@ -67,7 +80,8 @@ const mapStateToProps = (state) => ({
  * Define Dispatches to Properties
  * ========================================================== */
 const mapDispatchToProps = (dispatch) => bindActionCreators({
-  getPostsByFollowings
+  getPostsByFollowings,
+  openSideBar
 }, dispatch);
 
 /** ============================================================
