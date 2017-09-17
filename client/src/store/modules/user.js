@@ -3,7 +3,10 @@
  * =============================================================
  */
 const initialState = {
-  user: __PRELOADED_STATE__.user,
+  user: __PRELOADED_STATE__.currentUser,
+  stories: __PRELOADED_STATE__.stories,
+  posts: __PRELOADED_STATE__.posts,
+  following: [],
 };
 
 /** ============================================================

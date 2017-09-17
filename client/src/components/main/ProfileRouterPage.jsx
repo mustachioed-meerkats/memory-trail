@@ -29,7 +29,7 @@ class ProfileRouterPage extends React.Component {
 
   componentWillMount() {
     var user_id = Number(this.props.match.params.id);
-    if (user_id !== this.props.user.id) {
+    if (user_id !== this.props.user.user.id) {
       this.props.getUserInfo(user_id)
         .then(() => {
           this.setState({
@@ -39,7 +39,7 @@ class ProfileRouterPage extends React.Component {
         });
     } else {
       this.setState({
-        profile_display: this.props.user.display || this.props.user.email
+        profile_display: this.props.user.user.display || this.props.user.user.email
       });
     }
   }

@@ -19,7 +19,7 @@ const initialState = {
   location: '',
   story: '',
   landmark: '',
-  profile_id: __PRELOADED_STATE__.user.id,
+  profile_id: __PRELOADED_STATE__.currentUser.id,
   allUserStories: [{Test: 'Data'}],
   image_url: '',
 };

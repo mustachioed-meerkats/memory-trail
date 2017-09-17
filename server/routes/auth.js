@@ -5,20 +5,15 @@ const router = express.Router();
 
 router.route('/')
   .get(middleware.auth.verify, (req, res) => {
-    const preloadedState = {};  
-    preloadedState.user = req.user;
-
-    Promise.all([
-      models.Post.getAllPosts(),
-      //models.Post.getPostsByUserId(req.user.id),
-      //models.Following.getAllFollowings(req.user.id)
-    ])
-      .then((results) => {
-        preloadedState.posts = results[0];
-      //preloadedState.userPosts = results[1];
-      //preloadedState.following.posts = results[2];
+    const preloadedState = {};
+    preloadedState.currentUser = req.user;
+    models.Story.getStoriesByUserId(req.user.id)
+      .then(stories => {
+        preloadedState.stories = stories;
+        return models.Post.getPostsByUserId(req.user.id);
       })
-      .then(() => { 
+      .then(posts => {
+        preloadedState.posts = posts;
         res.render('index', {preloadedState});
       })
       .catch((err) => {
