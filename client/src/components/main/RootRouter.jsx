@@ -10,6 +10,7 @@ import CurrentUserProfilePage from './CurrentUserProfilePage.jsx';
 import Timeline from './Timeline.jsx';
 import TestPage from './TestPage.jsx';
 import Demo from './Chart.jsx';
+import LandmarkPage from './LandmarkPage.jsx';
 
 const RootRouter = () => (
   <Switch>
@@ -19,6 +20,7 @@ const RootRouter = () => (
     <Route exact path='/feed' component={FollowingFeed} />
     <Route exact path='/post/new' component={CreateNewPost} />
     <Route exact path='/post/:id' component={PostPage} />
+    <Route exact path='/landmark/:id' component={LandmarkPage} />
     <Route exact path='/followings' component={FollowingsPage} />
     <Route exact path='/timeline' component={Timeline} />
     <Route exact path='/testpage' component={TestPage} />
