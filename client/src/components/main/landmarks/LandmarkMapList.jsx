@@ -28,7 +28,7 @@ import {
 /** ============================================================
  * Define Component
  * ========================================================== */
-const LandmarkMapList = ({landmarks}) => {
+const LandmarkMapList = ({landmarks = [] }) => {
   return (
     <div>
       {landmarks.map((landmark, i) => { 
