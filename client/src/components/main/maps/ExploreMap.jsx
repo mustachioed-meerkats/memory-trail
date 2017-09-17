@@ -5,7 +5,6 @@ import RaisedButton from 'material-ui/RaisedButton';
 import { Link } from 'react-router-dom';
 import { withGoogleMap, GoogleMap, Marker, InfoWindow } from 'react-google-maps';
 import SearchBox from 'react-google-maps/lib/places/SearchBox';
-import Markers from './Markers.jsx';
 import Search from './Search.jsx';
 import PostList from '../PostList.jsx';
 

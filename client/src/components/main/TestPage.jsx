@@ -4,10 +4,9 @@ import { bindActionCreators } from 'redux';
 import RaisedButton from 'material-ui/RaisedButton';
 import { Link } from 'react-router-dom';
 import { withGoogleMap, GoogleMap, Marker, InfoWindow } from 'react-google-maps';
-import Markers from './maps/Markers.jsx';
 import styles from 'react-responsive-carousel/lib/styles/carousel.min.css';
 const Carousel = require('react-responsive-carousel').Carousel;
-
+import axios from 'axios';
 
 // import Markers from './maps/Markers.jsx';
 // import PostList from './PostList.jsx';
@@ -85,18 +84,40 @@ const mapStyle = {
   height: window.innerHeight
 };
 
+const PostEntry = (post) => {
+  return (
+    <div style={mapStyle}>
+      <img src={post.image} />
+      <p className="legend">{post.message}</p>
+    </div>
+  );
+};
+
 class TimeLine extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      userStories: [],
+      userStories: '',
       currentStory: '',
-      currentStoryPosts: [],
+      currentStoryPosts: ["https://cdn.vox-cdn.com/uploads/chorus_asset/file/6538939/dolores_park_torbakhopper.jpg",
+      "http://bethandarcher.com/wp-content/uploads/2016/05/thumb_IMG_5929_1024.jpg",
+      "https://sfbay.ca/home/wp-content/uploads/2016/06/coit.jpg"],
       currentStoryMarkers: [],
       currentPost: '',
       _map: null
     };
     this.handleMapMounted = this.handleMapMounted.bind(this);
+  }
+
+  componentWillMount () {
+    axios.get(`/api/stories/user/${this.props.user.id}`)
+    .then((result) => {
+      this.setState({
+        userStories: result.data,
+        currentStory: result.data[0],
+        currentStoryPosts: result.data[0].posts
+      })
+    })
   }
 
   handleMapMounted(map) {
@@ -106,58 +127,57 @@ class TimeLine extends React.Component {
   }
 
   render() {
-    return (
-      <Grid columns={2} stackable>
-        <Grid.Row>
-          <Grid.Column>
-            <div style={mapStyle}>
-              <MapComponent 
-                containerElement={this.props.containerElement}
-                mapElement={this.props.mapElement}
-                handleMapMounted={this.handleMapMounted}
-                center={this.props.center}
-                handleBoundsChanged={this.props.handleBoundsChanged}
-                map={this.state._map}
-                bounds={this.props.bounds}
-                handlePlacesChanged={this.props.handlePlacesChanged}
-                inputStyle={this.props.inputStyle}
-                handleMarkerClick={this.props.handleMarkerClick}
-                handleMarkerClose={this.props.handleMarkerClose}
-                markers={this.props.markers}
-                landmarks={this.props.landmarks}
-                openSideBar={this.props.openSideBar}
-              />
-            </div>
-          </Grid.Column>
-          <Grid.Column>
-            <Carousel 
-              axis="horizontal|vertical" 
-              showThumbs={true|false} 
-              showArrows={true|false} 
-              onChange={onChange} 
-              onClickItem={onClickItem} 
-              onClickThumb={onClickThumb} 
-              dynamicHeight 
-              emulateTouch
-              >
-                <div>
-                  <img src="https://cdn.vox-cdn.com/uploads/chorus_asset/file/6538939/dolores_park_torbakhopper.jpg" />
-                  <p className="legend">Legend 1</p>
+    if (this.state.userStories) {
+      return (
+          <Grid compact columns={2} stackable>
+              <Grid.Column>
+                <div style={mapStyle}>
+                  <MapComponent 
+                    containerElement={this.props.containerElement}
+                    mapElement={this.props.mapElement}
+                    handleMapMounted={this.handleMapMounted}
+                    center={this.props.center}
+                    handleBoundsChanged={this.props.handleBoundsChanged}
+                    map={this.state._map}
+                    bounds={this.props.bounds}
+                    handlePlacesChanged={this.props.handlePlacesChanged}
+                    inputStyle={this.props.inputStyle}
+                    handleMarkerClick={this.props.handleMarkerClick}
+                    handleMarkerClose={this.props.handleMarkerClose}
+                    markers={this.props.markers}
+                    landmarks={this.props.landmarks}
+                    openSideBar={this.props.openSideBar}
+                  />
                 </div>
-                <div>
-                  <img src="http://bethandarcher.com/wp-content/uploads/2016/05/thumb_IMG_5929_1024.jpg" />
-                  <p className="legend">Legend 2</p>
-                </div>
-                <div>
-                  <img src="https://sfbay.ca/home/wp-content/uploads/2016/06/coit.jpg" />
-                  <p className="legend">Legend 3</p>
-                </div>
-            </Carousel>
-          </Grid.Column>
-        </Grid.Row>
-      </Grid>
-
-    );
+              </Grid.Column>
+              <Grid.Column>
+                <Carousel
+                  style={{height: '100%'}}
+                  showThumbs={false}
+                  showArrows={true}
+                  showStatus={true}
+                  showIndicators={false}
+                  useKeyboardArrows={true}
+                >
+                  {this.state.currentStoryPosts.map((post, index) => {
+                    return (
+                      <Card fluid={true} key={index}>
+                        <Image src={post.image_url} />
+                        <Card.Content>
+                          <Card.Description>
+                            {post.content}
+                          </Card.Description>
+                        </Card.Content>
+                      </Card>
+                    )
+                  })}
+                </Carousel>
+              </Grid.Column>
+          </Grid>
+      );
+    } else {
+      return <div> Loading...</div>
+    }
   }
 }
 
@@ -173,6 +193,7 @@ const mapStateToProps = state => ({
   mapElement: <div style={{height: '100%'}} />,
   markers: state.map.markers,
   landmarks: state.map.landmarks,
+  user: state.user
 });
 
 /** ============================================================
@@ -193,3 +214,59 @@ export default connect(
 
 
 
+{/* <div>
+  <img src={this.state.currentStoryPosts[0]}/>
+</div>
+<div>
+  <img src={this.state.currentStoryPosts[1]}/>
+</div>
+<div>
+  <img src={this.state.currentStoryPosts[2]}/>
+</div> */}
+
+{/* <Card>
+                        <Image src={this.state.currentStoryPosts[0]}/>
+                        <Card.Content>
+                          <Card.Description> Hello this is my post </Card.Description>
+                        </Card.Content>
+                      </Card> */}
+
+
+                    //   <Grid columns={2} stackable>
+                    //   <Grid.Row>
+                    //     <Grid.Column>
+                    //       <div style={mapStyle}>
+                    //         <MapComponent 
+                    //           containerElement={this.props.containerElement}
+                    //           mapElement={this.props.mapElement}
+                    //           handleMapMounted={this.handleMapMounted}
+                    //           center={this.props.center}
+                    //           handleBoundsChanged={this.props.handleBoundsChanged}
+                    //           map={this.state._map}
+                    //           bounds={this.props.bounds}
+                    //           handlePlacesChanged={this.props.handlePlacesChanged}
+                    //           inputStyle={this.props.inputStyle}
+                    //           handleMarkerClick={this.props.handleMarkerClick}
+                    //           handleMarkerClose={this.props.handleMarkerClose}
+                    //           markers={this.props.markers}
+                    //           landmarks={this.props.landmarks}
+                    //           openSideBar={this.props.openSideBar}
+                    //         />
+                    //       </div>
+                    //     </Grid.Column>
+                    //     <Grid.Column>
+                    //       <div>
+                    //         <Carousel 
+                    //           axis="horizontal"
+                    //           style={mapStyle}
+                    //           dynamicHeight
+                    //           emulateTouch
+                    //           showThumbs={false}
+                    //           >
+                    //           {this.state.currentStoryPosts}
+                    //           })}
+                    //         </Carousel>
+                    //       </div>
+                    //     </Grid.Column>
+                    //   </Grid.Row>
+                    // </Grid>
