@@ -26,6 +26,7 @@ import {
   List,
   Menu,
   Message,
+  Modal,
   Segment,
   Table,
   TextArea,
@@ -70,7 +71,6 @@ class CreateNewPost extends React.Component {
     this.handleStoryFormVisibility = this.handleStoryFormVisibility.bind(this);
     this.handleDropdownVisibility = this.handleDropdownVisibility.bind(this);
     this.storySubmit = this.storySubmit.bind(this);
-    this.submitClick = this.submitClick.bind(this);
     this.storySelected = this.storySelected.bind(this);
   }
 
@@ -176,12 +176,16 @@ This code below is designed to run the autocomplete search box for the location 
     return this.props.handleNewPost(postObject);
   }
 
-
+  /*
+  This function exists so that we can send an api call and close the modal at the same time. 
+  This will have issues until we are able to fix the problem with the dropdown closing. 
+  */
 
   storySubmit () {
+    console.log('submitting')
     const storyInfo = {
       title: this.state.storyTitleForm,
-      summary: this.props.storySummaryForm,
+      summary: this.state.storySummaryForm,
       profile_id: this.props.user.id,
     };
     return axios.post('/api/stories/new', storyInfo)
@@ -190,19 +194,13 @@ This code below is designed to run the autocomplete search box for the location 
           storyID: result.data.id
         });
         console.log('STORY CREATED', result);
+        this.props.handleStoryLoad();
+        this.handleStoryFormVisibility();
       })
       .catch((err) => {
         console.log('STORY CREATION FAILED');
       });
-  }
 
-    /*
-      This function exists so that we can send an api call and close the modal at the same time. 
-      This will have issues until we are able to fix the problem with the dropdown closing. 
-    */
-  submitClick () {
-    this.props.handleStoryLoad();
-    this.handleStoryFormVisibility();
   }
 
   /*
@@ -234,10 +232,12 @@ This code below is designed to run the autocomplete search box for the location 
   }
 
   handleStorySummary (event) {
+    console.log(event);
     this.setState({ storySummaryForm: event });
   }
 
   handleStoryTitle (event) {
+    console.log(event);
     this.setState({storyTitleForm: event });
   }
 
@@ -258,25 +258,23 @@ This code below is designed to run the autocomplete search box for the location 
               <Button.Or/>
               <Button content='Select' onClick={this.handleDropdownVisibility}/>
             </Button.Group>
-            <Transition.Group animation='slide down' duration='500ms'>
-              {this.state.storyFormVisible &&
-              <Card fluid={true}>
-                <Card.Content>
-                  <Form>
-                    <Input fluid={true} size='huge' value = {this.state.storyTitleForm} placeholder='Name Your Story' onChange={(e) => this.handleStoryTitle(e.target.value)}/>
-                    <br/>
-                    <TextArea style={{fontSize: '20px'}} value = {this.state.storySummaryForm} placeholder='Story Summary' onChange={(e) => this.handleStorySummary(e.target.value)}/>
-                  </Form>
-                </Card.Content>
-                <Card.Content>
-                  <Button.Group fluid={true}>
-                    <Button size='huge' color='teal' type='submit' onClick={this.storySubmit}>OK</Button>
-                    <Button size='huge' type='submit' onClick={this.handleStoryFormVisibility}>Cancel</Button>
-                  </Button.Group>
-                </Card.Content>
-              </Card>
-              }
-            </Transition.Group>
+            <Modal size= 'large' open={this.state.storyFormVisible} onClose={this.handleStoryFormVisibility}>
+          <Modal.Content>
+          <Form>
+            <Form.Field>
+              <Input fluid={true} size='huge' placeholder='Name Your Story' onSubmit={(e) => this.handleStoryTitle(e.target.value)}/>
+              <br/>
+              <TextArea style={{fontSize: '20px'}} placeholder='Story Summary' onSubmit={(e) => this.handleStorySummary(e.target.value)} />
+            </Form.Field>
+          </Form>
+          </Modal.Content>
+          <Modal.Actions>
+            <Button negative onClick={this.handleStoryFormVisibility} >
+              Cancel
+            </Button>
+            <Button positive icon='checkmark' labelPosition='right' content='Submit' onClick={this.storySubmit} />
+          </Modal.Actions>
+        </Modal>
             <Transition.Group animation='slide down' duration='500ms'>
               {this.state.dropdownVisible &&
               <Card fluid={true}>
@@ -356,3 +354,26 @@ export default connect(
   mapStateToProps,
   mapDispatchToProps
 )(CreateNewPost);
+
+
+// {/* <Transition.Group animation='slide down' duration='500ms' as={Card}>
+// {this.state.storyFormVisible &&
+// <Card fluid={true}>
+//   <Card.Content>
+//     <Form>
+//       <Form.Field>
+//         <Input fluid={true} size='huge' placeholder='Name Your Story' onChange={this.handleTitleChange.bind(this)}/>
+//         <br/>
+//         <TextArea style={{fontSize: '20px'}} placeholder='Story Summary' onSubmit={(e) => this.handleStorySummary(e.target.value)} />
+//       </Form.Field>
+//     </Form>
+//   </Card.Content>
+//   <Card.Content>
+//     <Button.Group fluid={true}>
+//       <Button size='huge' color='teal' type='submit' onClick={this.storySubmit}>OK</Button>
+//       <Button size='huge' onClick={this.handleStoryFormVisibility}>Cancel</Button>
+//     </Button.Group>
+//   </Card.Content>
+// </Card>
+// }
+// </Transition.Group> */}
