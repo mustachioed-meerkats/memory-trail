@@ -37,7 +37,8 @@ passport.use('local-signup', new LocalStrategy({
       // create a new profile if a profile does not exist
       if (!profile) {
         var display = email.split('@')[0];
-        return models.Profile.forge({ email, display }).save();
+        var first = email.split('@')[0];
+        return models.Profile.forge({ email, display, first }).save();
       }
       // throw if any auth account already exists
       if (profile) {

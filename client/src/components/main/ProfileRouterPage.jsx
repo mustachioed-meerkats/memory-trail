@@ -30,7 +30,10 @@ class ProfileRouterPage extends React.Component {
 
   componentWillMount() {
     var user_id = Number(this.props.match.params.id);
+    console.log('visiting this user page: ', user_id);
+    console.log(this.props.user.user.id);
     if (user_id !== this.props.user.user.id) {
+      console.log('this is not current user');
       this.props.getUserInfo(user_id)
         .then(() => {
           this.setState({
@@ -39,6 +42,7 @@ class ProfileRouterPage extends React.Component {
           });
         });
     } else {
+      console.log('this is the current user');
       this.setState({
         profile_display: this.props.user.user.display || this.props.user.user.email
       });
