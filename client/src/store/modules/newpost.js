@@ -133,7 +133,7 @@ export const handleNewPost = (postObject) => {
     });
     createNewPost(postObject)
     .then(() => {
-      dispatch(push('/profile'));
+      dispatch(push(`/profile/${initialState.profile_id}`));
       console.log('(Client) Success! CREATING NEW POST');
     })
       .catch((err) => {
