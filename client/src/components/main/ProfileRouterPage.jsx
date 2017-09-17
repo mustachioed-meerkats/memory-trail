@@ -9,6 +9,7 @@ import { Grid, Row, Col, Button, ButtonGroup, ListGroupItem, Glyphicon, Tooltip,
 import { Link, Switch, Route } from 'react-router-dom';
 import DummyTimeLine from './DummyTimeLine.jsx'; 
 import CurrentUserPostList from './profile/CurrentUserPostList.jsx';
+import FollowingsPageList from './follow/FollowingsPageList.jsx';
 
 
 /** ============================================================
@@ -62,7 +63,7 @@ class ProfileRouterPage extends React.Component {
           <CurrentUserPostList isCurrentUser={this.state.isCurrentUser} />
         )}/>
         <Route exact path={`${this.props.match.url}/following`} render={() => (
-          <h3>following</h3>
+          <FollowingsPageList isCurrentUser={this.state.isCurrentUser} />
         )}/>
       </div>
     );

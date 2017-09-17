@@ -51,7 +51,7 @@ const FollowingsPageList = (props) => {
  * ========================================================== */
 const mapStateToProps = (state) => ({
   user: state.user,
-  followings: state.following.followings
+  followings: state.user.following
 });
 
 /** ============================================================

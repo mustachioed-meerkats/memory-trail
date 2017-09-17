@@ -14,6 +14,10 @@ router.route('/')
       })
       .then(posts => {
         preloadedState.posts = posts;
+        return models.Following.getAllFollowings(req.user.id);
+      })
+      .then(following => {
+        preloadedState.following = following;
         res.render('index', {preloadedState});
       })
       .catch((err) => {
