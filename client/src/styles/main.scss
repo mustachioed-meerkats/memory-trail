@@ -1,3 +1,12 @@
+.modal-landmark {
+  @media screen and (max-width: 425px) {
+    width: 95vw;
+  }
+  @media screen and (min-width: 1200px) {
+    width: 60vw;
+  }
+}
+
 .Sidebar-demo {
   padding: 0px;
 }
@@ -28,7 +37,15 @@
   background-color: #f5f5f5;
 }
 .Sidebar.modal.left {
-  right: auto;
+  @media screen and (min-width: 425px) {
+    right: 66vw;
+  }
+  @media screen and (min-width: 768px) {
+    right: 75vw;
+  }
+  @media screen and (min-width: 1024px) {
+    right: auto;
+  }
 }
 .Sidebar.modal.right {
   left: auto;
@@ -53,14 +70,6 @@
 }
 
 .Sidebar .nav {
-  width: 100px;
+  width: 66vw;
   font-size: 1.5rem;
-
-  @media screen and (max-width: 425px) {
-    width: 400px;
-    float: none;
-  }
-  @media screen and (min-width: 1200px) {
-    float: right;
-  }
 }

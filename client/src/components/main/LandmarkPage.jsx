@@ -50,17 +50,39 @@ class LandmarkPage extends React.Component {
         color: 'white'
       }
     };
-
+    const guestBook = [... new Set(landmark.posts.map((post) => { return post.profile_display; }))];
     return (
       <Container>
         <Segment.Group>
           <Segment>
             <div style={style.card}>
-              Welcome to <strong>{landmark.name}</strong>
+              <div>Welcome to <strong>{landmark.name}</strong></div>
             </div>
           </Segment>
-          <LandMarkPostList landmark={landmark}/>
         </Segment.Group>
+        <Grid columns={2} stackable>
+          <Grid.Column width={6}>
+            <Segment>
+              <div>
+                <strong>Landmark Information:</strong>
+              </div>
+              <div>
+                {landmark.posts.length} Memories at this landmark!
+              </div>
+            </Segment>
+            <Segment>
+              <div>
+                <strong>Guest Book:</strong>
+              </div>
+              <div>
+                {guestBook.join(', ')}
+              </div>
+            </Segment>
+          </Grid.Column>
+          <Grid.Column width={10}>
+            <LandMarkPostList landmark={landmark}/>
+          </Grid.Column>
+        </Grid>
       </Container>
     );
   }
