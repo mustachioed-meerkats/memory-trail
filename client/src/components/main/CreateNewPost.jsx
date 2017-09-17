@@ -247,6 +247,14 @@ This code below is designed to run the autocomplete search box for the location 
     this.setState({storyTitleForm: event });
   }
 
+  handleStorySummary (event) {
+    this.setState({ storySummaryForm: event });
+  }
+
+  handleStoryTitle (event) {
+    this.setState({storyTitleForm: event });
+  }
+
   render () {
     return (
       <Grid centered columns={2} stackable>
