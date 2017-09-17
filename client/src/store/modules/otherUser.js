@@ -12,7 +12,7 @@ export const GET_USER_INFO = 'GET_USER_INFO';
  * =============================================================
  */
 const initialState = {
-  user: '',
+  user: {},
   stories: [],
   posts: [],
   following: []
@@ -24,13 +24,11 @@ const initialState = {
  */
 export default (state = initialState, action) => {
   switch (action.type) {
-  case GET_USER_STORIES:
-    return {
-      stories: action.payload
-    };
   case GET_USER_INFO:
     return {
-      user: action.payload
+      user: action.user,
+      stories: action.stories,
+      posts: action.posts
     };
   default:
     return state;
@@ -42,33 +40,21 @@ export default (state = initialState, action) => {
  * =============================================================
  */
 
-export const getUserStories = (userId) => {
-  console.log('getting stories');
-  return dispatch => {
-    return axios.get(`/api/stories/user/${userId}`)
-      .then(results => {
-        dispatch({
-          type: GET_USER_STORIES,
-          payload: results.data
-        });
-      });
-  };
-};
-
 export const getUserInfo = (userId) => {
   console.log('getting info');
   return dispatch => {
-    return axios.get(`/api/profiles/${userId}`)
+    return axios.get(`/api/profiles/info/${userId}`)
       .then(results => {
+        var posts = getPostsFromStories(results.data[1]);
         dispatch({
           type: GET_USER_INFO,
-          payload: results.data
+          user: results.data[0],
+          stories: results.data[1],
+          posts: posts
         });
       });
   };
 };
-
-
 
 
 /** ============================================================

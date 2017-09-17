@@ -16,49 +16,53 @@ import { Link, Switch, Route } from 'react-router-dom';
 
 import { getPostsByUserId } from '../../store/modules/userPosts';
 import { followNewUser, getAllFollowings } from '../../store/modules/following';
-import { getUserStories, getUserInfo } from '../../store/modules/otherUser';
+import { getUserInfo } from '../../store/modules/otherUser';
 
-class ProfileRouter extends React.Component {
+class ProfileRouterPage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       isCurrentUser: true,
+      profile_display: ''
     };
   }
 
   componentWillMount() {
     var user_id = Number(this.props.match.params.id);
     if (user_id !== this.props.user.id) {
-      this.setState({isCurrentUser: false});
-      this.props.getUserStories(user_id)
+      this.props.getUserInfo(user_id)
         .then(() => {
-          return this.props.getUserInfo(user_id);
+          this.setState({
+            isCurrentUser: false,
+            profile_display: this.props.otherUser.user.display || this.props.otherUser.user.email
+          });
         });
+    } else {
+      this.setState({
+        profile_display: this.props.user.display || this.props.user.email
+      });
     }
   }
 
   render() {
     return (
       <div>
-        <div>{this.props.user.display}</div>
+        <div>{this.state.profile_display}</div>
         <nav>
           <ul>
-            <li><Link to={`${this.props.match.url}/stories`}>Stories</Link></li>
+            <li><Link to={`${this.props.match.url}`}>Stories</Link></li>
             <li><Link to={`${this.props.match.url}/posts`}>Posts</Link></li>
             <li><Link to={`${this.props.match.url}/following`}>Following</Link></li>
           </ul>
         </nav>
-        <Route path={`${this.props.match.url}/stories`} render={() => (
+        <Route exact path={`${this.props.match.url}`} render={() => (
           <h3>stories</h3>
         )}/>
-        <Route path={`${this.props.match.url}/posts`} render={() => (
+        <Route exact path={`${this.props.match.url}/posts`} render={() => (
           <h3>posts</h3>
         )}/>
-        <Route path={`${this.props.match.url}/following`} render={() => (
+        <Route exact path={`${this.props.match.url}/following`} render={() => (
           <h3>following</h3>
-        )}/>
-        <Route exact path={this.props.match.url} render={() => (
-          <h3>Welcome!</h3>
         )}/>
       </div>
     );
@@ -75,11 +79,10 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => bindActionCreators({
   getPostsByUserId,
   getAllFollowings,
-  getUserStories,
   getUserInfo
 }, dispatch);
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(ProfileRouter);
+)(ProfileRouterPage);

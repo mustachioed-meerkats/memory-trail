@@ -89,9 +89,9 @@ module.exports.getPassportByUserId = (req, res) => {
     });
 };
 
-module.exports.getInfoByUserId = (res, req) => {
+module.exports.getInfoByUserId = (req, res) => {
   var info = [];
-  models.profile.getProfileById(req.params.id)
+  models.Profile.getProfileById(req.params.id)
     .then(profile => {
       info.push(profile);
       return models.Story.getStoriesByUserId(req.params.id);
