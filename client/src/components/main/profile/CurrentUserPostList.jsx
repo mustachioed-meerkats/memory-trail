@@ -4,16 +4,17 @@ import { connect } from 'react-redux';
 import CurrentUserPostListEntry from './CurrentUserPostListEntry.jsx';
 
 const CurrentUserPostList = (props) => {
-  if (!props.posts) {
+  var posts = props.isCurrentUser ? props.userPosts : props.otherUserPosts;
+  if (!posts) {
     return (
       <div>
         Loading
       </div>
     );
-  } else if (props.posts) {
+  } else if (posts) {
     return (
       <div>
-        {props.posts.map((post, i) => { 
+        {posts.map((post, i) => { 
           return <CurrentUserPostListEntry post={post} id={i} key={i} />; 
         })}
       </div>
@@ -22,7 +23,8 @@ const CurrentUserPostList = (props) => {
 };
 
 const mapStateToProps = (state) => ({
-  posts: state.posts.currentUserPosts
+  userPosts: state.user.posts,
+  otherUserPosts: state.otherUser.posts,
 });
 
 export default connect(

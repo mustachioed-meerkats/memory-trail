@@ -8,6 +8,7 @@ import FollowingsPage from './FollowingsPage.jsx';
 import UserProfilePage from './UserProfilePage.jsx';
 import CurrentUserProfilePage from './CurrentUserProfilePage.jsx';
 import Timeline from './Timeline.jsx';
+import ProfileRouterPage from './ProfileRouterPage.jsx';
 import TestPage from './TestPage.jsx';
 import Demo from './Chart.jsx';
 import LandmarkPage from './LandmarkPage.jsx';
@@ -15,8 +16,7 @@ import LandmarkPage from './LandmarkPage.jsx';
 const RootRouter = () => (
   <Switch>
     <Route exact path='/' component={Home} />
-    <Route exact path='/profile' component={CurrentUserProfilePage} />
-    <Route exact path='/profile/:id' component={UserProfilePage} />
+    <Route path='/profile/:id' component={ProfileRouterPage} />
     <Route exact path='/feed' component={FollowingFeed} />
     <Route exact path='/post/new' component={CreateNewPost} />
     <Route exact path='/post/:id' component={PostPage} />
