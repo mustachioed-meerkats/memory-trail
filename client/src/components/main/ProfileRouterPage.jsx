@@ -7,14 +7,14 @@ import axios from 'axios';
 import RaisedButton from 'material-ui/RaisedButton';
 import { Grid, Row, Col, Button, ButtonGroup, ListGroupItem, Glyphicon, Tooltip, OverlayTrigger } from 'react-bootstrap';
 import { Link, Switch, Route } from 'react-router-dom';
-
+import DummyTimeLine from './DummyTimeLine.jsx'; 
+import CurrentUserPostList from './profile/CurrentUserPostList.jsx';
 
 
 /** ============================================================
  * Import Redux Action Creators
  * ============================================================= */
 
-import { getPostsByUserId } from '../../store/modules/userPosts';
 import { followNewUser, getAllFollowings } from '../../store/modules/following';
 import { getUserInfo } from '../../store/modules/otherUser';
 
@@ -56,10 +56,10 @@ class ProfileRouterPage extends React.Component {
           </ul>
         </nav>
         <Route exact path={`${this.props.match.url}`} render={() => (
-          <h3>stories</h3>
+          <DummyTimeLine isCurrentUser={this.state.isCurrentUser} />
         )}/>
         <Route exact path={`${this.props.match.url}/posts`} render={() => (
-          <h3>posts</h3>
+          <CurrentUserPostList isCurrentUser={this.state.isCurrentUser} />
         )}/>
         <Route exact path={`${this.props.match.url}/following`} render={() => (
           <h3>following</h3>
@@ -77,7 +77,6 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
-  getPostsByUserId,
   getAllFollowings,
   getUserInfo
 }, dispatch);
