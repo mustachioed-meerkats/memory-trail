@@ -80,8 +80,17 @@ class CreateNewPost extends React.Component {
   */
 
   componentWillMount () {
-    this.props.handleStoryLoad();
-    //TODO: ADD IN OUR DEFAULT STORY LOAD. 
+    //First, we are going to get the stories created by this user...
+    this.props.handleStoryLoad()
+    .then(() => {
+      //Next, we are going to map through them and find which on is the default. 
+      //The default story will be preloaded as the story that we post to. 
+      this.props.stories.map((story) => {
+        if (story.default_post === true) {
+          this.setState({storyID: story.id});
+        }
+      });
+    });
   }
 
 
@@ -271,7 +280,7 @@ This code below is designed to run the autocomplete search box for the location 
                   size='big'
                   >
                   {this.props.stories.map((story, index) => {
-                    return <List.Item key={index} onClick={() => this.storySelected(story.title)} content={story.title} value={story.title}/>
+                    return <List.Item key={index} onClick={() => this.storySelected(story.title)} content={story.title} value={story.title}/>;
                   })}
                 </List>
               </Card>
@@ -317,7 +326,6 @@ This code below is designed to run the autocomplete search box for the location 
 const mapStateToProps = state => ({
   content: state.newpost.content,
   location: state.newpost.location,
-  map: state.map.center,
   user: state.user,
   image_url: state.newpost.image_url,
   stories: state.newpost.allUserStories,
