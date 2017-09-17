@@ -182,7 +182,7 @@ This code below is designed to run the autocomplete search box for the location 
   */
 
   storySubmit () {
-    console.log('submitting')
+    console.log('submitting', this.props.user.id);
     const storyInfo = {
       title: this.state.storyTitleForm,
       summary: this.state.storySummaryForm,
@@ -219,8 +219,6 @@ This code below is designed to run the autocomplete search box for the location 
 
   //Activates modal for the story creation form. 
 
-  //NOTE: THERE IS CURRENTLY AN ERROR HERE, YOU HAVE TO CLICK THREE TIMES ON THE CANCEL BUTTON FOR THE 
-  //DROPDOWN TO CLOSE. I HAVE NO CLUE WHY. 
   handleStoryFormVisibility () {
     this.setState({storyFormVisible: !this.state.storyFormVisible});
   }
@@ -231,13 +229,13 @@ This code below is designed to run the autocomplete search box for the location 
     this.setState({ dropdownVisible: !this.state.dropdownVisible });
   }
 
+  //These functions set our input forms to the local state. 
+
   handleStorySummary (event) {
-    console.log(event);
     this.setState({ storySummaryForm: event });
   }
 
   handleStoryTitle (event) {
-    console.log(event);
     this.setState({storyTitleForm: event });
   }
 
@@ -258,13 +256,13 @@ This code below is designed to run the autocomplete search box for the location 
               <Button.Or/>
               <Button content='Select' onClick={this.handleDropdownVisibility}/>
             </Button.Group>
-            <Modal size= 'large' open={this.state.storyFormVisible} onClose={this.handleStoryFormVisibility}>
+            <Modal size= 'tiny' open={this.state.storyFormVisible} onClose={this.handleStoryFormVisibility}>
           <Modal.Content>
           <Form>
             <Form.Field>
-              <Input fluid={true} size='huge' placeholder='Name Your Story' onSubmit={(e) => this.handleStoryTitle(e.target.value)}/>
+              <Input fluid={true} size='huge' placeholder='Name Your Story' onChange={(e) => this.handleStoryTitle(e.target.value)}/>
               <br/>
-              <TextArea style={{fontSize: '20px'}} placeholder='Story Summary' onSubmit={(e) => this.handleStorySummary(e.target.value)} />
+              <TextArea style={{fontSize: '20px'}} placeholder='Story Summary' onChange={(e) => this.handleStorySummary(e.target.value)} />
             </Form.Field>
           </Form>
           </Modal.Content>
@@ -330,7 +328,7 @@ This code below is designed to run the autocomplete search box for the location 
 const mapStateToProps = state => ({
   content: state.newpost.content,
   location: state.newpost.location,
-  user: state.user,
+  user: state.user.user,
   image_url: state.newpost.image_url,
   stories: state.newpost.allUserStories,
 });
@@ -354,26 +352,3 @@ export default connect(
   mapStateToProps,
   mapDispatchToProps
 )(CreateNewPost);
-
-
-// {/* <Transition.Group animation='slide down' duration='500ms' as={Card}>
-// {this.state.storyFormVisible &&
-// <Card fluid={true}>
-//   <Card.Content>
-//     <Form>
-//       <Form.Field>
-//         <Input fluid={true} size='huge' placeholder='Name Your Story' onChange={this.handleTitleChange.bind(this)}/>
-//         <br/>
-//         <TextArea style={{fontSize: '20px'}} placeholder='Story Summary' onSubmit={(e) => this.handleStorySummary(e.target.value)} />
-//       </Form.Field>
-//     </Form>
-//   </Card.Content>
-//   <Card.Content>
-//     <Button.Group fluid={true}>
-//       <Button size='huge' color='teal' type='submit' onClick={this.storySubmit}>OK</Button>
-//       <Button size='huge' onClick={this.handleStoryFormVisibility}>Cancel</Button>
-//     </Button.Group>
-//   </Card.Content>
-// </Card>
-// }
-// </Transition.Group> */}
