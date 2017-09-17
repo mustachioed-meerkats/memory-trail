@@ -50,12 +50,6 @@ import {
  * ========================================================== */
 
 
-
-/** ============================================================
- * Define Component
- * ========================================================== */
-
-
 class CreateNewPost extends React.Component {
   constructor(props) {
     super(props);
@@ -237,14 +231,6 @@ This code below is designed to run the autocomplete search box for the location 
 
   handleDropdownVisibility () {
     this.setState({ dropdownVisible: !this.state.dropdownVisible });
-  }
-
-  handleStorySummary (event) {
-    this.setState({ storySummaryForm: event });
-  }
-
-  handleStoryTitle (event) {
-    this.setState({storyTitleForm: event });
   }
 
   handleStorySummary (event) {
