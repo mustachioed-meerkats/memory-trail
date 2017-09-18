@@ -86,6 +86,9 @@ router.route('/landmarks/guestbook/:id')
 router.route('/followings/new')
   .post(controller.Followings.createFollowing);
 
+router.route('/followings/unfollow')
+  .post(controller.Followings.removeFollowing);
+
 // return list of profile entries current user is following 
 router.route('/followings/:id')
   .get(controller.Followings.getAllFollowings);

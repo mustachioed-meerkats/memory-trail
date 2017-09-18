@@ -10,8 +10,14 @@ const Following = db.Model.extend({
   createFollowing: function(following) {
     return this.forge(following).save();
   },
+  removeFollowing: function(unfollow) {
+    return this.where(unfollow).save({currently_following: false}, {patch: true});
+  },
   getAllFollowings: function(profile_id) {
-    return this.where({profile_id}).fetchAll({withRelated: ['profile']});
+    return this.where({
+      profile_id: profile_id, 
+      currently_following: true})
+      .fetchAll({withRelated: ['profile']});
   }
 });
 

@@ -4,6 +4,7 @@ const path = require('path');
 const middleware = require('./middleware');
 const routes = require('./routes');
 const models = require('../db/models');
+const controller = require('./controllers');
 
 const app = express();
 
@@ -30,25 +31,6 @@ app.use('/api', routes.api);
 app.use('/api/profiles', routes.profiles);
 app.use('/upload', routes.upload);
 
-app.use('*', (req, res) => {
-  const preloadedState = {};
-  preloadedState.currentUser = req.user;
-  models.Story.getStoriesByUserId(req.user.id)
-    .then(stories => {
-      preloadedState.stories = stories;
-      return models.Post.getPostsByUserId(req.user.id);
-    })
-    .then(posts => {
-      preloadedState.posts = posts;
-      return models.Following.getAllFollowings(req.user.id);
-    })
-    .then(following => {
-      preloadedState.following = following;
-      res.render('index', {preloadedState});
-    })
-    .catch((err) => {
-      console.log('(Server) Error! Preloading State');
-    });
-});
+app.use('*', controller.Profiles.preloadUserInfo);
 
 module.exports = app;

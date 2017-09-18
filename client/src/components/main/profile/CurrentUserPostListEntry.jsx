@@ -69,10 +69,10 @@ const CurrentUserPostListEntry = (props) => {
     <Card
       centered={true}
       style={style.card}
-      image='http://cdn-image.travelandleisure.com/sites/default/files/styles/1600x1000/public/1444253482/DG2015-san-francisco.jpg?itok=MdRJm2Zo'
+      image={props.post.image_url || 'http://cdn-image.travelandleisure.com/sites/default/files/styles/1600x1000/public/1444253482/DG2015-san-francisco.jpg?itok=MdRJm2Zo'}
       header='TITLE_MEMORY'
-      meta={ 'Submitted XX hrs ago by USERNAME' }
-      description='This content is content which displays the content of the cards contents.'
+      meta={ 'Submitted XX hrs ago by ' + props.post.profile_display }
+      description={props.post.content}
       extra={extra}
     />
   );

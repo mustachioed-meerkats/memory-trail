@@ -6,6 +6,7 @@ import axios from 'axios';
  */
 export const GET_USER_STORIES = 'GET_USER_STORIES';
 export const GET_USER_INFO = 'GET_USER_INFO';
+export const IS_CURRENT_USER_FOLLOWING = 'IS_CURRENT_USER_FOLLOWING';
 
 /** ============================================================
  * Define Initial State
@@ -15,7 +16,8 @@ const initialState = {
   user: {},
   stories: [],
   posts: [],
-  following: []
+  following: [],
+  isCurrentUserFollowing: false
 };
 
 /** ============================================================
@@ -26,6 +28,7 @@ export default (state = initialState, action) => {
   switch (action.type) {
   case GET_USER_INFO:
     return {
+      ...state,
       user: action.user,
       stories: action.stories,
       posts: action.posts
@@ -41,7 +44,6 @@ export default (state = initialState, action) => {
  */
 
 export const getUserInfo = (userId) => {
-  console.log('getting info');
   return dispatch => {
     return axios.get(`/api/profiles/info/${userId}`)
       .then(results => {

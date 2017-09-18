@@ -9,7 +9,7 @@ export const SET_CURRENT_USER_POSTS = 'SET_CURRENT_USER_POSTS';
  * Define Initial State
  * ========================================================== */
 const initialState = {
-  posts: __PRELOADED_STATE__.posts,
+  posts: __PRELOADED_STATE__.user.posts,
   currentUserPosts: []
 };
 

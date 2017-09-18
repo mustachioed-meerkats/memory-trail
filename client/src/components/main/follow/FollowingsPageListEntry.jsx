@@ -42,7 +42,7 @@ const FollowingsPageListEntry = (props) => {
       </Card.Content>
       <Card.Content extra>
         <div className='ui two buttons'>
-          <Button basic color='green'><Link to={`/profile/${props.following.profile.id}`}>Vist this User's Profile</Link></Button>
+          <Button basic color='green' onClick={() => props.handleUserChange(props.following.profile.id)}><Link to={`/profile/${props.following.profile.id}`}>Vist this User's Profile</Link></Button>
         </div>
       </Card.Content>
     </Card>

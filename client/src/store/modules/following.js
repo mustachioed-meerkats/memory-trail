@@ -4,6 +4,7 @@ import axios from 'axios';
  * Define Actions
  * ========================================================== */
 export const FOLLOW_NEW_USER = 'FOLLOW_NEW_USER';
+export const UNFOLLOW_USER = 'UNFOLLOW_USER';
 export const SET_POSTS_FOLLOW_FEED = 'SET_POSTS_FOLLOW_FEED';
 export const SET_USER_FOLLOWINGS = 'SET_USER_FOLLOWINGS';
 
@@ -47,6 +48,17 @@ export const followNewUser = (profile_id, following_id) => {
       .then(results => {
         dispatch({
           type: FOLLOW_NEW_USER
+        });
+      });
+  };
+};
+
+export const unfollowUser = (profile_id, following_id) => {
+  return dispatch => {
+    return axios.post('/api/followings/unfollow', {profile_id, following_id})
+      .then(results => {
+        dispatch({
+          type: UNFOLLOW_USER
         });
       });
   };
