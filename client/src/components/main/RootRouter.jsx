@@ -23,7 +23,6 @@ const RootRouter = () => (
     <Route exact path='/landmark/:id' component={LandmarkPage} />
     <Route exact path='/followings' component={FollowingsPage} />
     <Route exact path='/testpage' component={TestPage} />
-    <Route exact path='/timeline' component={Timeline} />
   </Switch>
 );
 
