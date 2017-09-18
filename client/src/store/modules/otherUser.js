@@ -33,10 +33,6 @@ export default (state = initialState, action) => {
       stories: action.stories,
       posts: action.posts
     };
-  // case IS_CURRENT_USER_FOLLOWING:
-  //   return {
-  //     isCurrentUserFollowing: action.payload
-  //   };
   default:
     return state;
   }
@@ -61,19 +57,6 @@ export const getUserInfo = (userId) => {
       });
   };
 };
-
-// export const determineFollowingStatus = (userId, currentUserFollowings) => {
-//   var isCurrentUserFollowing = currentUserFollowings.some(following => {
-//     return userId === following.following_id;
-//   });
-//   // debugger
-//   return dispatch => {
-//     dispatch({
-//       type: IS_CURRENT_USER_FOLLOWING,
-//       payload: isCurrentUserFollowing
-//     });
-//   };
-// };
 
 
 /** ============================================================
