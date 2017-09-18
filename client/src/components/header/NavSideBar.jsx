@@ -93,7 +93,7 @@ class SidebarModal extends React.Component {
       >
         <Modal.Header closeButton>
           <Modal.Title>
-            <Icon name='home' />
+            <strong>Memory Trail</strong>
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
