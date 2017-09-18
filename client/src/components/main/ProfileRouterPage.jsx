@@ -2,21 +2,17 @@ import React from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import profile from '../../styles/profile';
-import PostList from './PostList.jsx';
-import axios from 'axios';
-import RaisedButton from 'material-ui/RaisedButton';
 import { Grid, Row, Col, Button, ButtonGroup, ListGroupItem, Glyphicon, Tooltip, OverlayTrigger } from 'react-bootstrap';
 import { Link, Switch, Route } from 'react-router-dom';
 import DummyTimeLine from './DummyTimeLine.jsx'; 
 import CurrentUserPostList from './profile/CurrentUserPostList.jsx';
 import FollowingsPageList from './follow/FollowingsPageList.jsx';
 
-
 /** ============================================================
  * Import Redux Action Creators
  * ============================================================= */
 
-import { followNewUser, unfollowUser, getAllFollowings } from '../../store/modules/following';
+import { followNewUser, unfollowUser } from '../../store/modules/following';
 import { getUserInfo, determineFollowingStatus } from '../../store/modules/otherUser';
 import { getCurrentUserFollowings } from '../../store/modules/user';
 
@@ -48,7 +44,6 @@ class ProfileRouterPage extends React.Component {
             profile_id: this.props.otherUser.user.id,
             profile_display: this.props.otherUser.user.display || this.props.otherUser.user.email
           });
-          return;
         })
         .then(() => {
           this.isCurrentUserFollowing();
@@ -72,7 +67,6 @@ class ProfileRouterPage extends React.Component {
   }
 
   handleFollow() {
-    console.log('following');
     this.props.followNewUser(this.props.user.user.id, this.state.profile_id)
       .then(() => {
         return this.props.getCurrentUserFollowings(this.props.user.user.id);
@@ -85,7 +79,6 @@ class ProfileRouterPage extends React.Component {
   }
 
   handleUnfollow() {
-    console.log('unfollowing');
     this.props.unfollowUser(this.props.user.user.id, this.state.profile_id)
       .then(() => {
         return this.props.getCurrentUserFollowings(this.props.user.user.id);
@@ -142,12 +135,9 @@ class ProfileRouterPage extends React.Component {
 const mapStateToProps = (state) => ({
   user: state.user,
   otherUser: state.otherUser,
-  followings: state.following.followings,
-  posts: state.posts.currentUserPosts
 });
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
-  getAllFollowings,
   getUserInfo,
   determineFollowingStatus,
   followNewUser,
