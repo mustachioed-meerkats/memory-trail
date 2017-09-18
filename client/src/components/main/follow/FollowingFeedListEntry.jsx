@@ -61,31 +61,32 @@ const FollowingFeedListEntry = ({post}) => {
         </div >
         <Card.Meta>
           <div>
-            <a><Icon name='heart' /> # Likes</a>
-            <a><Icon name='map pin' /> LAND_MARK</a>
+            <strong>
+              <Icon name='heart' color='red'/> {post.likeCount || '23'}
+            </strong>
+            <Link to={`/landmark/${post.landmark_id || '1'}`}>
+              <strong>
+                <Icon name='map pin' /> {post.landmark_display || 'LAND_MARK'}
+              </strong>
+            </Link>
           </div>
-          Submitted {getTimeSincePost(post.created_at)} by <strong>{post.profile_display}</strong>
+          Submitted {getTimeSincePost(post.created_at)} by <Link to={`/profile/${post.profile_id}`}><strong>{post.profile_display}</strong></Link>
         </Card.Meta>
         <Card.Description>
           {post.content.slice(0, 64) + ' ...'}
         </Card.Description>
       </Card.Content>
       <Card.Content extra>
-        <Button
-          color='red'
-          content=''
-          icon='heart'
-          label={{ basic: true, color: 'red', pointing: 'left', content: '###' }}
-        />
+        <Button circular icon='heart'/>
         <Button circular icon='commenting outline' />
         <Button circular icon='share alternate' />
       </Card.Content>
       <Card.Content extra>
         <Comment.Group>
           <Comment>
-            <Comment.Avatar src={'https://avatars0.githubusercontent.com/u/11849230?v=4&s=60'} />
+            <Comment.Avatar src={'https://i.imgur.com/yUvX0Es.png'} />
             <Comment.Content>
-              <Comment.Author as='a'>{'Dylan Baker'}</Comment.Author>
+              <Comment.Author as='a'>{'Anonymous'}</Comment.Author>
               <Comment.Actions>
                 <Comment.Action>Submitted {getTimeSincePost('2017-09-14T18:44:52.303Z')}</Comment.Action>
               </Comment.Actions>
