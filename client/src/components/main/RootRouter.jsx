@@ -8,7 +8,6 @@ import FollowingsPage from './FollowingsPage.jsx';
 import UserProfilePage from './UserProfilePage.jsx';
 import CurrentUserProfilePage from './CurrentUserProfilePage.jsx';
 import ProfileRouterPage from './ProfileRouterPage.jsx';
-import Timeline from './Timeline.jsx';
 import Demo from './Chart.jsx';
 import LandmarkPage from './LandmarkPage.jsx';
 import TestPage from './TestPage.jsx'
