@@ -4,8 +4,13 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import Autocomplete from 'react-google-autocomplete';
 import Upload from './Upload.jsx';
+import { browserHistory } from 'react-router';
+import { Link } from 'react-router-dom';
 
-/* Import Semantic UI Components */
+/** ============================================================
+ * Import Semantic UI Components
+ * ========================================================== */
+
 import {
   Button,
   Card,
@@ -21,6 +26,7 @@ import {
   List,
   Menu,
   Message,
+  Modal,
   Segment,
   Table,
   TextArea,
@@ -28,27 +34,22 @@ import {
 } from 'semantic-ui-react';
 
 /** ============================================================
- * Define React Bootstrap Components
- * =============================================================
- */
-// import { Grid, Row, Col } from 'react-bootstrap';
-// import { Modal, MenuItem, ButtonToolbar, ControlLabel, Form, FormGroup, DropdownButton, FormControl, Radio, ButtonGroup } from 'react-bootstrap';
+ * Import Redux Action Creators
+ * ========================================================== */
 
-/** ============================================================
- * Define Store Modules
- * =============================================================
- */
 import {
   handleTitleInput,
   handleContentTextArea,
   handleLocationInput,
   handleStoryLoad,
+  handleNewPost,
 } from '../../store/modules/newpost';
 
-import {
-  handleStorySummary,
-  handleStoryTitle,
-} from '../../store/modules/newstory';
+
+/** ============================================================
+ * Define Component
+ * ========================================================== */
+
 
 class CreateNewPost extends React.Component {
   constructor(props) {
@@ -57,23 +58,48 @@ class CreateNewPost extends React.Component {
       storyFormVisible: false,
       dropdownVisible: false,
       landmark: '',
+      storyTitleForm: '',
+      storySummaryForm: '',
       show: false,
       storyID: 0,
-      storyName: 'None Selected',
+      storyName: 'EveryDay Life',
+      defaultStory: 'EveryDay Life'
     };
     this.geocodeLocationInput = this.geocodeLocationInput.bind(this);
     this.initializeAutocomplete = this.initializeAutocomplete.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
+    this.handlePostSubmit = this.handlePostSubmit.bind(this);
     this.handleStoryFormVisibility = this.handleStoryFormVisibility.bind(this);
+    this.handleDropdownVisibility = this.handleDropdownVisibility.bind(this);
     this.storySubmit = this.storySubmit.bind(this);
-    this.submitClick = this.submitClick.bind(this);
     this.storySelected = this.storySelected.bind(this);
   }
 
+  /*
+  When our component loads, we need to load all of the stories for the current user.
+  Once this happens, we need to check for a default story, which then becomes the story that is 
+  added to on default. 
+  */
+
   componentWillMount () {
-    this.props.handleStoryLoad();
+    //First, we are going to get the stories created by this user...
+    this.props.handleStoryLoad()
+    .then(() => {
+      //Next, we are going to map through them and find which on is the default. 
+      //The default story will be preloaded as the story that we post to. 
+      this.props.stories.map((story) => {
+        console.log(story);
+        if (story.default_post === true) {
+          this.setState({storyID: story.id, defaultStory: story.title, storyName: story.title});
+        }
+      });
+    });
   }
 
+
+  /*
+  The following code is designed to run the geolocation in our search box when a user
+  selects where they made the post. 
+  */
   geocodeLocationInput (location) {
     // calls google geocoding API to fetch lat/lng from address selected in autocomplete form
     let url = `https://maps.googleapis.com/maps/api/geocode/json?address=${location}&key=AIzaSyDXLOMgs19AOUHeizaMnRwjVyzxcTGWmJ8`;
@@ -87,6 +113,11 @@ class CreateNewPost extends React.Component {
         console.log('(Client) Error calling Google Geocoding API');
       });
   }
+
+/*
+This code below is designed to run the autocomplete search box for the location search.
+*/
+
 
   // Autocomplete feature for the form's location input field
   initializeAutocomplete () {
@@ -122,9 +153,13 @@ class CreateNewPost extends React.Component {
     });
   }
 
-  handleSubmit (landmark) {
+  /*
+  When a post is submitted, the relevant information is added to the postObject, 
+  then sent to the api within redux. The page is also routed from that end to the users profile page.  
+  */
+
+  handlePostSubmit (landmark) {
     let post = {
-      // title: 'Placeholder',
       content: this.props.content,
       lat: this.props.location.lat,
       lng: this.props.location.lng,
@@ -133,69 +168,75 @@ class CreateNewPost extends React.Component {
       image_url: this.props.image_url,
       story_id: this.state.storyID
     };
-    console.log(post);
-
-    console.log('(Client) Intiating POST Request! CREATING NEW POST');
 
     var postObject = {
       post: post,
       landmark: this.state.landmark
     };
-
-    return axios.post('/api/posts/new', postObject)
-      .then(result => {
-        console.log('(Client) Success! CREATING NEW POST');
-        // TODO: Add redirection to Explore Map
-      })
-      .catch((err) => {
-        console.log('(Client) Error! CREATING NEW POST');
-        console.log(err);
-      });
+    return this.props.handleNewPost(postObject);
   }
 
+  /*
+  This function exists so that we can send an api call and close the modal at the same time. 
+  This will have issues until we are able to fix the problem with the dropdown closing. 
+  */
+
   storySubmit () {
-    console.log('Story submitting');
+    console.log('submitting', this.props.user.id);
     const storyInfo = {
-      title: this.props.storyTitle,
-      summary: this.props.storySummary,
+      title: this.state.storyTitleForm,
+      summary: this.state.storySummaryForm,
       profile_id: this.props.user.id,
     };
     return axios.post('/api/stories/new', storyInfo)
       .then(result => {
         this.setState({
           storyID: result.data.id
-        })
+        });
         console.log('STORY CREATED', result);
+        this.props.handleStoryLoad();
+        this.handleStoryFormVisibility();
       })
       .catch((err) => {
         console.log('STORY CREATION FAILED');
       });
+
   }
 
-  submitClick () {
-    this.props.handleStoryLoad();
-    this.handleStoryFormVisibility();
-  }
+  /*
+    When a story is selected by a user in the dropdown box, it will simply set the story in the 
+    local state. When a post is created, it will be associated with the appropriate story. 
+  */
 
-  storySelected (name) {
-    console.log(name);
+  storySelected (selectedStory) {
     this.props.stories.map((story) => {
-      console.log('story is: ', story);
-      if (story.title === name) {
-        console.log('story ID is: ', story.id)
-        let localID = story.id;
-        console.log(this);
-        this.setState({storyID: localID, storyName: story.title});
+      if (story.title === selectedStory) {
+        this.setState({storyID: story.id, storyName: story.title});
       }
     });
+    this.handleDropdownVisibility();
   }
 
-  handleStoryFormVisibility = () => {
-    this.setState({ storyFormVisible: !this.state.storyFormVisible });
+  //Activates modal for the story creation form. 
+
+  handleStoryFormVisibility () {
+    this.setState({storyFormVisible: !this.state.storyFormVisible});
   }
 
-  handleDropdownVisibility = () => {
-    this.setState({ dropdownVisible: !this.state.dropdownVisible })
+  //Activates modal for the story selection dropbox. 
+
+  handleDropdownVisibility () {
+    this.setState({ dropdownVisible: !this.state.dropdownVisible });
+  }
+
+  //These functions set our input forms to the local state. 
+
+  handleStorySummary (event) {
+    this.setState({ storySummaryForm: event });
+  }
+
+  handleStoryTitle (event) {
+    this.setState({storyTitleForm: event });
   }
 
   render () {
@@ -204,6 +245,10 @@ class CreateNewPost extends React.Component {
         <Grid.Row>
           <Upload />
         </Grid.Row>
+        <Message positive>
+          <Message.Header>Your current story is {this.state.storyName} </Message.Header>
+            <p>FYI, {this.state.defaultStory} is your default story.</p>
+        </Message>
         <Grid.Row>
           <Grid.Column>
             <Button.Group size='massive' fluid={true}>
@@ -211,25 +256,23 @@ class CreateNewPost extends React.Component {
               <Button.Or/>
               <Button content='Select' onClick={this.handleDropdownVisibility}/>
             </Button.Group>
-            <Transition.Group animation='slide down' duration='500ms'>
-              {this.state.storyFormVisible &&
-              <Card fluid={true}>
-                <Card.Content>
-                  <Form>
-                    <Input fluid={true} size='huge' placeholder='Name Your Story' onChange={(e) => this.props.handleStoryTitle(e.target.value)}/>
-                    <br/>
-                    <TextArea style={{fontSize: '20px'}} fluid={true} placeholder='Story Summary' onChange={(e) => this.props.handleStorySummary(e.target.value)}/>
-                  </Form>
-                </Card.Content>
-                <Card.Content>
-                  <Button.Group fluid={true}>
-                    <Button size='huge' color='teal' type='submit' onClick={this.storySubmit}>OK</Button>
-                    <Button size='huge' type='submit' onClick={this.handleStoryFormVisibility}>Cancel</Button>
-                  </Button.Group>
-                </Card.Content>
-              </Card>
-              }
-            </Transition.Group>
+            <Modal size= 'tiny' open={this.state.storyFormVisible} onClose={this.handleStoryFormVisibility}>
+          <Modal.Content>
+          <Form>
+            <Form.Field>
+              <Input fluid={true} size='huge' placeholder='Name Your Story' onChange={(e) => this.handleStoryTitle(e.target.value)}/>
+              <br/>
+              <TextArea style={{fontSize: '20px'}} placeholder='Story Summary' onChange={(e) => this.handleStorySummary(e.target.value)} />
+            </Form.Field>
+          </Form>
+          </Modal.Content>
+          <Modal.Actions>
+            <Button negative onClick={this.handleStoryFormVisibility} >
+              Cancel
+            </Button>
+            <Button positive icon='checkmark' labelPosition='right' content='Submit' onClick={this.storySubmit} />
+          </Modal.Actions>
+        </Modal>
             <Transition.Group animation='slide down' duration='500ms'>
               {this.state.dropdownVisible &&
               <Card fluid={true}>
@@ -239,7 +282,7 @@ class CreateNewPost extends React.Component {
                   size='big'
                   >
                   {this.props.stories.map((story, index) => {
-                    return <List.Item key={index} onClick={() => this.storySelected(story.title)} content={story.title} value={story.title}/>
+                    return <List.Item key={index} onClick={() => this.storySelected(story.title)} content={story.title} value={story.title}/>;
                   })}
                 </List>
               </Card>
@@ -248,10 +291,9 @@ class CreateNewPost extends React.Component {
           </Grid.Column>
         </Grid.Row>
         <Grid.Row>
-          <Grid.Column fluid={true}>
+          <Grid.Column>
             <Form>
               <TextArea
-                fluid={true}
                 style={{fontSize: '20px'}}
                 placeholder='Record a Memory!'
                 onChange={(e) => { this.props.handleContentTextArea(e.target.value); }}
@@ -270,39 +312,41 @@ class CreateNewPost extends React.Component {
         </Grid.Row>
         <Grid.Row>
           <Grid.Column>
-            <Button fluid={true} size='massive' color='teal' onClick={() => this.handleSubmit(this.state.landmark)}>Publish</Button>
+            <Button fluid={true} size='massive' color='teal' onClick={() => this.handlePostSubmit(this.state.landmark)}>Publish</Button>
           </Grid.Column>
         </Grid.Row>
       </Grid>
     );
   }
 }
+
+
 /** ============================================================
- * Define State Subscriptions
- * =============================================================
- */
+ * Define Class Properties
+ * ========================================================== */
+
 const mapStateToProps = state => ({
   content: state.newpost.content,
   location: state.newpost.location,
-  map: state.map.center,
-  user: state.user,
+  user: state.user.user,
   image_url: state.newpost.image_url,
   stories: state.newpost.allUserStories,
-  storyTitle: state.newstory.storyTitle,
-  storySummary: state.newstory.storySummary
 });
 
 /** ============================================================
- * Define Dispatches Subscriptions
- * =============================================================
- */
+ * Import Redux Action Creators
+ * ========================================================== */
+
 const mapDispatchToProps = dispatch => bindActionCreators({
   handleContentTextArea: handleContentTextArea,
   handleLocationInput: handleLocationInput,
   handleStoryLoad: handleStoryLoad,
-  handleStoryTitle: handleStoryTitle,
-  handleStorySummary: handleStorySummary,
+  handleNewPost: handleNewPost,
 }, dispatch);
+
+/** ============================================================
+ * Define Redux Store Connection
+ * ========================================================== */
 
 export default connect(
   mapStateToProps,
