@@ -2,29 +2,10 @@ const express = require('express');
 const middleware = require('../middleware');
 const models = require('../../db/models');
 const router = express.Router();
+const controller = require('../controllers');
 
 router.route('/')
-  .get(middleware.auth.verify, (req, res) => {
-    const preloadedState = {};
-    preloadedState.currentUser = req.user;
-    models.Story.getStoriesByUserId(req.user.id)
-      .then(stories => {
-        preloadedState.stories = stories;
-        return models.Post.getPostsByUserId(req.user.id);
-      })
-      .then(posts => {
-        preloadedState.posts = posts;
-        return models.Following.getAllFollowings(req.user.id);
-      })
-      .then(following => {
-        preloadedState.following = following;
-        res.render('index', {preloadedState});
-      })
-      .catch((err) => {
-        console.log('(Server) Error! Preloading State');
-      });
-
-  });
+  .get(middleware.auth.verify, controller.Profiles.preloadUserInfo);
 
 router.route('/login')
   .get((req, res) => {

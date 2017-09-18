@@ -10,10 +10,10 @@ export const SET_CURRENT_USER_FOLLOWINGS = 'SET_CURRENT_USER_FOLLOWINGS';
  * =============================================================
  */
 const initialState = {
-  user: __PRELOADED_STATE__.currentUser,
-  stories: __PRELOADED_STATE__.stories,
-  posts: __PRELOADED_STATE__.posts,
-  following: __PRELOADED_STATE__.following,
+  user: __PRELOADED_STATE__.user.user,
+  stories: __PRELOADED_STATE__.user.stories,
+  posts: __PRELOADED_STATE__.user.posts,
+  following: __PRELOADED_STATE__.user.following,
 };
 
 /** ============================================================
