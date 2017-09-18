@@ -58,7 +58,6 @@ class Timeline extends React.Component {
       userStories: '',
       currentStory: '',
       currentStoryPosts: [],
-      currentStoryMarkers: [],
       currentPost: '',
       currentPostIndex: 0,
       _map: null
@@ -97,53 +96,53 @@ class Timeline extends React.Component {
 
   render() {
     return (
-      <Grid container={true} relaxed columns={2} stackable>
-        <Grid.Column>
-          <div style={mapStyle}>
-            <StoryMap 
-              containerElement={this.props.containerElement}
-              mapElement={this.props.mapElement}
-              handleMapMounted={this.handleMapMounted}
-              center={this.props.center}
-              handleBoundsChanged={this.props.handleBoundsChanged}
-              map={this.state._map}
-              bounds={this.props.bounds}
-              handlePlacesChanged={this.props.handlePlacesChanged}
-              inputStyle={this.props.inputStyle}
-              handleMarkerClick={this.props.handleMarkerClick}
-              handleMarkerClose={this.props.handleMarkerClose}
-              markers={this.props.markers}
-              currentMarker={this.props.currentPostMarker}
-              landmarks={this.props.landmarks}
-              openSideBar={this.props.openSideBar}
-            />
-          </div>
-        </Grid.Column>
-        <Grid.Column>
-          <Carousel
-            showThumbs={false}
-            showArrows={true}
-            showStatus={true}
-            showIndicators={false}
-            useKeyboardArrows={true}
-            selectedItem={this.state.currentPostIndex}
-            onChange={(e) => this.handleChange(e)}
-          >
-            {this.state.currentStory.posts.map((post, index) => {
-              return (
-                <Card fluid={true} key={index}>
-                  <Image src={post.image_url} />
-                  <Card.Content>
-                    <Card.Description>
-                      {post.content}
-                    </Card.Description>
-                  </Card.Content>
-                </Card>
-              );
-            })}
-          </Carousel>
-        </Grid.Column>
-      </Grid>
+        <Grid container={true} relaxed columns={2} stackable>
+          <Grid.Column>
+            <div style={mapStyle}>
+              <StoryMap 
+                containerElement={this.props.containerElement}
+                mapElement={this.props.mapElement}
+                handleMapMounted={this.handleMapMounted}
+                center={this.props.center}
+                handleBoundsChanged={this.props.handleBoundsChanged}
+                map={this.state._map}
+                bounds={this.props.bounds}
+                handlePlacesChanged={this.props.handlePlacesChanged}
+                inputStyle={this.props.inputStyle}
+                handleMarkerClick={this.props.handleMarkerClick}
+                handleMarkerClose={this.props.handleMarkerClose}
+                markers={this.props.markers}
+                currentPost={this.props.currentPost}
+                landmarks={this.props.landmarks}
+                openSideBar={this.props.openSideBar}
+              />
+            </div>
+          </Grid.Column>
+          <Grid.Column>
+            <Carousel
+              showThumbs={false}
+              showArrows={true}
+              showStatus={true}
+              showIndicators={false}
+              useKeyboardArrows={true}
+              selectedItem={this.state.currentPostIndex}
+              onChange={(e) => this.handleChange(e)}
+            >
+              {this.state.currentStory.posts.map((post, index) => {
+                return (
+                  <Card fluid={true} key={index}>
+                    <Image src={post.image_url} />
+                    <Card.Content>
+                      <Card.Description>
+                        {post.content}
+                      </Card.Description>
+                    </Card.Content>
+                  </Card>
+                )
+              })}
+            </Carousel>
+          </Grid.Column>
+        </Grid>
     );
   }
 }
@@ -160,7 +159,8 @@ const mapStateToProps = state => ({
   mapElement: <div style={{height: '100%'}} />,
   markers: state.user.stories[0].posts,
   user: state.user,
-  otherUser: state.otherUser
+  otherUser: state.otherUser,
+  currentPost: state.map.currentPost
 });
 
 /** ============================================================
