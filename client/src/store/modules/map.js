@@ -11,7 +11,6 @@ export const HANDLE_SEARCH_AREA = 'map/HANDLE_SEARCH_AREA';
 export const HANDLE_MARKER_CLICK = 'map/HANDLE_MARKER_CLICK';
 export const HANDLE_MARKER_CLOSE = 'map/HANDLE_MARKER_CLOSE';
 export const HANDLE_STORY_LOAD = 'map/HANDLE_STORY_LOAD';
-export const HANDLE_CURRENT_POST_MARKER = 'map/HANDLE_CURRENT_POST_MARKER';
 /** ============================================================
  * Define Initial State
  * =============================================================
@@ -21,7 +20,6 @@ const initialState = {
   bounds: null,
   landmarks: [],
   markers: [],
-  currentPostMarker: null,
   storyPosts: [],
   userLocationAvailable: false
 };
@@ -89,11 +87,6 @@ export default (state = initialState, action) => {
         }
         return marker;
       })
-    };
-  case HANDLE_CURRENT_POST_MARKER:
-    return {
-      ...state,
-      currentPostMarker: action.marker
     };
   default:
     return state;
@@ -192,16 +185,6 @@ export const handleMarkerClose = (marker) => {
     });
   };
 };
-
-export const handleCurrentPostMarker = (marker) => {
-  console.log('New post to render! Post is: ', marker)
-  return dispatch => {
-    dispatch({
-      type: HANDLE_CURRENT_POST_MARKER,
-      targetMarker: marker
-    })
-  }
-}
 
 // helper function
 export const getPostsWithinRadius = (center) => {

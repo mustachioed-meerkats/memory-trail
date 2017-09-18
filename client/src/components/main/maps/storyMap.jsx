@@ -38,11 +38,11 @@ const StoryMap = withGoogleMap(props => (
           position={{lat: parseFloat(marker.lat), lng: parseFloat(marker.lng)}} key={index}
           onClick={() => props.handleMarkerClick(marker)}
         >
-        {/* {marker.showInfo && (
+        {marker.showInfo && (
           <InfoWindow onCloseClick={() => props.handleMarkerClose(marker)}>
             <div><Link to={`/landmark/${marker.landmark_id}`}>View Landmark</Link></div>
           </InfoWindow>
-        )} */}
+        )}
         </Marker>
       )
     })}
@@ -58,8 +58,7 @@ const mapStateToProps = state => ({
   bounds: state.map.bounds,
   containerElement: <div style={{height: '100%'}} />,
   mapElement: <div style={{height: '100%'}} />,
-  user: state.user,
-  currentMarker: state.map.currentPostMarker
+  user: state.user
 });
 
 /** ============================================================
@@ -77,8 +76,3 @@ export default connect(
   mapStateToProps,
   mapDispatchToProps
 )(StoryMap);
-
-{/* <Marker
-        position={{lat: parseFloat(marker.lat), lng: parseFloat(marker.lng)}} key={index} 
-        onClick={() => props.handleMarkerClick(marker)}
-      > */}
