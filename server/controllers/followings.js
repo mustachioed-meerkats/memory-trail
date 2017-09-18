@@ -7,6 +7,13 @@ module.exports.createFollowing = (req, res) => {
     });
 };
 
+module.exports.removeFollowing = (req, res) => {
+  models.Following.removeFollowing(req.body)
+    .then(result => {
+      res.status(200).send(result);
+    });
+};
+
 module.exports.getAllFollowings = (req, res) => {
   models.Following.getAllFollowings(req.params.id)
     .then(results => {
