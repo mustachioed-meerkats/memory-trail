@@ -16,17 +16,22 @@ import FollowingsPageList from './follow/FollowingsPageList.jsx';
  * Import Redux Action Creators
  * ============================================================= */
 
-import { followNewUser, getAllFollowings } from '../../store/modules/following';
-import { getUserInfo } from '../../store/modules/otherUser';
+import { followNewUser, unfollowUser, getAllFollowings } from '../../store/modules/following';
+import { getUserInfo, determineFollowingStatus } from '../../store/modules/otherUser';
+import { getCurrentUserFollowings } from '../../store/modules/user';
 
 class ProfileRouterPage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       isCurrentUser: true,
-      profile_display: ''
+      profile_display: '',
+      profile_id: '',
+      isFollowing: false
     };
     this.handleUserChange = this.handleUserChange.bind(this);
+    this.handleFollow = this.handleFollow.bind(this);
+    this.handleUnfollow = this.handleUnfollow.bind(this);
   }
 
   componentWillMount() {
@@ -40,14 +45,56 @@ class ProfileRouterPage extends React.Component {
         .then(() => {
           this.setState({
             isCurrentUser: false,
+            profile_id: this.props.otherUser.user.id,
             profile_display: this.props.otherUser.user.display || this.props.otherUser.user.email
           });
+          return;
+        })
+        .then(() => {
+          this.isCurrentUserFollowing();
         });
     } else {
       this.setState({
+        profile_id: this.props.user.user.id,
         profile_display: this.props.user.user.display || this.props.user.user.email
       });
     }
+  }
+
+  isCurrentUserFollowing() {
+    let profileOwnerId = Number(this.props.match.params.id);
+    let isFollowing = this.props.user.following.map((following) => {
+      return following.following_id;
+    }).includes(profileOwnerId);
+    this.setState({
+      isFollowing: isFollowing
+    });
+  }
+
+  handleFollow() {
+    console.log('following');
+    this.props.followNewUser(this.props.user.user.id, this.state.profile_id)
+      .then(() => {
+        return this.props.getCurrentUserFollowings(this.props.user.user.id);
+      })
+      .then(() => {
+        this.setState({
+          isFollowing: true
+        });
+      });
+  }
+
+  handleUnfollow() {
+    console.log('unfollowing');
+    this.props.unfollowUser(this.props.user.user.id, this.state.profile_id)
+      .then(() => {
+        return this.props.getCurrentUserFollowings(this.props.user.user.id);
+      })
+      .then(() => {
+        this.setState({
+          isFollowing: false
+        });
+      });
   }
 
   render() {
@@ -56,7 +103,11 @@ class ProfileRouterPage extends React.Component {
     if (this.state.isCurrentUser) {
       followingLink = (<li><Link to={`${this.props.match.url}/following`}>Following</Link></li>);
     } else {
-      followButton = (<Button>Follow</Button>);
+      if (this.state.isFollowing) {
+        followButton = (<Button onClick={this.handleUnfollow}>Unfollow</Button>);
+      } else {
+        followButton = (<Button onClick={this.handleFollow}>Follow</Button>);
+      }
     }
 
     return (
@@ -97,7 +148,11 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
   getAllFollowings,
-  getUserInfo
+  getUserInfo,
+  determineFollowingStatus,
+  followNewUser,
+  unfollowUser,
+  getCurrentUserFollowings
 }, dispatch);
 
 export default connect(

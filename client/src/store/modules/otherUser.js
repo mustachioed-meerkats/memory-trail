@@ -6,6 +6,7 @@ import axios from 'axios';
  */
 export const GET_USER_STORIES = 'GET_USER_STORIES';
 export const GET_USER_INFO = 'GET_USER_INFO';
+export const IS_CURRENT_USER_FOLLOWING = 'IS_CURRENT_USER_FOLLOWING';
 
 /** ============================================================
  * Define Initial State
@@ -15,7 +16,8 @@ const initialState = {
   user: {},
   stories: [],
   posts: [],
-  following: []
+  following: [],
+  isCurrentUserFollowing: false
 };
 
 /** ============================================================
@@ -26,10 +28,15 @@ export default (state = initialState, action) => {
   switch (action.type) {
   case GET_USER_INFO:
     return {
+      ...state,
       user: action.user,
       stories: action.stories,
       posts: action.posts
     };
+  // case IS_CURRENT_USER_FOLLOWING:
+  //   return {
+  //     isCurrentUserFollowing: action.payload
+  //   };
   default:
     return state;
   }
@@ -54,6 +61,19 @@ export const getUserInfo = (userId) => {
       });
   };
 };
+
+// export const determineFollowingStatus = (userId, currentUserFollowings) => {
+//   var isCurrentUserFollowing = currentUserFollowings.some(following => {
+//     return userId === following.following_id;
+//   });
+//   // debugger
+//   return dispatch => {
+//     dispatch({
+//       type: IS_CURRENT_USER_FOLLOWING,
+//       payload: isCurrentUserFollowing
+//     });
+//   };
+// };
 
 
 /** ============================================================
