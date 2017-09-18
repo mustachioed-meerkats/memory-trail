@@ -1,16 +1,22 @@
 import React from 'react';
-import {withGoogleMap, GoogleMap, Marker, Polyline} from 'react-google-maps';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import RaisedButton from 'material-ui/RaisedButton';
 import { Link } from 'react-router-dom';
-import Markers from './maps/Markers.jsx';
-import Search from './maps/Search.jsx';
-import PostList from './PostList.jsx';
+import { withGoogleMap, GoogleMap, Marker, InfoWindow } from 'react-google-maps';
+import styles from 'react-responsive-carousel/lib/styles/carousel.min.css';
+const Carousel = require('react-responsive-carousel').Carousel;
+import axios from 'axios';
+import StoryMap from './maps/StoryMap.jsx'
 
-/* Import Semantic UI Components */
+/** ============================================================
+ * Import Semantic UI Components
+ * =============================================================
+ */
 import {
   Button,
   Card,
+  Container,
   Divider,
   Dropdown,
   Form,
@@ -29,67 +35,48 @@ import {
   Transition
 } from 'semantic-ui-react';
 
-import { 
+/** ============================================================
+ * Import Redux Action Creators
+ * ========================================================== */
+import {
+  handleMapMounted, 
   handlePlacesChanged,
   handleBoundsChanged,
-  handleSearchArea,
+  handleMarkerClick,
+  handleMarkerClose,
+  handleCurrentPostMarker
 } from '../../store/modules/map';
 
-//The strategy utilized here only works with posts coming from the server organized by timestamp,
-//it cannot use the same routes as the home page.
-
-const TimelineComponent = withGoogleMap(props => {
-  const path = [];
-  props.markers.forEach(function (post) {
-    var obj = {'lat': parseFloat(post.lat), 'lng': parseFloat(post.lng)};
-    path.push(obj);
-  });
-  console.log(path);
-  return (
-    <GoogleMap
-      ref={props.handleMapMounted}
-      defaultZoom={10}
-      center={props.center}
-    >
-      {props.markers.map((marker, index) => (
-        <Marker
-          position={{lat: parseFloat(marker.lat), lng: parseFloat(marker.lng)}} key={index}
-        >
-        </Marker>
-      ))}
-      <Polyline
-        path={path}
-      />
-    </GoogleMap>
-  );
-});
+const mapStyle = {
+  height: window.innerHeight
+};
 
 class Timeline extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      _map: null,
+      userStories: '',
+      currentStory: '',
+      currentStoryPosts: [],
+      currentStoryMarkers: [],
+      currentPost: '',
+      currentPostIndex: 0,
+      _map: null
     };
     this.handleMapMounted = this.handleMapMounted.bind(this);
-    this.StoryListClick = this.StoryListClick.bind(this);
+    this.handleChange = this.handleChange.bind(this);
   }
 
-  // Eventually we will need to fix this so that we get actual posts from the appropriate story. 
-  // We may have an eventual issue with the postList page, as it looks for the storyPosts state, which is set by 
-  // the following component. This needs to be investigated later on. 
-
-  // We will also need to have a story that loads on default with the page. 
-  // This can be looked at later, probably qualifies as techinical debt. 
-  // componentDidMount () {
-  //   this.props.handleStoryLoad(storyID);
-  // }
-
-  StoryListClick(post) {
-    console.log('STORYLIST CLICK WORKING', post);
+  componentWillMount () {
+    let userData = this.props.isCurrentUser ? this.props.user : this.props.otherUser;
+    console.log(userData);
     this.setState({
-      center: {lat: parseFloat(post.lat), lng: parseFloat(post.lng)},
-      zoom: 15
-    });
+      userStories: userData.stories,
+      currentStory: userData.stories[0],
+      currentStoryPosts: userData.stories[0].posts,
+      currentPostIndex: 0,
+      currentPost: ''
+    })
   }
 
   handleMapMounted(map) {
@@ -98,42 +85,98 @@ class Timeline extends React.Component {
     });
   }
 
-  handleSearchBoxMounted(searchBox) {
+  updateCurrentPostIndex (index) {
     this.setState({
-      _searchBox: searchBox
-    });
+      currentPostIndex: index
+    })
+  }
+  
+  handleChange(e) {
+    this.updateCurrentPostIndex(e);
   }
 
   render() {
     return (
-      <TimelineComponent 
-        containerElement={this.props.containerElement}
-        mapElement={this.props.mapElement}
-        handleMapMounted={this.handleMapMounted}
-        center={this.props.center}
-        map={this.state._map}
-        markers={this.props.markers}
-      />
+        <Grid container={true} relaxed columns={2} stackable>
+          <Grid.Column>
+            <div style={mapStyle}>
+              <StoryMap 
+                containerElement={this.props.containerElement}
+                mapElement={this.props.mapElement}
+                handleMapMounted={this.handleMapMounted}
+                center={this.props.center}
+                handleBoundsChanged={this.props.handleBoundsChanged}
+                map={this.state._map}
+                bounds={this.props.bounds}
+                handlePlacesChanged={this.props.handlePlacesChanged}
+                inputStyle={this.props.inputStyle}
+                handleMarkerClick={this.props.handleMarkerClick}
+                handleMarkerClose={this.props.handleMarkerClose}
+                markers={this.props.markers}
+                currentMarker={this.props.currentPostMarker}
+                landmarks={this.props.landmarks}
+                openSideBar={this.props.openSideBar}
+              />
+            </div>
+          </Grid.Column>
+          <Grid.Column>
+            <Carousel
+              showThumbs={false}
+              showArrows={true}
+              showStatus={true}
+              showIndicators={false}
+              useKeyboardArrows={true}
+              selectedItem={this.state.currentPostIndex}
+              onChange={(e) => this.handleChange(e)}
+            >
+              {this.state.currentStory.posts.map((post, index) => {
+                return (
+                  <Card fluid={true} key={index}>
+                    <Image src={post.image_url} />
+                    <Card.Content>
+                      <Card.Description>
+                        {post.content}
+                      </Card.Description>
+                    </Card.Content>
+                  </Card>
+                )
+              })}
+            </Carousel>
+          </Grid.Column>
+        </Grid>
     );
   }
 }
 
+
+/** ============================================================
+ * Define State Subscriptions
+ * =============================================================
+ */
 const mapStateToProps = state => ({
   center: state.map.center,
   bounds: state.map.bounds,
   containerElement: <div style={{height: '100%'}} />,
   mapElement: <div style={{height: '100%'}} />,
-  markers: state.map.markers,
+  markers: state.user.stories[0].posts,
+  user: state.user,
+  otherUser: state.otherUser
 });
 
+/** ============================================================
+ * Define Dispatches Subscriptions
+ * =============================================================
+ */
 const mapDispatchToProps = dispatch => bindActionCreators({
   handlePlacesChanged,
   handleBoundsChanged,
-  handleSearchArea,
+  handleMarkerClick,
+  handleMarkerClose
 }, dispatch);
-
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps
 )(Timeline);
+
+// onChange={this.props.handleCurrentPostMarker(this.state.currentPost)}

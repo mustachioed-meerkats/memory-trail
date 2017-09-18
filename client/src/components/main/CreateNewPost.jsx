@@ -328,6 +328,7 @@ This code below is designed to run the autocomplete search box for the location 
 const mapStateToProps = state => ({
   content: state.newpost.content,
   location: state.newpost.location,
+  map: state.map.center,
   user: state.user.user,
   image_url: state.newpost.image_url,
   stories: state.newpost.allUserStories,

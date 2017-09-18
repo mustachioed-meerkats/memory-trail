@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import profile from '../../styles/profile';
 import { Grid, Row, Col, Button, ButtonGroup, ListGroupItem, Glyphicon, Tooltip, OverlayTrigger } from 'react-bootstrap';
 import { Link, Switch, Route } from 'react-router-dom';
-import DummyTimeLine from './DummyTimeLine.jsx'; 
+import Timeline from './Timeline.jsx'; 
 import CurrentUserPostList from './profile/CurrentUserPostList.jsx';
 import FollowingsPageList from './follow/FollowingsPageList.jsx';
 
@@ -117,7 +117,7 @@ class ProfileRouterPage extends React.Component {
           </ul>
         </nav>
         <Route exact path={`${this.props.match.url}`} render={() => (
-          <DummyTimeLine isCurrentUser={this.state.isCurrentUser} />
+          <Timeline isCurrentUser={this.state.isCurrentUser} />
         )}/>
         <Route exact path={`${this.props.match.url}/posts`} render={() => (
           <CurrentUserPostList isCurrentUser={this.state.isCurrentUser} />

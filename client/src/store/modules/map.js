@@ -186,7 +186,6 @@ export const handleMarkerClose = (marker) => {
   };
 };
 
-
 // helper function
 export const getPostsWithinRadius = (center) => {
   return axios.post('/api/posts/nearby', center);

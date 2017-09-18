@@ -7,11 +7,10 @@ import FollowingFeed from './FollowingFeed.jsx';
 import FollowingsPage from './FollowingsPage.jsx';
 import UserProfilePage from './UserProfilePage.jsx';
 import CurrentUserProfilePage from './CurrentUserProfilePage.jsx';
-import Timeline from './Timeline.jsx';
 import ProfileRouterPage from './ProfileRouterPage.jsx';
-import TestPage from './TestPage.jsx';
 import Demo from './Chart.jsx';
 import LandmarkPage from './LandmarkPage.jsx';
+import TestPage from './TestPage.jsx'
 
 const RootRouter = () => (
   <Switch>
@@ -22,10 +21,9 @@ const RootRouter = () => (
     <Route exact path='/post/:id' component={PostPage} />
     <Route exact path='/landmark/:id' component={LandmarkPage} />
     <Route exact path='/followings' component={FollowingsPage} />
-    <Route exact path='/timeline' component={Timeline} />
     <Route exact path='/testpage' component={TestPage} />
-    <Route exact path='/testing' component={Demo} />
   </Switch>
 );
+
 
 export default RootRouter;
