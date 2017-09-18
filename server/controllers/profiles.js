@@ -106,22 +106,26 @@ module.exports.preloadUserInfo = (req, res) => {
   const preloadedState = {};
   preloadedState.user = {};
   preloadedState.user.user = req.user;
-  models.Story.getStoriesByUserId(req.user.id)
-    .then(stories => {
-      preloadedState.user.stories = stories;
-      return models.Post.getPostsByUserId(req.user.id);
-    })
-    .then(posts => {
-      preloadedState.user.posts = posts;
-      return models.Following.getAllFollowings(req.user.id);
-    })
-    .then(following => {
-      preloadedState.user.following = following;
-      res.render('index', {preloadedState});
-    })
-    .catch((err) => {
-      console.log('(Server) Error! Preloading State');
-    });
+  if (req.user) {
+    models.Story.getStoriesByUserId(req.user.id)
+      .then(stories => {
+        preloadedState.user.stories = stories;
+        return models.Post.getPostsByUserId(req.user.id);
+      })
+      .then(posts => {
+        preloadedState.user.posts = posts;
+        return models.Following.getAllFollowings(req.user.id);
+      })
+      .then(following => {
+        preloadedState.user.following = following;
+        res.render('index', {preloadedState});
+      })
+      .catch((err) => {
+        console.log('(Server) Error! Preloading State');
+      });
+  } else {
+    res.render('index', {preloadedState});
+  }
 };
 
 
