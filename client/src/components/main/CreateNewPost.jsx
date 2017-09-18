@@ -76,16 +76,16 @@ class CreateNewPost extends React.Component {
 
   /*
   When our component loads, we need to load all of the stories for the current user.
-  Once this happens, we need to check for a default story, which then becomes the story that is 
-  added to on default. 
+  Once this happens, we need to check for a default story, which then becomes the story that is
+  added to on default.
   */
 
   componentWillMount () {
     //First, we are going to get the stories created by this user...
     this.props.handleStoryLoad()
     .then(() => {
-      //Next, we are going to map through them and find which on is the default. 
-      //The default story will be preloaded as the story that we post to. 
+      //Next, we are going to map through them and find which on is the default.
+      //The default story will be preloaded as the story that we post to.
       this.props.stories.map((story) => {
         if (story.default_post === true) {
           this.setState({storyID: story.id, defaultStory: story.title, storyName: story.title});
@@ -97,7 +97,7 @@ class CreateNewPost extends React.Component {
 
   /*
   The following code is designed to run the geolocation in our search box when a user
-  selects where they made the post. 
+  selects where they made the post.
   */
   geocodeLocationInput (location) {
     // calls google geocoding API to fetch lat/lng from address selected in autocomplete form
@@ -150,8 +150,8 @@ This code below is designed to run the autocomplete search box for the location 
   }
 
   /*
-  When a post is submitted, the relevant information is added to the postObject, 
-  then sent to the api within redux. The page is also routed from that end to the users profile page.  
+  When a post is submitted, the relevant information is added to the postObject,
+  then sent to the api within redux. The page is also routed from that end to the users profile page.
   */
 
   handlePostSubmit (landmark) {
@@ -199,8 +199,8 @@ This code below is designed to run the autocomplete search box for the location 
   }
 
   /*
-    When a story is selected by a user in the dropdown box, it will simply set the story in the 
-    local state. When a post is created, it will be associated with the appropriate story. 
+    When a story is selected by a user in the dropdown box, it will simply set the story in the
+    local state. When a post is created, it will be associated with the appropriate story.
   */
 
   storySelected (selectedStory) {
@@ -212,19 +212,19 @@ This code below is designed to run the autocomplete search box for the location 
     this.handleDropdownVisibility();
   }
 
-  //Activates modal for the story creation form. 
+  //Activates modal for the story creation form.
 
   handleStoryFormVisibility () {
     this.setState({storyFormVisible: !this.state.storyFormVisible});
   }
 
-  //Activates modal for the story selection dropbox. 
+  //Activates modal for the story selection dropbox.
 
   handleDropdownVisibility () {
     this.setState({ dropdownVisible: !this.state.dropdownVisible });
   }
 
-  //These functions set our input forms to the local state. 
+  //These functions set our input forms to the local state.
 
   handleStorySummary (event) {
     this.setState({ storySummaryForm: event });
