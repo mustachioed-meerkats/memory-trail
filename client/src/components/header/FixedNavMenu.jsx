@@ -1,9 +1,7 @@
 import React from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import following from '../../styles/following';
 import { Link } from 'react-router-dom';
-import FollowingFeedList from './follow/FollowingFeedList.jsx';
 
 /** ============================================================
  * Import Semantic UI Components
@@ -35,7 +33,7 @@ import { openSideBar } from '../../store/modules/sidebar';
 /** ============================================================
  * Define Component
  * ========================================================== */
-class FollowingFeed extends React.Component {
+class FixedNavMenu extends React.Component {
   constructor(props) {
     super(props);
   }
@@ -44,20 +42,25 @@ class FollowingFeed extends React.Component {
   }
 
   render () {
-    const listNav = {
-      position: 'fixed',
-      padding: '1rem',
-      top: 0
+    const space = {
+      padding: '2rem'
     };
-
+    
     return (
-      <Container>
-        <Segment.Group>
-          <Segment>Memory Feed</Segment>
-        </Segment.Group>
-        <Link to='/followings'>View Followings</Link>
-        <FollowingFeedList />
-      </Container>
+      <div>
+        <Menu size='tiny' fixed='top'>
+          <Menu.Item>
+            <Button
+              size='tiny'
+              style={{backgroundColor: 'white'}}
+              icon='sidebar'
+              onClick={ () => this.props.openSideBar()}
+            />
+          </Menu.Item>
+        </Menu>
+        <div style={space}>
+        </div>
+      </div>
     );
   }
 }
@@ -83,4 +86,4 @@ const mapDispatchToProps = (dispatch) => bindActionCreators({
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(FollowingFeed);
+)(FixedNavMenu);

@@ -7,6 +7,7 @@ import { withGoogleMap, GoogleMap, Marker, InfoWindow } from 'react-google-maps'
 import SearchBox from 'react-google-maps/lib/places/SearchBox';
 import Search from './Search.jsx';
 import PostList from '../PostList.jsx';
+import InfoWindowContent from './InfoWindowContent.jsx';
 
 /** ============================================================
  * Import Semantic UI Components
@@ -26,7 +27,8 @@ import {
   Table,
   Card,
   Dimmer,
-  Loader
+  Loader,
+  Popup
 } from 'semantic-ui-react';
 
 /** ============================================================
@@ -82,6 +84,18 @@ let mapOptions = {
   fullscreenControl: false
 };
 
+const infoMarker = (landMarkImage) => {
+  return (
+    {
+      margin: '-1rem -1rem 0.5rem -1rem',
+      height: '5rem',
+      background: `url(${landMarkImage})  center center`,
+      backgroundSize: 'cover'
+    }
+  );
+};
+
+
 const ExploreMapComponent = withGoogleMap(props => (
   <GoogleMap
     ref={props.handleMapMounted}
@@ -98,20 +112,34 @@ const ExploreMapComponent = withGoogleMap(props => (
       inputPlaceholder='Search for a place!'
       inputStyle={props.inputStyle}
     />
-    {props.landmarks.map((marker, index) => (
+    {props.landmarks.map((landmark, index) => (
       <Marker 
-        position={{lat: parseFloat(marker.lat), lng: parseFloat(marker.lng)}} key={index} 
-        onClick={() => props.handleMarkerClick(marker)}
+        position={{lat: parseFloat(landmark.lat), lng: parseFloat(landmark.lng)}} key={index} 
+        onClick={() => props.handleMarkerClick(landmark)}
       >
-        {marker.showInfo && (
-          <InfoWindow onCloseClick={() => props.handleMarkerClose(marker)}>
-            <div><Link to={`/landmark/${marker.id}`}>{marker.name}</Link></div>
+        {landmark.showInfo && (
+          <InfoWindow onCloseClick={() => props.handleMarkerClose(landmark)}>
+            <InfoWindowContent landmark={landmark} />
           </InfoWindow>
         )}
       </Marker>
     ))}
   </GoogleMap>
 ));
+
+
+
+
+{ /* <Marker 
+position={{lat: parseFloat(marker.lat), lng: parseFloat(marker.lng)}} key={index} 
+onClick={() => props.handleMarkerClick(marker)}
+>
+{marker.showInfo && (
+  <InfoWindow onCloseClick={() => props.handleMarkerClose(marker)}>
+    <div><Link to={`/landmark/${marker.id}`}>{marker.name}</Link></div>
+  </InfoWindow>
+)}
+</Marker> */ }
 
 
 class ExploreMap extends React.Component {
