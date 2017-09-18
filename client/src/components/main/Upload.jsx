@@ -12,7 +12,8 @@ class Upload extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      file: null
+      file: null,
+      previewImage: null
     };
     this.handleFile = this.handleFile.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -23,19 +24,31 @@ class Upload extends React.Component {
       .then( res => {
         let image_url = res.data.Location;
         this.props.handleImageUrl(image_url);
-        console.log('Upload successful');
       })
       .catch(err => {
-        console.log(err);
+        console.log('failed', err);
       });
   }
 
   handleFile(e) {
+    this.imagePreview();
     let formData = new FormData();
     formData.append('file', e.target.files[0]);
     this.setState({
       file: formData
-    })
+    });
+  }
+
+  imagePreview() {
+    let file = this.refs.file.files[0];
+    let reader = new FileReader();
+    let url = reader.readAsDataURL(file);
+    reader.onloadend = function (e) {
+      this.setState({
+        previewImage: [reader.result],
+      });
+    }.bind(this);
+
   }
 
   render() {
@@ -44,8 +57,11 @@ class Upload extends React.Component {
         <label htmlFor="hidden-new-file">
           <Icon name='photo' size='massive' color='teal' style={{cursor: 'pointer'}}/>
         </label>
-        <input type='file' id="hidden-new-file" style={{display: 'none'}} onChange={this.handleFile}/>
+        <input ref='file' type='file' id="hidden-new-file" style={{display: 'none'}} onChange={this.handleFile}/>
         <Button size='small' onClick={this.handleSubmit}>Upload</Button>
+        <div>
+        <img src={this.state.previewImage} />
+      </div>
       </div>
     );
   }
