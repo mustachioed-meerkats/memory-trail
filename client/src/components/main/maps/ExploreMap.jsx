@@ -130,7 +130,7 @@ const ExploreMapComponent = withGoogleMap(props => (
 
 
 
-{/* <Marker 
+{ /* <Marker 
 position={{lat: parseFloat(marker.lat), lng: parseFloat(marker.lng)}} key={index} 
 onClick={() => props.handleMarkerClick(marker)}
 >
@@ -139,7 +139,7 @@ onClick={() => props.handleMarkerClick(marker)}
     <div><Link to={`/landmark/${marker.id}`}>{marker.name}</Link></div>
   </InfoWindow>
 )}
-</Marker> */}
+</Marker> */ }
 
 
 class ExploreMap extends React.Component {
