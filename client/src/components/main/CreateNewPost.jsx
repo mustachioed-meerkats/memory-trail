@@ -87,7 +87,6 @@ class CreateNewPost extends React.Component {
       //Next, we are going to map through them and find which on is the default. 
       //The default story will be preloaded as the story that we post to. 
       this.props.stories.map((story) => {
-        console.log(story);
         if (story.default_post === true) {
           this.setState({storyID: story.id, defaultStory: story.title, storyName: story.title});
         }
@@ -105,12 +104,11 @@ class CreateNewPost extends React.Component {
     let url = `https://maps.googleapis.com/maps/api/geocode/json?address=${location}&key=AIzaSyDXLOMgs19AOUHeizaMnRwjVyzxcTGWmJ8`;
     return axios.get(url)
       .then((res) => {
-        console.log('response from geocoding API: ', res);
         // action handler to update location value in state
         this.props.handleLocationInput(res.data.results[0].geometry.location);
       })
       .catch((err) => {
-        console.log('(Client) Error calling Google Geocoding API');
+        console.log('failed', err);
       });
   }
 
@@ -128,7 +126,6 @@ This code below is designed to run the autocomplete search box for the location 
     // listen for location selection from the dropdown
     google.maps.event.addListener(autocomplete, 'place_changed', () => {
       place = autocomplete.getPlace();
-      console.log(place);
       // populate landmark object with data from google places
       let image_url;
       if (place.photos) {
@@ -147,7 +144,6 @@ This code below is designed to run the autocomplete search box for the location 
           lng: place.geometry.location.lng()
         }
       });
-      console.log('landmark object: ', this.state.landmark);
       // when a place is selected, use its address property to call google geocoding API
       this.geocodeLocationInput(place.formatted_address);
     });
@@ -178,12 +174,10 @@ This code below is designed to run the autocomplete search box for the location 
   }
 
   /*
-  This function exists so that we can send an api call and close the modal at the same time. 
-  This will have issues until we are able to fix the problem with the dropdown closing. 
+  This function exists so that we can send an api call for story submission, then close the modal and reload the stories. 
   */
 
   storySubmit () {
-    console.log('submitting', this.props.user.id);
     const storyInfo = {
       title: this.state.storyTitleForm,
       summary: this.state.storySummaryForm,
@@ -195,12 +189,11 @@ This code below is designed to run the autocomplete search box for the location 
           storyID: result.data.id,
           storyName: result.data.title
         });
-        console.log('STORY CREATED', result);
         this.props.handleStoryLoad();
         this.handleStoryFormVisibility();
       })
       .catch((err) => {
-        console.log('STORY CREATION FAILED');
+        console.log('failed', err);
       });
 
   }
@@ -259,22 +252,24 @@ This code below is designed to run the autocomplete search box for the location 
               <Button content='Select' onClick={this.handleDropdownVisibility}/>
             </Button.Group>
             <Modal size= 'tiny' open={this.state.storyFormVisible} onClose={this.handleStoryFormVisibility}>
-          <Modal.Content>
-          <Form>
-            <Form.Field>
-              <Input fluid={true} size='huge' placeholder='Name Your Story' onChange={(e) => this.handleStoryTitle(e.target.value)}/>
-              <br/>
-              <TextArea style={{fontSize: '20px'}} placeholder='Story Summary' onChange={(e) => this.handleStorySummary(e.target.value)} />
-            </Form.Field>
-          </Form>
-          </Modal.Content>
-          <Modal.Actions>
-            <Button negative onClick={this.handleStoryFormVisibility} >
-              Cancel
-            </Button>
-            <Button positive icon='checkmark' labelPosition='right' content='Submit' onClick={this.storySubmit} />
-          </Modal.Actions>
-        </Modal>
+              <Modal.Content>
+                <Form>
+                  <Form.Field>
+                    <Input fluid={true} size='huge' placeholder='Name Your Story' onChange={(e) => this.handleStoryTitle(e.target.value)}/>
+                    <br/>
+                    <TextArea style={{fontSize: '20px'}} placeholder='Story Summary' onChange={(e) => this.handleStorySummary(e.target.value)} />
+                  </Form.Field>
+                </Form>
+              </Modal.Content>
+              <Modal.Actions>
+                <Button negative onClick={this.handleStoryFormVisibility} >
+                  Cancel
+                </Button>
+                <Button positive onClick={this.storySubmit}>
+                  Submit
+                </Button>
+              </Modal.Actions>
+            </Modal>
             <Transition.Group animation='slide down' duration='500ms'>
               {this.state.dropdownVisible &&
               <Card fluid={true}>
