@@ -1,4 +1,6 @@
 import React from 'react';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
 import {
   // main component 
   Chart,  
@@ -10,85 +12,19 @@ import {
   helpers, DropShadow, Gradient
 } from 'rumble-charts';
 import _ from 'lodash';
-import axios from 'axios';
-
-const series = [{
-  name: 'Billy',
-  data: [1, 2, 3, 5]
-}, {
-  name: 'Booga Booga',
-  data: [5, 7, 11, 17]
-}, {
-  name: 'Bob',
-  data: [13, 17, 19, 23]
-}, {
-  name: 'Bison',
-  data: [21, 23, 25, 34]
-}];
 
 class SentimentChart extends React.Component {
-  render() {
-    return <Chart onClick={this.updateSeries} width={400} height={400} series={this.state.series} minY={0}>
-      <Layer width='80%' height='80%' position='middle center'>
-      <Handlers onMouseMove={this.handleMouseMove} onMouseLeave={this.handleMouseLeave} optimized={false}>
-        <Animate>
-        <Ticks
-          axis='y'
-          ticks={{maxTicks: 4}}
-          tickVisible={({tick}) => tick.y > 0}
-          lineLength='100%'
-          lineVisible={true}
-          lineStyle={{stroke: 'lightgray'}}
-          labelStyle={{textAnchor: 'end', alignmentBaseline: 'middle', fontSize: '0.5em', fill: 'lightgray'}}
-          labelAttributes={{x: -5}}
-        />
-        <Ticks
-          axis='x'
-          label={({tick}) => tick.x + 1}
-          labelStyle={{textAnchor:'middle',alignmentBaseline:'before-edge',fontSize:'0.5em',fill:'lightgray'}}
-          labelAttributes={{y: 3}}
-        />
-        <Bars
-          groupPadding='3%'
-          innerPadding='0.5%'
-          barAttributes={{
-            onMouseMove: e => e.target.style.fillOpacity = 1,
-            onMouseLeave: e => e.target.style.fillOpacity = 0.5
-          }}
-          barStyle={{
-            fillOpacity: 0.5,
-            // transition: 'all 250ms'
-          }}
-        />
-        <Lines />
-        <Dots className='dots' dotStyle={{transition:'all 250ms',fillOpacity:0}} />
-        <Labels
-        className='labels'
-        label={({point}) => Math.round(point.y)}
-        dotStyle={{
-          alignmentBaseline:'after-edge',
-          textAnchor:'middle',
-          display:'none'
-        }}
-      />
-        </Animate>
-      </Handlers>
-      </Layer>
-    </Chart>;
-  }
   constructor() {
     super();
-    this.state = {series};
-    this.updateSeries = () => {
-      const series = _.map(_.range(1), index => ({
-        data: _.map(_.range(6), index => Math.random() * 100)
-      }));
-      // const arr = _.range(this.state.series.length);
-      // arr.push(this.state.series.length);
-      // const series = [{
-      //   data: arr
-      // }];
+    this.state = {
+      series: [],
+      stories: []
+    };
 
+    this.updateSeries = () => {
+      const series = _.map(_.range(3), index => ({
+        data: _.map(_.range(3), index => Math.random() * 100)
+      }));
       this.setState({series});
     };
 
@@ -129,18 +65,87 @@ class SentimentChart extends React.Component {
   }
 
   componentDidMount() {
-    axios.get('/api/posts/user/6')
-      .then(results => {
-        console.log(results);
-        var arr = results.data.map(post => {
-          return parseFloat(post.magnitude);
-        });
-        var dataz = [{
-          data: arr
-        }];
-        this.setState({series: dataz});
-      });
+    var stories = this.props.userStories;
+    var displayIndex = 0;
+    for (var i = 0; i < stories.length; i++) {
+      if (stories[i].default_display) {
+        displayIndex = i;
+      }
+    }
+    var series = this.generateSeries(stories[displayIndex]);
+    var xTicks = this.generateTicks(stories[displayIndex]);
+    this.setState({
+      stories: stories,
+      series: [{
+        data: series,
+        landmark_name: xTicks
+      }],
+    });
+  }
+
+  generateSeries(story) {
+    return story.posts.map(post => {
+      return Number(post.score) * Number(post.magnitude);
+    });
+  }
+
+  generateTicks(story) {
+    return story.posts.map(post => {
+      return post.landmark_name || 'Oakland';
+    });
+  }
+
+  render() {
+    return (
+    <div style={{fontFamily:'sans-serif',fontSize:'4em'}}>
+      <Chart onClick={this.updateSeries} width={800} height={800} series={this.state.series} minY={-3} maxY={3}>
+        <Layer width='80%' height='80%' position='middle center'>
+        <Handlers onMouseMove={this.handleMouseMove} onMouseLeave={this.handleMouseLeave} optimized={false}>
+          <Animate _ease='bounce' _ease='elastic'>
+          <Ticks
+            axis='y'
+            ticks={{maxTicks: 7}}
+            tickVisible={({tick}) => tick.y >= -3}
+            lineLength='100%'
+            lineVisible={true}
+            lineStyle={{stroke: 'lightgray'}}
+            labelStyle={{textAnchor: 'end', alignmentBaseline: 'middle', fontSize: '0.5em', fill: 'lightgray'}}
+            labelAttributes={{x: -5}}
+          />
+          <Ticks
+            axis='x'
+            label={({index, props}) => props.series[0].landmark_name[index]}
+            labelStyle={{textAnchor:'middle',alignmentBaseline:'before-edge',fontSize:'0.5em',fill:'lightgray'}}
+            labelAttributes={{y: 3}}
+          />
+          <Lines />
+          <Dots className='dots' dotStyle={{transition:'all 250ms',fillOpacity:0}} />
+          <Labels
+          className='labels'
+          label={({point}) => Math.round(point.y)}
+          dotStyle={{
+            alignmentBaseline:'after-edge',
+            textAnchor:'middle',
+            display:'none'
+          }}
+        />
+          </Animate>
+        </Handlers>
+        </Layer>
+      </Chart>
+    </div>);
   }
 }
 
-export default SentimentChart;
+
+const mapStateToProps = (state) => ({
+  userStories: state.user.stories
+});
+
+const mapDispatchToProps = (dispatch) => bindActionCreators({
+}, dispatch);
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(SentimentChart);
