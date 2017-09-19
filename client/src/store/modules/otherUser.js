@@ -18,7 +18,6 @@ const initialState = {
   posts: [],
   following: [],
   passport: [],
-  isCurrentUserFollowing: false
 };
 
 /** ============================================================
