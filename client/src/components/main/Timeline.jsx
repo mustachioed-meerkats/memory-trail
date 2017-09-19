@@ -180,3 +180,4 @@ export default connect(
 )(Timeline);
 
 // onChange={this.props.handleCurrentPostMarker(this.state.currentPost)}
+
