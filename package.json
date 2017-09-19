@@ -2,7 +2,7 @@
   "name": "course.thesis",
   "version": "1.0.0",
   "scripts": {
-    "heroku-postbuild": "webpack -p && npm run postbuild:migrate",
+    "heroku-postbuild": "webpack -p",
     "postbuild:migrate": "knex migrate:latest --env NODE_ENV",
     "start": "nodemon server",
     "test": "NODE_ENV=test mocha ./server/test/**/*.js && jest --testPathPattern ./client/test/",
