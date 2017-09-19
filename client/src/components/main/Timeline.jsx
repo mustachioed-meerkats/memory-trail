@@ -58,8 +58,8 @@ class Timeline extends React.Component {
       userStories: '',
       currentStory: '',
       currentStoryPosts: [],
-      currentPost: '',
       currentPostIndex: 0,
+      currentPost: '',
       _map: null
     };
     this.handleMapMounted = this.handleMapMounted.bind(this);
@@ -68,7 +68,6 @@ class Timeline extends React.Component {
 
   componentWillMount () {
     let userData = this.props.isCurrentUser ? this.props.user : this.props.otherUser;
-    console.log(userData);
     this.setState({
       userStories: userData.stories,
       currentStory: userData.stories[0],
@@ -97,62 +96,72 @@ class Timeline extends React.Component {
 
   render() {
     return (
-      <Card raised fluid>
-        <Card.Header>
+      <Container fluid={true}>
+        <Card raised fluid>
+          <Card.Header>
+          <Menu size='large'>
+            <Dropdown
+              item 
+              text='Choose a Story'
+              options={this.state.userStories.map((story, index) => {
+                return {value: story.title, text: story.title, key: index}
+              })}>
+            </Dropdown>
+          </Menu>
           <h1 style={{textAlign:'center'}}>{this.state.currentStory.title}</h1>
           <p style={{textAlign:'center'}}>{this.state.currentStory.summary}</p>
-        </Card.Header>
-        <Card.Content>
-          <Grid columns={2} stackable>
-            <Grid.Column>
-              <div style={{height: 75+'vh'}}>
-                <StoryMap 
-                  containerElement={this.props.containerElement}
-                  mapElement={this.props.mapElement}
-                  handleMapMounted={this.handleMapMounted}
-                  center={this.props.center}
-                  handleBoundsChanged={this.props.handleBoundsChanged}
-                  map={this.state._map}
-                  bounds={this.props.bounds}
-                  handlePlacesChanged={this.props.handlePlacesChanged}
-                  inputStyle={this.props.inputStyle}
-                  handleMarkerClick={this.props.handleMarkerClick}
-                  handleMarkerClose={this.props.handleMarkerClose}
-                  markers={this.props.markers}
-                  currentPost={this.state.currentPost}
-                  landmarks={this.props.landmarks}
-                  openSideBar={this.props.openSideBar}
-                />
-              </div>
-            </Grid.Column>
-            <Grid.Column>
-              <div style={{height: 75+'vh'}}>
-                <Carousel
-                  showThumbs
-                  showArrows={true}
-                  showStatus={true}
-                  showIndicators={false}
-                  useKeyboardArrows={true}
-                  selectedItem={this.state.currentPostIndex}
-                  onChange={(e) => this.handleChange(e)}
-                >
-                  {this.state.currentStory.posts.map((post, index) => {
-                    return (
-                      <Card fluid style={{height: 100+'%'}}>
-                        <Image src={post.image_url} />
-                        <Card.Description>
-                          {post.content}
-                        </Card.Description>
-                      </Card>
-                    ) 
-                  })}
-                </Carousel>
-              </div>
-            </Grid.Column>
-          </Grid>
-        </Card.Content>
-      </Card>
-
+          </Card.Header>
+          <Card.Content>
+            <Grid columns={2} stackable>
+              <Grid.Column>
+                <div style={{height: 75+'vh'}}>
+                  <StoryMap 
+                    containerElement={this.props.containerElement}
+                    mapElement={this.props.mapElement}
+                    handleMapMounted={this.handleMapMounted}
+                    center={this.props.center}
+                    handleBoundsChanged={this.props.handleBoundsChanged}
+                    map={this.state._map}
+                    bounds={this.props.bounds}
+                    handlePlacesChanged={this.props.handlePlacesChanged}
+                    inputStyle={this.props.inputStyle}
+                    handleMarkerClick={this.props.handleMarkerClick}
+                    handleMarkerClose={this.props.handleMarkerClose}
+                    markers={this.props.markers}
+                    currentPost={this.state.currentPost}
+                    landmarks={this.props.landmarks}
+                    openSideBar={this.props.openSideBar}
+                  />
+                </div>
+              </Grid.Column>
+              <Grid.Column>
+                <div style={{height: 75+'vh'}}>
+                  <Carousel
+                    showThumbs={false}
+                    showArrows={true}
+                    showStatus={true}
+                    showIndicators={false}
+                    useKeyboardArrows={true}
+                    selectedItem={this.state.currentPostIndex}
+                    onChange={(e) => this.handleChange(e)}
+                  >
+                    {this.state.currentStory.posts.map((post, index) => {
+                      return (
+                        <Card key={index} fluid style={{height: 100+'%'}}>
+                          <Image src={post.image_url} />
+                          <Card.Description>
+                            {post.content}
+                          </Card.Description>
+                        </Card>
+                      ) 
+                    })}
+                  </Carousel>
+                </div>
+              </Grid.Column>
+            </Grid>
+          </Card.Content>
+        </Card>
+      </Container>
     );
   }
 }
