@@ -1,4 +1,4 @@
-import React from'react';
+import React from 'react';
 import axios from 'axios';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -7,6 +7,14 @@ import { Button, Form, Header, Icon, Input } from 'semantic-ui-react';
 import {
   handleImageUrl
 } from '../../store/modules/newpost';
+
+const divStyle = {
+  height: auto, 
+  width: auto,
+  maxHeight: '25rem', 
+  maxWidth: '25rem'
+
+};
 
 class Upload extends React.Component {
   constructor(props) {
@@ -59,7 +67,7 @@ class Upload extends React.Component {
         </label>
         <input ref='file' type='file' id="hidden-new-file" style={{display: 'none'}} onChange={this.handleFile}/>
         <Button size='small' onClick={this.handleSubmit}>Upload</Button>
-        <div>
+        <div style={divStyle} >
         <img src={this.state.previewImage} />
       </div>
       </div>
