@@ -33,7 +33,7 @@ import {
 /** ============================================================
  * Define Component
  * ========================================================== */
-const LandMarkPostModal = ({post, landmark, showModal, openModal, closeModal}) => {
+const LandmarkPostModal = ({post, landmark, showModal, openModal, closeModal}) => {
   const postImage = post.image_url || 'https://i.imgur.com/a53MMcb.jpg';
 
   return (
@@ -63,4 +63,4 @@ const LandMarkPostModal = ({post, landmark, showModal, openModal, closeModal}) =
   );
 };
 
-export default LandMarkPostModal;
+export default LandmarkPostModal;

@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import getTimeSincePost from '../../../../lib/getTimeSincePost';
-import LandMarkPostModal from './LandMarkPostModal.jsx';
+import LandmarkPostModal from './LandmarkPostModal.jsx';
 
 /** ============================================================
  * Import Semantic UI Components
@@ -79,7 +79,7 @@ class LandmarkPostListEntry extends React.Component {
             <Button circular icon='share alternate' />
           </Card.Content>
         </Card>
-        <LandMarkPostModal
+        <LandmarkPostModal
           landmark={this.props.landmark}
           post={this.props.post} 
           showModal={this.state.showModal} 

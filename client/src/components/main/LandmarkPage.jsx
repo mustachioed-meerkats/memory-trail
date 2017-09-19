@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import LandMarkPostList from './landmarks/LandMarkPostList.jsx';
+import LandmarkPostList from './landmarks/LandmarkPostList.jsx';
 
 /** ============================================================
  * Import Semantic UI Components
