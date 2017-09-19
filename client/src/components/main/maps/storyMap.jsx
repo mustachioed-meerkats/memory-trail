@@ -27,8 +27,8 @@ let mapOptions = {
 const StoryMap = withGoogleMap(props => (
   <GoogleMap
     ref={props.handleMapMounted}
-    defaultZoom={12}
-    center={props.center}
+    defaultZoom={15}
+    center={{lat: parseFloat(props.currentPost.lat), lng: parseFloat(props.currentPost.lng)}}
     onDragEnd={() => props.handleBoundsChanged(props.map)}
     options={mapOptions}
   >
