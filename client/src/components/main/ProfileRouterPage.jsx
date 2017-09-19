@@ -7,6 +7,7 @@ import { Link, Switch, Route } from 'react-router-dom';
 import Timeline from './Timeline.jsx'; 
 import CurrentUserPostList from './profile/CurrentUserPostList.jsx';
 import FollowingsPageList from './follow/FollowingsPageList.jsx';
+import SentimentChart from './SentimentChart.jsx';
 
 /** ============================================================
  * Import Redux Action Creators
@@ -114,6 +115,7 @@ class ProfileRouterPage extends React.Component {
             <li><Link to={`${this.props.match.url}`}>Stories</Link></li>
             <li><Link to={`${this.props.match.url}/posts`}>Posts</Link></li>
             {followingLink}
+            <li><Link to={`${this.props.match.url}/sentiment`}>Sentiment Analysis</Link></li>
           </ul>
         </nav>
         <Route exact path={`${this.props.match.url}`} render={() => (
@@ -126,6 +128,9 @@ class ProfileRouterPage extends React.Component {
           <FollowingsPageList 
             isCurrentUser={this.state.isCurrentUser} 
             handleUserChange={this.handleUserChange}/>
+        )}/>
+        <Route exact path={`${this.props.match.url}/sentiment`} render={() => (
+          <SentimentChart isCurrentUser={this.state.isCurrentUser} />
         )}/>
       </div>
     );

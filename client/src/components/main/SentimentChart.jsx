@@ -13,16 +13,16 @@ import _ from 'lodash';
 import axios from 'axios';
 
 const series = [{
-    data: [1, 2, 3, 5]
+  data: [1, 2, 3, 5]
 }, {
-    data: [5, 7, 11, 17]
+  data: [5, 7, 11, 17]
 }, {
-    data: [13, 17, 19, 23]
+  data: [13, 17, 19, 23]
 }, {
-    data: [21, 23, 25, 34]
+  data: [21, 23, 25, 34]
 }];
 
-class Demo extends React.Component {
+class SentimentChart extends React.Component {
   render() {
     return <Chart onClick={this.updateSeries} width={400} height={400} series={this.state.series} minY={0}>
       <Layer width='80%' height='80%' position='middle center'>
@@ -34,8 +34,8 @@ class Demo extends React.Component {
           tickVisible={({tick}) => tick.y > 0}
           lineLength='100%'
           lineVisible={true}
-          lineStyle={{stroke:'lightgray'}}
-          labelStyle={{textAnchor:'end',alignmentBaseline:'middle',fontSize:'0.5em',fill:'lightgray'}}
+          lineStyle={{stroke: 'lightgray'}}
+          labelStyle={{textAnchor: 'end', alignmentBaseline: 'middle', fontSize: '0.5em', fill: 'lightgray'}}
           labelAttributes={{x: -5}}
         />
         <Ticks
@@ -62,9 +62,9 @@ class Demo extends React.Component {
           className='labels'
           label={({point}) => Math.round(point.y)}
           dotStyle={{
-            alignmentBaseline:'after-edge',
-            textAnchor:'middle',
-            display:'none'
+            alignmentBaseline: 'after-edge',
+            textAnchor: 'middle',
+            display: 'none'
           }}
         />
         </Animate>
@@ -90,13 +90,13 @@ class Demo extends React.Component {
 
     let hovered = null;
     const hideHovered = () => {
-       if (hovered && hovered.circle) {
-         hovered.circle.setAttribute('r', hovered.radius);
-         hovered.circle.style.fillOpacity = hovered.opacity;
-         if (hovered.label) {
-           hovered.label.style.display = 'none';
-         }
-       }
+      if (hovered && hovered.circle) {
+        hovered.circle.setAttribute('r', hovered.radius);
+        hovered.circle.style.fillOpacity = hovered.opacity;
+        if (hovered.label) {
+          hovered.label.style.display = 'none';
+        }
+      }
     };
 
     this.handleMouseMove = ({closestPoints}) => {
@@ -139,4 +139,4 @@ class Demo extends React.Component {
   }
 }
 
-export default Demo;
+export default SentimentChart;
