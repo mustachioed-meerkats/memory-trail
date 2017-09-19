@@ -97,15 +97,15 @@ class Timeline extends React.Component {
 
   render() {
     return (
-      <Card style={{height: 100+'vh'}} fluid={true}>
+      <Card raised fluid>
         <Card.Header>
           <h1 style={{textAlign:'center'}}>{this.state.currentStory.title}</h1>
           <p style={{textAlign:'center'}}>{this.state.currentStory.summary}</p>
         </Card.Header>
         <Card.Content>
-          <Grid container={true} columns={2} stackable>
+          <Grid columns={2} stackable>
             <Grid.Column>
-              <div style={{height: 100+'%'}}>
+              <div style={{height: 75+'vh'}}>
                 <StoryMap 
                   containerElement={this.props.containerElement}
                   mapElement={this.props.mapElement}
@@ -126,28 +126,28 @@ class Timeline extends React.Component {
               </div>
             </Grid.Column>
             <Grid.Column>
-              <Carousel
-                showThumbs
-                showArrows={true}
-                showStatus={true}
-                showIndicators={false}
-                useKeyboardArrows={true}
-                selectedItem={this.state.currentPostIndex}
-                onChange={(e) => this.handleChange(e)}
-              >
-                {this.state.currentStory.posts.map((post, index) => {
-                  return (
-                    <Card fluid={true} key={index}>
-                      <Image src={post.image_url} />
-                      <Card.Content>
+              <div style={{height: 75+'vh'}}>
+                <Carousel
+                  showThumbs
+                  showArrows={true}
+                  showStatus={true}
+                  showIndicators={false}
+                  useKeyboardArrows={true}
+                  selectedItem={this.state.currentPostIndex}
+                  onChange={(e) => this.handleChange(e)}
+                >
+                  {this.state.currentStory.posts.map((post, index) => {
+                    return (
+                      <Card fluid style={{height: 100+'%'}}>
+                        <Image src={post.image_url} />
                         <Card.Description>
                           {post.content}
                         </Card.Description>
-                      </Card.Content>
-                    </Card>
-                  )
-                })}
-              </Carousel>
+                      </Card>
+                    ) 
+                  })}
+                </Carousel>
+              </div>
             </Grid.Column>
           </Grid>
         </Card.Content>
@@ -169,8 +169,7 @@ const mapStateToProps = state => ({
   mapElement: <div style={{height: '100%'}} />,
   markers: state.user.stories[0].posts,
   user: state.user,
-  otherUser: state.otherUser,
-  currentPost: state.map.currentPost
+  otherUser: state.otherUser
 });
 
 /** ============================================================
@@ -188,6 +187,3 @@ export default connect(
   mapStateToProps,
   mapDispatchToProps
 )(Timeline);
-
-// onChange={this.props.handleCurrentPostMarker(this.state.currentPost)}
-
