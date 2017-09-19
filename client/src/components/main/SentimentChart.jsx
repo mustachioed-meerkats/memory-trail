@@ -13,12 +13,16 @@ import _ from 'lodash';
 import axios from 'axios';
 
 const series = [{
+  name: 'Billy',
   data: [1, 2, 3, 5]
 }, {
+  name: 'Booga Booga',
   data: [5, 7, 11, 17]
 }, {
+  name: 'Bob',
   data: [13, 17, 19, 23]
 }, {
+  name: 'Bison',
   data: [21, 23, 25, 34]
 }];
 
@@ -59,14 +63,14 @@ class SentimentChart extends React.Component {
         <Lines />
         <Dots className='dots' dotStyle={{transition:'all 250ms',fillOpacity:0}} />
         <Labels
-          className='labels'
-          label={({point}) => Math.round(point.y)}
-          dotStyle={{
-            alignmentBaseline: 'after-edge',
-            textAnchor: 'middle',
-            display: 'none'
-          }}
-        />
+        className='labels'
+        label={({point}) => Math.round(point.y)}
+        dotStyle={{
+          alignmentBaseline:'after-edge',
+          textAnchor:'middle',
+          display:'none'
+        }}
+      />
         </Animate>
       </Handlers>
       </Layer>
