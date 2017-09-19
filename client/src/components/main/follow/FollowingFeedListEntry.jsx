@@ -33,37 +33,19 @@ import {
  * ========================================================== */
 const FollowingFeedListEntry = ({post}) => {
 
-  post.user = {
-    avatar: 'https://avatars0.githubusercontent.com/u/11849230?v=4&s=60'
+  const postImage = post.image_url || 'https://i.imgur.com/a53MMcb.jpg';
+  const postImageStyle = {
+    margin: '-1rem -1rem 0.5rem -1rem',
+    height: '5rem',
+    display: '-webkit-flex',
+    display: 'flex',
   };
-  post.image = 'http://www.quotemaster.org/images/1b/1b652896515238ec56fb6a38e58c9baa.jpg';
-
-  let postContent = '';
-  if (post.content.length > 255) {
-    postContent = post.content.slice(0, 255) + ' ...';
-  } else {
-    postContent = post.content;
-  }
-
-  const hmm = {
-    card: {
-      margin: '-1rem -1rem 0.5rem -1rem',
-      height: '400px',
-      background: 'url(http://cdn-image.travelandleisure.com/sites/default/files/styles/1600x1000/public/1444253482/DG2015-san-francisco.jpg?itok=MdRJm2Zo)  center center',
-      backgroundSize: 'cover'
-    }
-  };
-
   return (
     <Card fluid raised={true}> 
       <Card.Content>
-        <div style={hmm.card}>
-        </div >
+        <Image src={post.image_url} />
         <Card.Meta>
           <div>
-            <strong>
-              <Icon name='heart' color='red'/> {post.likeCount || '23'}
-            </strong>
             <Link to={`/landmark/${post.landmark_id || '1'}`}>
               <strong>
                 <Icon name='map pin' /> {post.landmark_display || 'LAND_MARK'}
@@ -73,33 +55,8 @@ const FollowingFeedListEntry = ({post}) => {
           Submitted {getTimeSincePost(post.created_at)} by <Link to={`/profile/${post.profile_id}`}><strong>{post.profile_display}</strong></Link>
         </Card.Meta>
         <Card.Description>
-          {post.content.slice(0, 64) + ' ...'}
+          {post.content}
         </Card.Description>
-      </Card.Content>
-      <Card.Content extra>
-        <Button circular icon='heart'/>
-        <Button circular icon='commenting outline' />
-        <Button circular icon='share alternate' />
-      </Card.Content>
-      <Card.Content extra>
-        <Comment.Group>
-          <Comment>
-            <Comment.Avatar src={'https://i.imgur.com/yUvX0Es.png'} />
-            <Comment.Content>
-              <Comment.Author as='a'>{'Anonymous'}</Comment.Author>
-              <Comment.Actions>
-                <Comment.Action>Submitted {getTimeSincePost('2017-09-14T18:44:52.303Z')}</Comment.Action>
-              </Comment.Actions>
-              <Comment.Text>
-                {'COMMENT_CONTENT'}
-              </Comment.Text>
-            </Comment.Content>
-          </Comment>
-          <Form reply>
-            <Form.Input />
-            <Button content='Add Reply' labelPosition='left' icon='edit' primary />
-          </Form>
-        </Comment.Group>
       </Card.Content>
     </Card>
   );
