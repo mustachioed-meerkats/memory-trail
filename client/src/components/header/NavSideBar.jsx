@@ -50,13 +50,13 @@ class NavSideBar extends React.Component {
     return (
       <SidebarModal side='left' isVisible={ this.props.toggleSideBar} onHide={ () => this.props.closeSideBar() }>
         <Menu fluid vertical icon='labeled'>
-          <Menu.Item as={Link} to='/' name='explore' onClick={this.handleItemClick}>
+          <Menu.Item as={Link} to='/' name='newstory' onClick={this.handleItemClick}>
+            <Icon name='pencil' />
+            Record a Memory
+          </Menu.Item>
+          <Menu.Item as={Link} to='/explore' name='explore' onClick={this.handleItemClick}>
             <Icon name='map outline' />
             Explore
-          </Menu.Item>
-          <Menu.Item as={Link} to='/post/new' name='newstory' onClick={this.handleItemClick}>
-            <Icon name='pencil' />
-            Write a Story
           </Menu.Item>
           <Menu.Item as={Link} to='/feed' name='feed' onClick={this.handleItemClick}>
             <Icon name='feed' />

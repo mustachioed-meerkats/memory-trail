@@ -80,7 +80,7 @@ class LandmarkPage extends React.Component {
             </Segment>
           </Grid.Column>
           <Grid.Column width={10}>
-            <LandMarkPostList landmark={landmark}/>
+            <LandmarkPostList landmark={landmark}/>
           </Grid.Column>
         </Grid>
       </Container>

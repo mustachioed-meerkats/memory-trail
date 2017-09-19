@@ -58,8 +58,8 @@ passport.use('local-signup', new LocalStrategy({
     .tap(profile => {
       return models.Story.createStory({
         profile_id: profile.get('id'),
-        title: 'default story',
-        summary: 'default summary',
+        title: 'Everyday Life',
+        summary: 'This is the story of my life!',
         default_post: true,
         default_display: true
       });
@@ -166,8 +166,8 @@ const getOrCreateOAuthProfile = (type, oauthProfile, done) => {
     .tap(profile => {
       return models.Story.createStory({
         profile_id: profile.get('id'),
-        title: 'default story',
-        summary: 'default summary',
+        title: 'Everyday Life',
+        summary: 'This is the story of my life!',
         default_post: true,
         default_display: true
       });
