@@ -35,6 +35,13 @@ class ProfileRouterPage extends React.Component {
     this.handleUserChange(user_id);
   }
 
+  componentWillReceiveProps(nextProps) {
+    var new_user_id = Number(nextProps.match.params.id);
+    if (this.state.profile_id !== new_user_id) {
+      this.handleUserChange(Number(nextProps.match.params.id));
+    }
+  }
+
   handleUserChange(user_id) {
     if (user_id !== this.props.user.user.id) {
       this.props.getUserInfo(user_id)
@@ -50,6 +57,7 @@ class ProfileRouterPage extends React.Component {
         });
     } else {
       this.setState({
+        isCurrentUser: true,
         profile_id: this.props.user.user.id,
         profile_display: this.props.user.user.display || this.props.user.user.email
       });
