@@ -34,7 +34,7 @@ class Upload extends React.Component {
       .then( res => {
         let image_url = res.data.Location;
         this.props.handleImageUrl(image_url);
-        this.setState({imageStatus: 'uploaded'});
+        this.setState({imageStatus: 'uploaded', previewImage: null});
       })
       .catch(err => {
         console.log('failed', err);
@@ -65,27 +65,33 @@ class Upload extends React.Component {
   }
 
   render() {
-    let preview = null;
-    if (this.state.imageStatus === false) {
-      preview = null;
-    }
+    /*
+    Conditional renders for user feedback with regards to the status of their image. 
+
+    */
+    let previewMessage = null;
+    let previewImage = null;
     if (this.state.imageStatus === true) {
-      preview = <Message positive>
+      previewMessage = <Message positive>
       <Message.Header> Image Preview </Message.Header>
       </Message>;
     }
 
     if (this.state.imageStatus === 'failed') {
-      preview = <Message negative> 
+      previewMessage = <Message negative> 
       <Message.Header> Uh Oh... Upload Failed </Message.Header>
       <p> Please try again, or refresh the page. </p>
       </Message>;
     }
 
     if (this.state.imageStatus === 'uploaded') {
-      preview = <Message positive> 
+      previewMessage = <Message positive> 
         <Message.Header> Image Uploaded! </Message.Header>
         </Message>; 
+    }
+
+    if (this.state.previewImage !== null) {
+      previewImage = <Image src={this.state.previewImage} fluid />; 
     }
     
     return (
@@ -96,8 +102,8 @@ class Upload extends React.Component {
         <input ref='file' type='file' id="hidden-new-file" style={{display: 'none'}} onChange={this.handleFile}/>
         <Button size='small' onClick={this.handleSubmit}>Upload</Button>
         <div style={divStyle} >
-          {preview}
-        <Image src={this.state.previewImage} fluid />
+          {previewMessage}
+          {previewImage}
       </div>
       </div>
     );
