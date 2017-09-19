@@ -94,8 +94,10 @@ class ProfileRouterPage extends React.Component {
   render() {
     var followingLink = (<div></div>);
     var followButton = (<span></span>);
+    var sentimentLink = (<div></div>);
     if (this.state.isCurrentUser) {
       followingLink = (<li><Link to={`${this.props.match.url}/following`}>Following</Link></li>);
+      sentimentLink = (<li><Link to={`${this.props.match.url}/sentiment`}>Sentiment Analysis</Link></li>);
     } else {
       if (this.state.isFollowing) {
         followButton = (<Button onClick={this.handleUnfollow}>Unfollow</Button>);
@@ -115,7 +117,7 @@ class ProfileRouterPage extends React.Component {
             <li><Link to={`${this.props.match.url}`}>Stories</Link></li>
             <li><Link to={`${this.props.match.url}/posts`}>Posts</Link></li>
             {followingLink}
-            <li><Link to={`${this.props.match.url}/sentiment`}>Sentiment Analysis</Link></li>
+            {sentimentLink}
           </ul>
         </nav>
         <Route exact path={`${this.props.match.url}`} render={() => (
