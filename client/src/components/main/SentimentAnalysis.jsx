@@ -10,9 +10,10 @@ class SentimentAnalysis extends React.Component {
     this.state = {
       currentStory: {}
     };
+    this.handleSelectStory = this.handleSelectStory.bind(this);
   }
 
-  componentDidMount() {
+  componentWillMount() {
     var stories = this.props.userStories;
     var displayIndex = 0;
     for (var i = 0; i < stories.length; i++) {
@@ -25,12 +26,22 @@ class SentimentAnalysis extends React.Component {
     });
   }
 
+  handleSelectStory(eventKey) {
+    this.setState({
+      currentStory: this.props.userStories[eventKey]
+    });
+  }
+
   render() {
     return (
       <div>
-        <DropdownButton bsStyle='primary' title={this.state.currentStory.title} id={0}>
+        <DropdownButton onSelect={this.handleSelectStory} bsStyle='primary' title={this.state.currentStory.title} id={0}>
           {this.props.userStories.map((story, index) => {
-            return (<MenuItem eventKey={index}>{story.title}</MenuItem>);
+            return (
+              <MenuItem 
+              eventKey={index} 
+              key={index}
+              >{story.title}</MenuItem>);
           })}
         </DropdownButton>
         <SentimentChart story={this.state.currentStory}/>
