@@ -7,7 +7,7 @@ import { withGoogleMap, GoogleMap, Marker, InfoWindow } from 'react-google-maps'
 import styles from 'react-responsive-carousel/lib/styles/carousel.min.css';
 const Carousel = require('react-responsive-carousel').Carousel;
 import axios from 'axios';
-import StoryMap from './maps/StoryMap.jsx'
+import StoryMap from './maps/StoryMap.jsx';
 
 /** ============================================================
  * Import Semantic UI Components
@@ -76,7 +76,7 @@ class Timeline extends React.Component {
       currentStoryPosts: userData.stories[0].posts,
       currentPostIndex: 0,
       currentPost: ''
-    })
+    });
   }
 
   handleMapMounted(map) {
@@ -88,7 +88,7 @@ class Timeline extends React.Component {
   updateCurrentPostIndex (index) {
     this.setState({
       currentPostIndex: index
-    })
+    });
   }
   
   handleChange(e) {
@@ -97,53 +97,53 @@ class Timeline extends React.Component {
 
   render() {
     return (
-        <Grid container={true} relaxed columns={2} stackable>
-          <Grid.Column>
-            <div style={mapStyle}>
-              <StoryMap 
-                containerElement={this.props.containerElement}
-                mapElement={this.props.mapElement}
-                handleMapMounted={this.handleMapMounted}
-                center={this.props.center}
-                handleBoundsChanged={this.props.handleBoundsChanged}
-                map={this.state._map}
-                bounds={this.props.bounds}
-                handlePlacesChanged={this.props.handlePlacesChanged}
-                inputStyle={this.props.inputStyle}
-                handleMarkerClick={this.props.handleMarkerClick}
-                handleMarkerClose={this.props.handleMarkerClose}
-                markers={this.props.markers}
-                currentMarker={this.props.currentPostMarker}
-                landmarks={this.props.landmarks}
-                openSideBar={this.props.openSideBar}
-              />
-            </div>
-          </Grid.Column>
-          <Grid.Column>
-            <Carousel
-              showThumbs={false}
-              showArrows={true}
-              showStatus={true}
-              showIndicators={false}
-              useKeyboardArrows={true}
-              selectedItem={this.state.currentPostIndex}
-              onChange={(e) => this.handleChange(e)}
-            >
-              {this.state.currentStory.posts.map((post, index) => {
-                return (
-                  <Card fluid={true} key={index}>
-                    <Image src={post.image_url} />
-                    <Card.Content>
-                      <Card.Description>
-                        {post.content}
-                      </Card.Description>
-                    </Card.Content>
-                  </Card>
-                )
-              })}
-            </Carousel>
-          </Grid.Column>
-        </Grid>
+      <Grid container={true} relaxed columns={2} stackable>
+        <Grid.Column>
+          <div style={mapStyle}>
+            <StoryMap 
+              containerElement={this.props.containerElement}
+              mapElement={this.props.mapElement}
+              handleMapMounted={this.handleMapMounted}
+              center={this.props.center}
+              handleBoundsChanged={this.props.handleBoundsChanged}
+              map={this.state._map}
+              bounds={this.props.bounds}
+              handlePlacesChanged={this.props.handlePlacesChanged}
+              inputStyle={this.props.inputStyle}
+              handleMarkerClick={this.props.handleMarkerClick}
+              handleMarkerClose={this.props.handleMarkerClose}
+              markers={this.props.markers}
+              currentMarker={this.props.currentPostMarker}
+              landmarks={this.props.landmarks}
+              openSideBar={this.props.openSideBar}
+            />
+          </div>
+        </Grid.Column>
+        <Grid.Column>
+          <Carousel
+            showThumbs={false}
+            showArrows={true}
+            showStatus={true}
+            showIndicators={false}
+            useKeyboardArrows={true}
+            selectedItem={this.state.currentPostIndex}
+            onChange={(e) => this.handleChange(e)}
+          >
+            {this.state.currentStory.posts.map((post, index) => {
+              return (
+                <Card fluid={true} key={index}>
+                  <Image src={post.image_url} />
+                  <Card.Content>
+                    <Card.Description>
+                      {post.content}
+                    </Card.Description>
+                  </Card.Content>
+                </Card>
+              );
+            })}
+          </Carousel>
+        </Grid.Column>
+      </Grid>
     );
   }
 }

@@ -1,7 +1,7 @@
 import React from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import LandMarkPostListEntry from './LandMarkPostListEntry.jsx';
+import LandmarkPostListEntry from './LandmarkPostListEntry.jsx';
 
 /** ============================================================
  * Import Semantic UI Components
@@ -27,7 +27,7 @@ import {
 /** ============================================================
  * Define Component
  * ========================================================== */
-const LandMarkPostList = (props) => {
+const LandmarkPostList = (props) => {
   if (!props.landmark) {
     return (
       <Segment>
@@ -40,11 +40,11 @@ const LandMarkPostList = (props) => {
     return (
       <Segment>
         {props.landmark.posts.sort((a, b) => { return b.created_at - a.created_at; }).map((post, i) => {
-          return <LandMarkPostListEntry post={post} id={i} landmark={props.landmark} key={i} />;
+          return <LandmarkPostListEntry post={post} id={i} landmark={props.landmark} key={i} />;
         })}
       </Segment>
     );
   }
 };
 
-export default LandMarkPostList;
+export default LandmarkPostList;
