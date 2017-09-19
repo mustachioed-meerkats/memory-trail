@@ -17,6 +17,7 @@ const initialState = {
   stories: [],
   posts: [],
   following: [],
+  passport: [],
   isCurrentUserFollowing: false
 };
 
@@ -31,7 +32,8 @@ export default (state = initialState, action) => {
       ...state,
       user: action.user,
       stories: action.stories,
-      posts: action.posts
+      posts: action.posts,
+      passport: action.passport
     };
   default:
     return state;
@@ -52,6 +54,7 @@ export const getUserInfo = (userId) => {
           type: GET_USER_INFO,
           user: results.data[0],
           stories: results.data[1],
+          passport: results.data[2],
           posts: posts
         });
       });
