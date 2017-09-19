@@ -101,15 +101,25 @@ class ProfileRouterPage extends React.Component {
   render() {
     var followingLink = (<div></div>);
     var followButton = (<span></span>);
+    var passportData;
     if (this.state.isCurrentUser) {
+      passportData = this.props.user.passport;
       followingLink = (<li><Link to={`${this.props.match.url}/following`}>Following</Link></li>);
     } else {
+      passportData = this.props.otherUser.passport;
       if (this.state.isFollowing) {
         followButton = (<Button onClick={this.handleUnfollow}>Unfollow</Button>);
       } else {
         followButton = (<Button onClick={this.handleFollow}>Follow</Button>);
       }
     }
+    var passport = (
+      <div>
+        {passportData.map((passportEntry, index) => {
+          return (<div key={index}>{passportEntry.name}</div>);
+        })}
+      </div>
+    );
 
     return (
       <div>
@@ -124,6 +134,10 @@ class ProfileRouterPage extends React.Component {
             {followingLink}
           </ul>
         </nav>
+        <div>
+          <strong>Passport:</strong>
+          {passport}
+        </div>
         <Route exact path={`${this.props.match.url}`} render={() => (
           <Timeline isCurrentUser={this.state.isCurrentUser} />
         )}/>

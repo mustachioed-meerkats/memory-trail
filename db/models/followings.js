@@ -8,7 +8,16 @@ const Following = db.Model.extend({
   }
 }, {
   createFollowing: function(following) {
-    return this.forge(following).save();
+    return this.where(following).fetch()
+      .then(followingEntry => {
+        if (followingEntry) {
+          throw followingEntry;
+        }
+        return this.forge(following).save();
+      })
+      .catch(existingFollowingEntry => {
+        return existingFollowingEntry.save({currently_following: true}, {patch: true});
+      });
   },
   removeFollowing: function(unfollow) {
     return this.where(unfollow).save({currently_following: false}, {patch: true});
