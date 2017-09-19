@@ -5,10 +5,13 @@ const axios = require('axios');
 module.exports.createPost = (req, res) => {
   var {post, landmark} = req.body;
   var landmark_id;
+  var landmark_name = '';
   models.Landmark.findOrCreateLandmark(landmark)
     .then(landmarkModel => {
       landmark_id = landmarkModel.get('id');
+      landmark_name = landmarkModel.get('name');
       post.landmark_id = landmark_id;
+      post.landmark_name = landmark_name;
       return models.Profile.getProfileById(post.profile_id);
     })
     .then(profile => {
@@ -60,7 +63,6 @@ module.exports.getPostsByLandmarkId = (req, res) => {
 module.exports.getPostsByFollowings = (req, res) => {
   models.Following.getAllFollowings(req.params.id)
     .then(results => {
-      console.log('this is res', results);
       return results.models.map(following => {
         return following.get('following_id');
       });

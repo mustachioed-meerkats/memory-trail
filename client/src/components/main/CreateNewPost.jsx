@@ -166,7 +166,8 @@ This code below is designed to run the autocomplete search box for the location 
       profile_id: this.props.user.id,
       profile_display: this.props.user.display,
       image_url: this.props.image_url,
-      story_id: this.state.storyID
+      story_id: this.state.storyID,
+      story_name: this.state.storyName
     };
 
     var postObject = {
@@ -191,7 +192,8 @@ This code below is designed to run the autocomplete search box for the location 
     return axios.post('/api/stories/new', storyInfo)
       .then(result => {
         this.setState({
-          storyID: result.data.id
+          storyID: result.data.id,
+          storyName: result.data.title
         });
         console.log('STORY CREATED', result);
         this.props.handleStoryLoad();
