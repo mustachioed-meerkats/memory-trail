@@ -118,6 +118,13 @@ module.exports.preloadUserInfo = (req, res) => {
       })
       .then(following => {
         preloadedState.user.following = following;
+        return models.Profile.getProfileById(req.user.id);
+      })
+      .then(profile => {
+        return profile.landmarks().fetch();
+      })
+      .then(passport => {
+        preloadedState.user.passport = passport;
         res.render('index', {preloadedState});
       })
       .catch((err) => {

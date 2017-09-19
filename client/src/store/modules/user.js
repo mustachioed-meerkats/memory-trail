@@ -14,6 +14,7 @@ const initialState = {
   stories: __PRELOADED_STATE__.user.stories,
   posts: __PRELOADED_STATE__.user.posts,
   following: __PRELOADED_STATE__.user.following,
+  passport: __PRELOADED_STATE__.user.passport,
 };
 
 /** ============================================================
