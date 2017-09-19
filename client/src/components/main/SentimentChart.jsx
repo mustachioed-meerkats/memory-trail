@@ -18,14 +18,6 @@ class SentimentChart extends React.Component {
     super();
     this.state = {
       series: [],
-      stories: []
-    };
-
-    this.updateSeries = () => {
-      const series = _.map(_.range(3), index => ({
-        data: _.map(_.range(3), index => Math.random() * 100)
-      }));
-      this.setState({series});
     };
 
     let hovered = null;
@@ -65,17 +57,9 @@ class SentimentChart extends React.Component {
   }
 
   componentDidMount() {
-    var stories = this.props.userStories;
-    var displayIndex = 0;
-    for (var i = 0; i < stories.length; i++) {
-      if (stories[i].default_display) {
-        displayIndex = i;
-      }
-    }
-    var series = this.generateSeries(stories[displayIndex]);
-    var xTicks = this.generateTicks(stories[displayIndex]);
+    var series = this.generateSeries(this.props.story);
+    var xTicks = this.generateTicks(this.props.story);
     this.setState({
-      stories: stories,
       series: [{
         data: series,
         landmark_name: xTicks
@@ -97,8 +81,8 @@ class SentimentChart extends React.Component {
 
   render() {
     return (
-    <div style={{fontFamily:'sans-serif',fontSize:'4em'}}>
-      <Chart onClick={this.updateSeries} width={800} height={800} series={this.state.series} minY={-3} maxY={3}>
+    <div style={{fontFamily:'sans-serif',fontSize:'2em'}}>
+      <Chart width={1600} height={800} series={this.state.series} minY={-3} maxY={3}>
         <Layer width='80%' height='80%' position='middle center'>
         <Handlers onMouseMove={this.handleMouseMove} onMouseLeave={this.handleMouseLeave} optimized={false}>
           <Animate _ease='bounce' _ease='elastic'>
@@ -122,7 +106,7 @@ class SentimentChart extends React.Component {
           <Dots className='dots' dotStyle={{transition:'all 250ms',fillOpacity:0}} />
           <Labels
           className='labels'
-          label={({point}) => Math.round(point.y)}
+          label={({point}) => Number(point.y.toFixed(1))}
           dotStyle={{
             alignmentBaseline:'after-edge',
             textAnchor:'middle',
