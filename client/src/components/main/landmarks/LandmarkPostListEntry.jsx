@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import getTimeSincePost from '../../../../lib/getTimeSincePost';
-import LandmarkPostModal from './LandmarkPostModal.jsx';
+import LandmarkPostModal from './LandMarkPostModal.jsx';
 
 /** ============================================================
  * Import Semantic UI Components

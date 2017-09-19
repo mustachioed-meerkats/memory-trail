@@ -7,7 +7,7 @@ import { withGoogleMap, GoogleMap, Marker, InfoWindow } from 'react-google-maps'
 import styles from 'react-responsive-carousel/lib/styles/carousel.min.css';
 const Carousel = require('react-responsive-carousel').Carousel;
 import axios from 'axios';
-import StoryMap from './maps/StoryMap.jsx';
+import StoryMap from './maps/storyMap.jsx';
 
 /** ============================================================
  * Import Semantic UI Components
