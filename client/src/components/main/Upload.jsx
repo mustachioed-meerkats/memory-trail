@@ -9,9 +9,9 @@ import {
 } from '../../store/modules/newpost';
 
 const divStyle = {
-  height: auto, 
+  height: auto,
   width: auto,
-  maxHeight: '25rem', 
+  maxHeight: '25rem',
   maxWidth: '25rem'
 
 };
