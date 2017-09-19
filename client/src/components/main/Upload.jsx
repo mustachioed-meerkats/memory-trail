@@ -97,8 +97,8 @@ class Upload extends React.Component {
         <Button size='small' onClick={this.handleSubmit}>Upload</Button>
         <div style={divStyle} >
           {preview}
-        <Image src={this.state.previewImage} fluid />
-      </div>
+          <Image src={this.state.previewImage} fluid />
+        </div>
       </div>
     );
   }
