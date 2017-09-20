@@ -46,6 +46,8 @@ import {
   handleNewPost,
 } from '../../store/modules/newpost';
 
+import {updateAfterSubmitPost} from '../../store/modules/user';
+
 
 /** ============================================================
  * Define Component
@@ -172,7 +174,10 @@ This code below is designed to run the autocomplete search box for the location 
       post: post,
       landmark: this.state.landmark
     };
-    return this.props.handleNewPost(postObject);
+    return this.props.handleNewPost(postObject)
+      .then(() => {
+        return this.props.updateAfterSubmitPost(this.props.user.id);
+      });
   }
 
   /*
@@ -377,6 +382,7 @@ const mapDispatchToProps = dispatch => bindActionCreators({
   handleLocationInput: handleLocationInput,
   handleStoryLoad: handleStoryLoad,
   handleNewPost: handleNewPost,
+  updateAfterSubmitPost: updateAfterSubmitPost
 }, dispatch);
 
 /** ============================================================
