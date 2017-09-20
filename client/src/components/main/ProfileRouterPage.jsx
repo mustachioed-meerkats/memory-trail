@@ -2,11 +2,36 @@ import React from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import profile from '../../styles/profile';
-import { Grid, Row, Col, Button, ButtonGroup, ListGroupItem, Glyphicon, Tooltip, OverlayTrigger } from 'react-bootstrap';
 import { Link, Switch, Route } from 'react-router-dom';
 import Timeline from './Timeline.jsx'; 
 import CurrentUserPostList from './profile/CurrentUserPostList.jsx';
 import FollowingsPageList from './follow/FollowingsPageList.jsx';
+
+/** ============================================================
+ * Import Semantic UI Components
+ * =============================================================
+ */
+import {
+  Button,
+  Card,
+  Container,
+  Divider,
+  Dropdown,
+  Form,
+  Grid,
+  Header,
+  Icon,
+  Image,
+  Input,
+  Label,
+  List,
+  Menu,
+  Message,
+  Segment,
+  Table,
+  TextArea,
+  Transition
+} from 'semantic-ui-react';
 
 /** ============================================================
  * Import Redux Action Creators
@@ -104,7 +129,7 @@ class ProfileRouterPage extends React.Component {
     var passportData;
     if (this.state.isCurrentUser) {
       passportData = this.props.user.passport;
-      followingLink = (<li><Link to={`${this.props.match.url}/following`}>Following</Link></li>);
+      followingLink = (<Link to={`${this.props.match.url}/following`}>Following</Link>);
     } else {
       passportData = this.props.otherUser.passport;
       if (this.state.isFollowing) {
@@ -113,43 +138,57 @@ class ProfileRouterPage extends React.Component {
         followButton = (<Button onClick={this.handleFollow}>Follow</Button>);
       }
     }
-    var passport = (
-      <div>
-        {passportData.map((passportEntry, index) => {
-          return (<div key={index}>{passportEntry.name}</div>);
-        })}
-      </div>
-    );
+
+    let passport = [... new Set(passportData.map((passportEntry, index) => {
+        return passportEntry.name;
+    }))];
 
     return (
-      <div>
-        <div>
-          {this.state.profile_display}
-          {followButton}
-        </div>
-        <nav>
-          <ul>
-            <li><Link to={`${this.props.match.url}`}>Stories</Link></li>
-            <li><Link to={`${this.props.match.url}/posts`}>Posts</Link></li>
-            {followingLink}
-          </ul>
-        </nav>
-        <div>
-          <strong>Passport:</strong>
-          {passport}
-        </div>
-        <Route exact path={`${this.props.match.url}`} render={() => (
-          <Timeline isCurrentUser={this.state.isCurrentUser} />
-        )}/>
-        <Route exact path={`${this.props.match.url}/posts`} render={() => (
-          <CurrentUserPostList isCurrentUser={this.state.isCurrentUser} />
-        )}/>
-        <Route exact path={`${this.props.match.url}/following`} render={() => (
-          <FollowingsPageList 
-            isCurrentUser={this.state.isCurrentUser} 
-            handleUserChange={this.handleUserChange}/>
-        )}/>
-      </div>
+      <Container fluid={true}>
+        <Grid columns={2}>
+          <Grid.Column width={2}>
+          <div>
+            {this.state.profile_display}
+            {followButton}
+          </div>
+          <Menu text vertical size='large'>
+            <Menu.Item>
+              <Link to={`${this.props.match.url}`}>Stories</Link>
+            </Menu.Item>
+            <Menu.Item>
+              <Link to={`${this.props.match.url}/posts`}>Posts</Link>
+            </Menu.Item>
+            <Menu.Item>
+              {followingLink}
+            </Menu.Item>
+          </Menu>
+          <Divider/>
+          <List relaxed size='large'>
+            <List.Item>
+              <List.Header>Passport</List.Header>
+            </List.Item>
+            <List.Content>
+              {passport.map((place, index) => {
+                return <List.Item key={index}>{place}</List.Item>
+              })}
+            </List.Content>
+          </List>
+          </Grid.Column>
+          <Grid.Column width={14}>
+            <Route exact path={`${this.props.match.url}`} render={() => (
+              <Timeline isCurrentUser={this.state.isCurrentUser} />
+            )}/>
+            <Route exact path={`${this.props.match.url}/posts`} render={() => (
+              <CurrentUserPostList isCurrentUser={this.state.isCurrentUser} />
+            )}/>
+            <Route exact path={`${this.props.match.url}/following`} render={() => (
+              <FollowingsPageList 
+                isCurrentUser={this.state.isCurrentUser} 
+                handleUserChange={this.handleUserChange}/>
+            )}/>
+          </Grid.Column>
+        </Grid>
+      </Container>
     );
   }
 }
