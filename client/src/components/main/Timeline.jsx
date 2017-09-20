@@ -48,10 +48,6 @@ import {
   handleCurrentPostMarker
 } from '../../store/modules/map';
 
-const mapStyle = {
-  height: window.innerHeight
-};
-
 class Timeline extends React.Component {
   constructor(props) {
     super(props);
@@ -139,7 +135,7 @@ class Timeline extends React.Component {
           <p style={{textAlign:'center'}}>{this.state.currentStory.summary}</p>
           </Card.Header>
           <Card.Content>
-            <Grid style={{display: 'flex'}} columns={2} stackable>
+            <Grid columns={2} stackable>
               <Grid.Column>
                 <div style={{height: '75vh'}}>
                   <StoryMap 
@@ -162,7 +158,7 @@ class Timeline extends React.Component {
                 </div>
               </Grid.Column>
               <Grid.Column>
-                <div style={{height: '75vh'}}>
+                <div style={{height: 100+'%'}}>
                   <Carousel
                     showThumbs={false}
                     showArrows={true}
@@ -171,12 +167,12 @@ class Timeline extends React.Component {
                     useKeyboardArrows={true}
                     selectedItem={this.state.currentPostIndex}
                     onChange={(e) => this.handleChange(e)}
-                  >
+                    >
                     {this.state.currentStory.posts.map((post, index) => {
                       return (
-                        <Card key={index} fluid style={{height: 100+'%'}}>
-                          <Image src={post.image_url} />
-                          <Card.Description>
+                        <Card key={index} fluid>
+                          <Image style={{height: '60vh', objectFit: 'cover'}} src={post.image_url} />
+                          <Card.Description style={{height: '15vh', objectFit: 'cover'}}>
                             {post.content}
                           </Card.Description>
                         </Card>
