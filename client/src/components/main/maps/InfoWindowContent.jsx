@@ -30,6 +30,14 @@ const InfoWindowContent = ({landmark}) => {
     return new Date(b.created_at) - new Date(a.created_at);
   })[0];
 
+  let message = `${landmarkCount} memories shared by ${guestCount} guests.`;
+
+  if (landmarkCount === 1 && guestCount === 1) {
+    message = `${landmarkCount} memory shared by ${guestCount} guest.`;    
+  }
+  if (landmarkCount !== 1 && guestCount === 1) {
+    message = `${landmarkCount} memories shared by ${guestCount} guest.`;    
+  }
   return (
     <div>
       <Link to={`/landmark/${landmark.id}`}>
@@ -37,7 +45,7 @@ const InfoWindowContent = ({landmark}) => {
       </Link>
       <Divider />
       <div>
-        {landmarkCount} memories shared by {guestCount} guests.
+        {message}
       </div>
       <Divider />
       <div>
@@ -45,7 +53,7 @@ const InfoWindowContent = ({landmark}) => {
           {`"${mostRecentPost.content}"`}
         </div>
         <div>
-          - <i>{mostRecentPost.profile_display}</i>
+          - <Link to={`/profile/${mostRecentPost.profile_id}`}><i>{mostRecentPost.profile_display}</i></Link>
         </div>
       </div>
     </div>

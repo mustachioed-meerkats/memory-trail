@@ -17,7 +17,11 @@ const getTimeSincePost = (postTime) => {
         return hours + ' hours ago';
       } else {
         let days = Math.floor(hours / 24);
-        return days + ' days ago ';
+        if (days === 1) {
+          return ' yesterday ';
+        } else {
+          return days + ' days ago ';
+        }
       }
     }
   }
