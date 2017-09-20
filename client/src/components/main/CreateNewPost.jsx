@@ -47,6 +47,7 @@ import {
 } from '../../store/modules/newpost';
 
 import {updateAfterSubmitPost} from '../../store/modules/user';
+import {handleSearchArea} from '../../store/modules/map';
 
 
 /** ============================================================
@@ -177,6 +178,9 @@ This code below is designed to run the autocomplete search box for the location 
     return this.props.handleNewPost(postObject)
       .then(() => {
         return this.props.updateAfterSubmitPost(this.props.user.id);
+      })
+      .then(() => {
+        return this.props.handleSearchArea(this.props.map);
       });
   }
 
@@ -382,7 +386,8 @@ const mapDispatchToProps = dispatch => bindActionCreators({
   handleLocationInput: handleLocationInput,
   handleStoryLoad: handleStoryLoad,
   handleNewPost: handleNewPost,
-  updateAfterSubmitPost: updateAfterSubmitPost
+  updateAfterSubmitPost: updateAfterSubmitPost,
+  handleSearchArea: handleSearchArea
 }, dispatch);
 
 /** ============================================================
