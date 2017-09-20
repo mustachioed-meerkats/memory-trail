@@ -132,7 +132,7 @@ class ProfileRouterPage extends React.Component {
     if (this.state.isCurrentUser) {
       passportData = this.props.user.passport;
       followingLink = (<Link to={`${this.props.match.url}/following`}>Following</Link>);
-      sentimentLink = (<li><Link to={`${this.props.match.url}/sentiment`}>Sentiment Analysis</Link></li>);
+      sentimentLink = (<Link to={`${this.props.match.url}/sentiment`}>Sentiment Analysis</Link>);
     } else {
       passportData = this.props.otherUser.passport;
       if (this.state.isFollowing) {
