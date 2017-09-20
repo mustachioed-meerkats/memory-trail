@@ -47,7 +47,7 @@ import {
 } from '../../store/modules/newpost';
 
 import {updateAfterSubmitPost} from '../../store/modules/user';
-
+import {handleSearchArea} from '../../store/modules/map';
 
 /** ============================================================
  * Define Component
@@ -409,6 +409,7 @@ const mapDispatchToProps = dispatch => bindActionCreators({
   handleStoryLoad: handleStoryLoad,
   handleNewPost: handleNewPost,
   updateAfterSubmitPost: updateAfterSubmitPost,
+  handleSearchArea: handleSearchArea,
 }, dispatch);
 
 /** ============================================================
