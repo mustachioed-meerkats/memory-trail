@@ -49,7 +49,6 @@ import {
 import {updateAfterSubmitPost} from '../../store/modules/user';
 import {handleSearchArea} from '../../store/modules/map';
 
-
 /** ============================================================
  * Define Component
  * ========================================================== */
@@ -85,6 +84,7 @@ class CreateNewPost extends React.Component {
   */
 
   componentWillMount () {
+    this.props.handleSearchArea();
     //First, we are going to get the stories created by this user...
     this.props.handleStoryLoad()
     .then(() => {
@@ -96,6 +96,8 @@ class CreateNewPost extends React.Component {
         }
       });
     });
+    //We also need to load the landmarks so that we can properly link to landmarks in case
+    //the user does not visit the explore map page. 
   }
 
 
@@ -177,11 +179,9 @@ This code below is designed to run the autocomplete search box for the location 
     };
     return this.props.handleNewPost(postObject)
       .then(() => {
-        console.log('getting stories and posts');
         return this.props.updateAfterSubmitPost(this.props.user.id);
       })
       .then(() => {
-        console.log('getting landmarks');
         return this.props.handleSearchArea(this.props.map);
       });
   }
@@ -206,7 +206,6 @@ This code below is designed to run the autocomplete search box for the location 
         this.handleStoryFormVisibility();
       })
       .catch((err) => {
-        console.log('failed', err);
       });
 
   }
@@ -254,9 +253,9 @@ This code below is designed to run the autocomplete search box for the location 
     //Only once the user has filled in all of the rquired information is the actual button released to the 
     //end user, where they can publish their post. 
 
-    let formValidation = <Button fluid={true} size='massive' color='teal' onClick={() => this.handlePostSubmit(this.state.landmark)}>Publish</Button>;
+    let postFormValidation = <Button fluid={true} size='massive' color='teal' onClick={() => this.handlePostSubmit(this.state.landmark)}>Publish</Button>;
     if (this.props.location === '') {
-      formValidation = 
+      postFormValidation = 
         <Popup
           trigger={<Button fluid={true} size='massive' color='teal'>Publish</Button>}
           content={<p> Please Select location </p>}
@@ -265,7 +264,7 @@ This code below is designed to run the autocomplete search box for the location 
         />;
     }
     if (this.props.content === '') {
-      formValidation =         
+      postFormValidation =         
         <Popup
           trigger={<Button fluid={true} size='massive' color='teal'>Publish</Button>}
           content={<p> Please write a post. </p>}
@@ -274,10 +273,34 @@ This code below is designed to run the autocomplete search box for the location 
         />;
     }
     if (this.props.image_url === '') {
-      formValidation =  
+      postFormValidation =  
         <Popup
           trigger={<Button fluid={true} size='massive' color='teal'>Publish</Button>}
           content={<p> Please upload a Photo </p>}
+          on='click'
+          position='top right'
+        />;
+    }
+
+    //Form Validation for the create story modal. 
+
+    let storyFormValidation = <Button positive onClick={this.storySubmit}> Submit </Button>;
+  
+    if (this.state.storySummaryForm === '') {
+      storyFormValidation =                 
+        <Popup
+          trigger={<Button positive> Submit </Button>}
+          content={<p> Enter a Story Summary! </p>}
+          on='click'
+          position='top right'
+        />;
+    }
+
+    if (this.state.storyTitleForm === '') {
+      storyFormValidation = 
+        <Popup
+          trigger={<Button positive> Submit </Button>}
+          content={<p> Enter a Story Title! </p>}
           on='click'
           position='top right'
         />;
@@ -313,9 +336,7 @@ This code below is designed to run the autocomplete search box for the location 
                 <Button negative onClick={this.handleStoryFormVisibility} >
                   Cancel
                 </Button>
-                <Button positive onClick={this.storySubmit}>
-                  Submit
-                </Button>
+                {storyFormValidation}
               </Modal.Actions>
             </Modal>
             <Transition.Group animation='slide down' duration='500ms'>
@@ -357,7 +378,7 @@ This code below is designed to run the autocomplete search box for the location 
         </Grid.Row>
         <Grid.Row>
           <Grid.Column>
-            {formValidation}            
+            {postFormValidation}            
           </Grid.Column>
         </Grid.Row>
       </Grid>
@@ -389,7 +410,7 @@ const mapDispatchToProps = dispatch => bindActionCreators({
   handleStoryLoad: handleStoryLoad,
   handleNewPost: handleNewPost,
   updateAfterSubmitPost: updateAfterSubmitPost,
-  handleSearchArea: handleSearchArea
+  handleSearchArea: handleSearchArea,
 }, dispatch);
 
 /** ============================================================

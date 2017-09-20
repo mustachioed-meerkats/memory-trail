@@ -1,4 +1,8 @@
 import axios from 'axios';
+import { routerMiddleware, push } from 'react-router-redux';
+import { browserHistory } from 'react-router';
+import {createStore} from 'redux';
+import thunk from 'redux-thunk';
 
 /** ============================================================
  * Define Actions
@@ -11,6 +15,7 @@ export const HANDLE_SEARCH_AREA = 'map/HANDLE_SEARCH_AREA';
 export const HANDLE_MARKER_CLICK = 'map/HANDLE_MARKER_CLICK';
 export const HANDLE_MARKER_CLOSE = 'map/HANDLE_MARKER_CLOSE';
 export const HANDLE_STORY_LOAD = 'map/HANDLE_STORY_LOAD';
+export const HANDLE_LANDMARK_SELECT = 'map/HANDLE_LANDMARK_SELECT';
 /** ============================================================
  * Define Initial State
  * =============================================================
@@ -23,6 +28,10 @@ const initialState = {
   storyPosts: [],
   userLocationAvailable: false
 };
+
+//The middleware below allows us to redirect from the redux store. 
+const middleware = routerMiddleware(browserHistory);
+
 
 /** ============================================================
  * Define Reducer
@@ -44,6 +53,11 @@ export default (state = initialState, action) => {
       center: action.center,
       markers: action.markers,
       landmarks: action.landmarks
+    };
+  case HANDLE_LANDMARK_SELECT:
+    return {
+      ...state,
+      landmarks: state.landmarks.concat(action.landmarks)
     };
   case HANDLE_BOUNDS_CHANGED:
     return {
@@ -88,6 +102,7 @@ export default (state = initialState, action) => {
         return marker;
       })
     };
+    applyMiddleware(middleware);
   default:
     return state;
   }
@@ -97,6 +112,30 @@ export default (state = initialState, action) => {
  * Define Dispatches
  * =============================================================
  */
+
+export const handleLandmarkSelect = (id) => {
+  return dispatch => {
+    return getLandmarkByID(id)
+    .then(results => {
+      //When we only get one landmark, a problem that we face is that it comes back as an object, we need an array.
+      let resultsArr = [];
+      resultsArr.push(results.data);
+      dispatch({
+        type: HANDLE_LANDMARK_SELECT,
+        landmarks: resultsArr,
+      }),
+    dispatch(push(`/landmark/${id}`));
+      return results;
+    });
+  };
+};
+
+export const handleLandmarkSuccess = (id) => {
+  return dispatchEvent => {
+    dispatch(push(`/landmark/${id}`));
+  };
+};
+
 export const setCenter = (lat, lng) => {
   return dispatch => {
     return getLandmarksWithinRadius({lat, lng})
@@ -132,7 +171,6 @@ export const handlePlacesChanged = (searchBox, oldCenter) => {
 };
 
 export const handleBoundsChanged = (map) => {
-  console.log('center changed: ', map.getCenter().lat(), map.getCenter().lng());
   return dispatch => {
     dispatch({
       type: HANDLE_BOUNDS_CHANGED,
@@ -205,4 +243,8 @@ export const getPostsFromLandmarks = (landmarks) => {
     posts = posts.concat(landmark.posts);
   });
   return posts;
+};
+
+export const getLandmarkByID = (id) => {
+  return axios.get(`/api/landmarks/${id}`);
 };

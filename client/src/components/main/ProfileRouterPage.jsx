@@ -3,7 +3,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import profile from '../../styles/profile';
 import { Link, Switch, Route } from 'react-router-dom';
-import Timeline from './Timeline.jsx'; 
+import Timeline from './Timeline.jsx';
 import CurrentUserPostList from './profile/CurrentUserPostList.jsx';
 import FollowingsPageList from './follow/FollowingsPageList.jsx';
 import SentimentAnalysis from './SentimentAnalysis.jsx';
@@ -41,6 +41,7 @@ import {
 import { followNewUser, unfollowUser } from '../../store/modules/following';
 import { getUserInfo, determineFollowingStatus } from '../../store/modules/otherUser';
 import { getCurrentUserFollowings } from '../../store/modules/user';
+import { handleLandmarkSelect } from '../../store/modules/map';
 
 class ProfileRouterPage extends React.Component {
   constructor(props) {
@@ -54,6 +55,7 @@ class ProfileRouterPage extends React.Component {
     this.handleUserChange = this.handleUserChange.bind(this);
     this.handleFollow = this.handleFollow.bind(this);
     this.handleUnfollow = this.handleUnfollow.bind(this);
+    this.landmarkSelected = this.landmarkSelected.bind(this);
   }
 
   componentWillMount() {
@@ -124,6 +126,24 @@ class ProfileRouterPage extends React.Component {
       });
   }
 
+  //When the landmark is selected, we can just go to the redux, where we will search the
+  //current store for the selected landmark, then if we can't find it we will make an api call.
+  //Redirection will be routed through the redux store.
+  landmarkSelected(id) {
+    let found = '';
+    for (var i = 0; i < this.props.landmarks; i++) {
+      let landmark = this.props.landmarks[i];
+      if (landmark.id === id) {
+        found = landmark.id;
+      }
+    }
+    if (this.props.landmarks !== undefined && found !== '') {
+      this.props.handleLandmarkSuccess(id);
+    } else {
+      this.props.handleLandmarkSelect(id);
+    }
+  }
+
   render() {
     var followingLink = (<div></div>);
     var followButton = (<span></span>);
@@ -141,9 +161,8 @@ class ProfileRouterPage extends React.Component {
         followButton = (<Button onClick={this.handleFollow}>Follow</Button>);
       }
     }
-
     let passport = [... new Set(passportData.map((passportEntry, index) => {
-      return passportEntry.name;
+        return `${passportEntry.name} + ${passportEntry.id}`;
     }))];
 
     return (
@@ -175,7 +194,10 @@ class ProfileRouterPage extends React.Component {
             </List.Item>
             <List.Content>
               {passport.map((place, index) => {
-                return <List.Item key={index}>{place}</List.Item>
+                let split = place.split('+');
+                let name = split[0];
+                let id = Number(split[1]);
+                return <List.Item onClick={this.landmarkSelected.bind(this, id)} key={index}><Link to={`/profile/${this.props.user.user.id}`} > {name} </Link></List.Item>;
               })}
             </List.Content>
           </List>
@@ -188,8 +210,8 @@ class ProfileRouterPage extends React.Component {
               <CurrentUserPostList isCurrentUser={this.state.isCurrentUser} />
             )}/>
             <Route exact path={`${this.props.match.url}/following`} render={() => (
-              <FollowingsPageList 
-                isCurrentUser={this.state.isCurrentUser} 
+              <FollowingsPageList
+                isCurrentUser={this.state.isCurrentUser}
                 handleUserChange={this.handleUserChange}/>
             )}/>
             <Route exact path={`${this.props.match.url}/sentiment`} render={() => (
@@ -205,6 +227,7 @@ class ProfileRouterPage extends React.Component {
 const mapStateToProps = (state) => ({
   user: state.user,
   otherUser: state.otherUser,
+  landmarks: state.map.landmarks
 });
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
@@ -212,6 +235,7 @@ const mapDispatchToProps = (dispatch) => bindActionCreators({
   determineFollowingStatus,
   followNewUser,
   unfollowUser,
+  handleLandmarkSelect,
   getCurrentUserFollowings
 }, dispatch);
 

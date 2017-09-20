@@ -1,4 +1,8 @@
 import axios from 'axios';
+import { routerMiddleware, push } from 'react-router-redux';
+import { browserHistory } from 'react-router';
+import {createStore} from 'redux';
+import thunk from 'redux-thunk';
 
 /** ============================================================
  * Define Actions
@@ -16,7 +20,10 @@ const initialState = {
   posts: __PRELOADED_STATE__.user.posts,
   following: __PRELOADED_STATE__.user.following,
   passport: __PRELOADED_STATE__.user.passport,
+  profile_id: __PRELOADED_STATE__.user.user.id,
 };
+
+const middleware = routerMiddleware(browserHistory);
 
 /** ============================================================
  * Define Reducer
@@ -35,6 +42,7 @@ export default (state = initialState, action) => {
       stories: action.stories,
       posts: action.posts
     };
+    applyMiddleware(middleware);
   default:
     return state;
   }
@@ -67,6 +75,7 @@ export const updateAfterSubmitPost = (profile_id) => {
           stories: results.data,
           posts: posts
         });
+        dispatch(push(`/profile/${initialState.profile_id}`));
       });
   };
 };
