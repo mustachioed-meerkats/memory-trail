@@ -88,6 +88,7 @@ class Upload extends React.Component {
     let previewMessage = null;
     let previewImage = null;
     let buttonUpload = <Button size='small' onClick={this.handleSubmit}>Upload</Button>;
+
     if (this.state.imageStatus === true) {
       previewMessage = <Message positive >
       <Message.Header> Image Preview </Message.Header>
@@ -117,6 +118,10 @@ class Upload extends React.Component {
           on='click'
           position='bottom left'
         />;
+    }
+
+    if (this.state.previewImage !== null) {
+      previewImage = <Image src={this.state.previewImage} fluid />;
     }
 
     return (
