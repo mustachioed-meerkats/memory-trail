@@ -48,25 +48,20 @@ import {
   handleCurrentPostMarker
 } from '../../store/modules/map';
 
-const mapStyle = {
-  height: window.innerHeight
-};
-
 class Timeline extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       userStories: '',
       currentStory: '',
-      currentStoryPosts: [],
       currentPostIndex: 0,
-      currentPost: '',
       _map: null,
       chartVisible: false
     };
     this.handleMapMounted = this.handleMapMounted.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.toggleChartVisibility = this.toggleChartVisibility.bind(this);
+    this.updateSelectedStory = this.updateSelectedStory.bind(this);
   }
 
   componentWillMount () {
@@ -74,9 +69,7 @@ class Timeline extends React.Component {
     this.setState({
       userStories: userData.stories,
       currentStory: userData.stories[0],
-      currentStoryPosts: userData.stories[0].posts,
-      currentPostIndex: 0,
-      currentPost: userData.stories[0].posts[0]
+      currentPostIndex: 0
     });
   }
 
@@ -88,8 +81,7 @@ class Timeline extends React.Component {
 
   updateCurrentPostIndex (index) {
     this.setState({
-      currentPostIndex: index,
-      currentPost: this.state.currentStoryPosts[index]
+      currentPostIndex: index
     })
   }
   
@@ -101,6 +93,16 @@ class Timeline extends React.Component {
     this.setState({
       chartVisible: !this.state.chartVisible
     });
+  }
+
+  updateSelectedStory(e) {
+    e.persist();
+    let selectedStory = this.state.userStories.filter((story) => {
+      return story.title === e.target.textContent;
+    });
+    this.setState({
+      currentStory: selectedStory[0]
+    })
   }
 
   render() {
@@ -123,25 +125,29 @@ class Timeline extends React.Component {
       <Container fluid={true}>
         <Card raised fluid>
           <Card.Header>
-          <Menu size='large'>
-            <Dropdown
-              item 
-              text='Choose a Story'
-              options={this.state.userStories.map((story, index) => {
-                return {value: story.title, text: story.title, key: index}
-              })}>
-            </Dropdown>
-            <Button onClick={this.toggleChartVisibility}>
-              Sentiment Analysis
-            </Button>
-          </Menu>
-          <h1 style={{textAlign:'center'}}>{this.state.currentStory.title}</h1>
-          <p style={{textAlign:'center'}}>{this.state.currentStory.summary}</p>
+            <Menu vertical={false} size='large'>
+              <Menu.Item>Choose a Story</Menu.Item>
+              <Dropdown
+                closeOnBlur={true}
+                item
+                text={this.state.currentStory.title}
+                options={this.state.userStories.map((story, index) => {
+                  return {value: story.title, text: story.title, key: index}
+                })}
+                onChange={(e) => this.updateSelectedStory(e)}
+                >
+              </Dropdown>
+              <Button onClick={this.toggleChartVisibility}>
+                Sentiment Analysis
+              </Button>
+            </Menu>
+            <h1 style={{textAlign:'center'}}>{this.state.currentStory.title}</h1>
+            <p style={{textAlign:'center'}}>{this.state.currentStory.summary}</p>
           </Card.Header>
           <Card.Content>
             <Grid columns={2} stackable>
               <Grid.Column>
-                <div style={{height: 75+'vh'}}>
+                <div style={{height: '80vh'}}>
                   <StoryMap 
                     containerElement={this.props.containerElement}
                     mapElement={this.props.mapElement}
@@ -154,15 +160,15 @@ class Timeline extends React.Component {
                     inputStyle={this.props.inputStyle}
                     handleMarkerClick={this.props.handleMarkerClick}
                     handleMarkerClose={this.props.handleMarkerClose}
-                    markers={this.props.markers}
-                    currentPost={this.state.currentPost}
+                    markers={this.state.currentStory.posts}
+                    currentPost={this.state.currentStory.posts[this.state.currentPostIndex]}
                     landmarks={this.props.landmarks}
                     openSideBar={this.props.openSideBar}
                   />
                 </div>
               </Grid.Column>
               <Grid.Column>
-                <div style={{height: 75+'vh'}}>
+                <div style={{height: 100+'%'}}>
                   <Carousel
                     showThumbs={false}
                     showArrows={true}
@@ -171,12 +177,15 @@ class Timeline extends React.Component {
                     useKeyboardArrows={true}
                     selectedItem={this.state.currentPostIndex}
                     onChange={(e) => this.handleChange(e)}
-                  >
+                    >
                     {this.state.currentStory.posts.map((post, index) => {
                       return (
-                        <Card key={index} fluid style={{height: 100+'%'}}>
-                          <Image src={post.image_url} />
-                          <Card.Description>
+                        <Card key={index} fluid>
+                          <Card.Header style={{height: '5vh', objectFit: 'cover'}}>
+                            {post.landmark_name}
+                          </Card.Header>
+                          <Image style={{height: '60vh', objectFit: 'cover'}} src={post.image_url} />
+                          <Card.Description style={{height: '15vh', objectFit: 'cover'}}>
                             {post.content}
                           </Card.Description>
                         </Card>
@@ -204,7 +213,6 @@ const mapStateToProps = state => ({
   bounds: state.map.bounds,
   containerElement: <div style={{height: '100%'}} />,
   mapElement: <div style={{height: '100%'}} />,
-  markers: state.user.stories[0].posts,
   user: state.user,
   otherUser: state.otherUser
 });
