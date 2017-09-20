@@ -192,6 +192,9 @@ class ProfileRouterPage extends React.Component {
                 isCurrentUser={this.state.isCurrentUser} 
                 handleUserChange={this.handleUserChange}/>
             )}/>
+            <Route exact path={`${this.props.match.url}/sentiment`} render={() => (
+              <SentimentAnalysis isCurrentUser={this.state.isCurrentUser} />
+            )}/>
           </Grid.Column>
         </Grid>
       </Container>
