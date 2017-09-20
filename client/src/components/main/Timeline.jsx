@@ -139,9 +139,9 @@ class Timeline extends React.Component {
           <p style={{textAlign:'center'}}>{this.state.currentStory.summary}</p>
           </Card.Header>
           <Card.Content>
-            <Grid columns={2} stackable>
+            <Grid style={{display: 'flex'}} columns={2} stackable>
               <Grid.Column>
-                <div style={{height: 75+'vh'}}>
+                <div style={{height: '75vh'}}>
                   <StoryMap 
                     containerElement={this.props.containerElement}
                     mapElement={this.props.mapElement}
@@ -162,7 +162,7 @@ class Timeline extends React.Component {
                 </div>
               </Grid.Column>
               <Grid.Column>
-                <div style={{height: 75+'vh'}}>
+                <div style={{height: '75vh'}}>
                   <Carousel
                     showThumbs={false}
                     showArrows={true}
