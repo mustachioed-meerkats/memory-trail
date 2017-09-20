@@ -33,7 +33,7 @@ const Landmark = db.Model.extend({
       });
   },
   getLandmarkById: function(id) {
-    return this.where({id}).fetch();
+    return this.where({id}).fetch({withRelated: ['posts']});
   },
   getLandmarksWithinRadius: function(center, radius = 13) {
     var {lat, lng} = center;
