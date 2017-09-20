@@ -98,11 +98,11 @@ class Timeline extends React.Component {
 
   updateSelectedStory(e) {
     e.persist();
-    console.log(e.target.textContent);
+    let selectedStory = this.state.userStories.filter((story) => {
+      return story.title === e.target.textContent;
+    });
     this.setState({
-      currentStory: this.state.userStories.filter((story) => {
-        return story.title === e.target.textContent;
-      })
+      currentStory: selectedStory[0]
     })
   }
 
@@ -148,7 +148,7 @@ class Timeline extends React.Component {
           <Card.Content>
             <Grid columns={2} stackable>
               <Grid.Column>
-                <div style={{height: '75vh'}}>
+                <div style={{height: '80vh'}}>
                   <StoryMap 
                     containerElement={this.props.containerElement}
                     mapElement={this.props.mapElement}
@@ -182,6 +182,9 @@ class Timeline extends React.Component {
                     {this.state.currentStory.posts.map((post, index) => {
                       return (
                         <Card key={index} fluid>
+                          <Card.Header style={{height: '5vh', objectFit: 'cover'}}>
+                            {post.landmark_name}
+                          </Card.Header>
                           <Image style={{height: '60vh', objectFit: 'cover'}} src={post.image_url} />
                           <Card.Description style={{height: '15vh', objectFit: 'cover'}}>
                             {post.content}
