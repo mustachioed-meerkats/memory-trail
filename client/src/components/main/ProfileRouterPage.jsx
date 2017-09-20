@@ -165,7 +165,7 @@ class ProfileRouterPage extends React.Component {
               {followingLink}
             </Menu.Item>
             <Menu.Item>
-            {sentimentLink}
+              {sentimentLink}
             </Menu.Item>
           </Menu>
           <Divider/>
