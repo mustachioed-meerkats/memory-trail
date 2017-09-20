@@ -61,7 +61,9 @@ class SentimentChart extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    this.generateSeries(nextProps.story);
+    if (nextProps.story.title !== this.props.story.title) {
+      this.generateSeries(nextProps.story);
+    }
   }
 
   generateSeries(story) {
@@ -106,7 +108,7 @@ class SentimentChart extends React.Component {
           <Dots className='dots' dotStyle={{transition:'all 250ms',fillOpacity:0}} />
           <Labels
           className='labels'
-          label={({point}) => Number(point.y.toFixed(1))}
+          label={({series, pointIndex}) => series.landmark_name[pointIndex]}
           dotStyle={{
             alignmentBaseline:'after-edge',
             textAnchor:'middle',
