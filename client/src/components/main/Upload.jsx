@@ -2,7 +2,7 @@ import React from 'react';
 import axios from 'axios';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { Button, Form, Header, Icon, Input, Image, Message } from 'semantic-ui-react';
+import { Button, Form, Header, Icon, Input, Image, Message, Popup } from 'semantic-ui-react';
 
 import {
   handleImageUrl
@@ -17,16 +17,20 @@ const divStyle = {
 
 };
 
+let timeout = 3000;
+
 class Upload extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       file: null,
       previewImage: null,
-      imageStatus: false
+      imageStatus: false,
+      messageOpen: false
     };
     this.handleFile = this.handleFile.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.openMessage = this.openMessage.bind(this);
   }
 
   handleSubmit(e) {
@@ -34,11 +38,13 @@ class Upload extends React.Component {
       .then( res => {
         let image_url = res.data.Location;
         this.props.handleImageUrl(image_url);
-        this.setState({imageStatus: 'uploaded'});
+        this.setState({imageStatus: 'uploaded', previewImage: null});
+        this.openMessage();
       })
       .catch(err => {
         console.log('failed', err);
         this.setState({imageStatus: 'failed'});
+        this.openMessage();
       });
   }
 
@@ -60,45 +66,75 @@ class Upload extends React.Component {
         previewImage: reader.result,
         imageStatus: true,
       });
+      this.openMessage();
     }.bind(this);
 
   }
 
+
+  openMessage () {
+    this.setState({ messageOpen: true });
+
+    this.timeout = setTimeout(() => {
+      this.setState({ messageOpen: false });
+    }, timeout);
+  }
+
   render() {
-    let preview = null;
-    if (this.state.imageStatus === false) {
-      preview = null;
-    }
+    /*
+    Conditional renders for user feedback with regards to the status of their image.
+
+    */
+    let previewMessage = null;
+    let previewImage = null;
+    let buttonUpload = <Button size='small' onClick={this.handleSubmit}>Upload</Button>;
+
     if (this.state.imageStatus === true) {
-      preview = <Message positive>
+      previewMessage = <Message positive >
       <Message.Header> Image Preview </Message.Header>
       </Message>;
     }
 
-    if (this.state.imageStatus === 'failed') {
-      preview = <Message negative> 
+    if (this.state.imageStatus === 'failed' && this.state.messageOpen === true) {
+      previewMessage = <Message negative >
       <Message.Header> Uh Oh... Upload Failed </Message.Header>
       <p> Please try again, or refresh the page. </p>
       </Message>;
     }
 
-    if (this.state.imageStatus === 'uploaded') {
-      preview = <Message positive> 
+    if (this.state.imageStatus === 'uploaded' && this.state.messageOpen === true) {
+      previewMessage = <Message positive>
         <Message.Header> Image Uploaded! </Message.Header>
-        </Message>; 
+        </Message>;
     }
-    
+
+    if (this.state.previewImage !== null) {
+      previewImage = <Image src={this.state.previewImage} fluid />;
+    } else {
+      buttonUpload =
+        <Popup
+          trigger={<Button size='small'>Upload</Button>}
+          content={<p>Select an image first by hitting that camera button!!</p>}
+          on='click'
+          position='bottom left'
+        />;
+    }
+
+    if (this.state.previewImage !== null) {
+      previewImage = <Image src={this.state.previewImage} fluid />;
+    }
+
     return (
       <div>
         <label htmlFor="hidden-new-file">
           <Icon name='photo' size='massive' color='teal' style={{cursor: 'pointer'}}/>
         </label>
         <input ref='file' type='file' id="hidden-new-file" style={{display: 'none'}} onChange={this.handleFile}/>
-        <Button size='small' onClick={this.handleSubmit}>Upload</Button>
+        {buttonUpload}
         <div style={divStyle} >
-          {preview}
-          <Image src={this.state.previewImage} fluid />
-        </div>
+          {previewMessage}
+          {previewImage}
+      </div>
       </div>
     );
   }

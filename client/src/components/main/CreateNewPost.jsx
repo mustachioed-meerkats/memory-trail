@@ -30,6 +30,7 @@ import {
   Segment,
   Table,
   TextArea,
+  Popup,
   Transition
 } from 'semantic-ui-react';
 
@@ -63,7 +64,7 @@ class CreateNewPost extends React.Component {
       show: false,
       storyID: 0,
       storyName: 'EveryDay Life',
-      defaultStory: 'EveryDay Life'
+      defaultStory: 'EveryDay Life',
     };
     this.geocodeLocationInput = this.geocodeLocationInput.bind(this);
     this.initializeAutocomplete = this.initializeAutocomplete.bind(this);
@@ -155,6 +156,7 @@ This code below is designed to run the autocomplete search box for the location 
   */
 
   handlePostSubmit (landmark) {
+    
     let post = {
       content: this.props.content,
       lat: this.props.location.lat,
@@ -235,6 +237,41 @@ This code below is designed to run the autocomplete search box for the location 
   }
 
   render () {
+
+    //The following conditional render acts as a sort of form validation. If the user has not filled in 
+    //all of the appropriate forms, they will recieve an error popup. This is done via the use of fake buttons. 
+    //Only once the user has filled in all of the rquired information is the actual button released to the 
+    //end user, where they can publish their post. 
+
+    let formValidation = <Button fluid={true} size='massive' color='teal' onClick={() => this.handlePostSubmit(this.state.landmark)}>Publish</Button>;
+    if (this.props.location === '') {
+      formValidation = 
+        <Popup
+          trigger={<Button fluid={true} size='massive' color='teal'>Publish</Button>}
+          content={<p> Please Select location </p>}
+          on='click'
+          position='top right'
+        />;
+    }
+    if (this.props.content === '') {
+      formValidation =         
+        <Popup
+          trigger={<Button fluid={true} size='massive' color='teal'>Publish</Button>}
+          content={<p> Please write a post. </p>}
+          on='click'
+          position='top right'
+        />;
+    }
+    if (this.props.image_url === '') {
+      formValidation =  
+        <Popup
+          trigger={<Button fluid={true} size='massive' color='teal'>Publish</Button>}
+          content={<p> Please upload a Photo </p>}
+          on='click'
+          position='top right'
+        />;
+    }
+
     return (
       <Grid centered columns={2} stackable>
         <Grid.Row>
@@ -309,7 +346,7 @@ This code below is designed to run the autocomplete search box for the location 
         </Grid.Row>
         <Grid.Row>
           <Grid.Column>
-            <Button fluid={true} size='massive' color='teal' onClick={() => this.handlePostSubmit(this.state.landmark)}>Publish</Button>
+            {formValidation}            
           </Grid.Column>
         </Grid.Row>
       </Grid>
