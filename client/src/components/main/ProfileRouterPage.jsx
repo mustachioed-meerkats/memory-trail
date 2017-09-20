@@ -130,7 +130,14 @@ class ProfileRouterPage extends React.Component {
   //current store for the selected landmark, then if we can't find it we will make an api call.
   //Redirection will be routed through the redux store.
   landmarkSelected(id) {
-    if (this.props.landmarks !== undefined && this.props.landmarks.includes(id)) {
+    let found = '';
+    for (var i = 0; i < this.props.landmarks; i++) {
+      let landmark = this.props.landmarks[i];
+      if (landmark.id === id) {
+        found = landmark.id;
+      }
+    }
+    if (this.props.landmarks !== undefined && found !== '') {
       this.props.handleLandmarkSuccess(id);
     } else {
       this.props.handleLandmarkSelect(id);

@@ -84,6 +84,7 @@ class CreateNewPost extends React.Component {
   */
 
   componentWillMount () {
+    this.props.handleSearchArea();
     //First, we are going to get the stories created by this user...
     this.props.handleStoryLoad()
     .then(() => {

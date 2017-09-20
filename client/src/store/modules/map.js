@@ -57,7 +57,7 @@ export default (state = initialState, action) => {
   case HANDLE_LANDMARK_SELECT:
     return {
       ...state,
-      landmarks: action.landmarks
+      landmarks: state.landmarks.concat(action.landmarks)
     };
   case HANDLE_BOUNDS_CHANGED:
     return {
@@ -117,7 +117,7 @@ export const handleLandmarkSelect = (id) => {
   return dispatch => {
     return getLandmarkByID(id)
     .then(results => {
-      //When we only get one landmark, a problem that we face is that it comes back 
+      //When we only get one landmark, a problem that we face is that it comes back as an object, we need an array.
       let resultsArr = [];
       resultsArr.push(results.data);
       dispatch({
@@ -125,6 +125,7 @@ export const handleLandmarkSelect = (id) => {
         landmarks: resultsArr,
       }),
     dispatch(push(`/landmark/${id}`));
+      return results;
     });
   };
 };
