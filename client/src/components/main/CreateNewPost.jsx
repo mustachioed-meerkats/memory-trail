@@ -177,9 +177,11 @@ This code below is designed to run the autocomplete search box for the location 
     };
     return this.props.handleNewPost(postObject)
       .then(() => {
+        console.log('getting stories and posts');
         return this.props.updateAfterSubmitPost(this.props.user.id);
       })
       .then(() => {
+        console.log('getting landmarks');
         return this.props.handleSearchArea(this.props.map);
       });
   }
