@@ -3,7 +3,7 @@ const getTimeSincePost = (postTime) => {
   let currentDateMilliseconds = new Date().getTime();
 
   let diff = Math.abs(currentDateMilliseconds - postDateMilliseconds);
-  let seconds = (diff / 1000).toFixed(0);
+  let seconds = Number((diff / 1000).toFixed(0));
 
   if (seconds < 60) {
     return seconds + ' seconds ago ';

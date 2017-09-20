@@ -8,6 +8,7 @@ import styles from 'react-responsive-carousel/lib/styles/carousel.min.css';
 const Carousel = require('react-responsive-carousel').Carousel;
 import axios from 'axios';
 import StoryMap from './maps/storyMap.jsx';
+import SentimentChart from './SentimentChart.jsx';
 
 /** ============================================================
  * Import Semantic UI Components
@@ -60,10 +61,12 @@ class Timeline extends React.Component {
       currentStoryPosts: [],
       currentPostIndex: 0,
       currentPost: '',
-      _map: null
+      _map: null,
+      chartVisible: false
     };
     this.handleMapMounted = this.handleMapMounted.bind(this);
     this.handleChange = this.handleChange.bind(this);
+    this.toggleChartVisibility = this.toggleChartVisibility.bind(this);
   }
 
   componentWillMount () {
@@ -74,7 +77,7 @@ class Timeline extends React.Component {
       currentStoryPosts: userData.stories[0].posts,
       currentPostIndex: 0,
       currentPost: userData.stories[0].posts[0]
-    })
+    });
   }
 
   handleMapMounted(map) {
@@ -94,7 +97,28 @@ class Timeline extends React.Component {
     this.updateCurrentPostIndex(e);
   }
 
+  toggleChartVisibility() {
+    this.setState({
+      chartVisible: !this.state.chartVisible
+    });
+  }
+
   render() {
+    var sentimentAnalysis = (<div></div>);
+    if (this.state.chartVisible) {
+      sentimentAnalysis = (
+        <Card raised fluid>
+          <Card.Header>
+            Sentiment Analysis
+          </Card.Header>
+          <Card.Content>
+            <SentimentChart story={this.state.currentStory}/>
+          </Card.Content>
+        </Card>
+      );
+    }
+    
+
     return (
       <Container fluid={true}>
         <Card raised fluid>
@@ -107,6 +131,9 @@ class Timeline extends React.Component {
                 return {value: story.title, text: story.title, key: index}
               })}>
             </Dropdown>
+            <Button onClick={this.toggleChartVisibility}>
+              Sentiment Analysis
+            </Button>
           </Menu>
           <h1 style={{textAlign:'center'}}>{this.state.currentStory.title}</h1>
           <p style={{textAlign:'center'}}>{this.state.currentStory.summary}</p>
@@ -153,7 +180,7 @@ class Timeline extends React.Component {
                             {post.content}
                           </Card.Description>
                         </Card>
-                      ) 
+                      );
                     })}
                   </Carousel>
                 </div>
@@ -161,6 +188,7 @@ class Timeline extends React.Component {
             </Grid>
           </Card.Content>
         </Card>
+        {sentimentAnalysis}
       </Container>
     );
   }
