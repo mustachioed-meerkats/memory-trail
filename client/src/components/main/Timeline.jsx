@@ -129,6 +129,7 @@ class Timeline extends React.Component {
               <Menu.Item>Choose a Story</Menu.Item>
               <Dropdown
                 closeOnBlur={true}
+                scrolling
                 item
                 text={this.state.currentStory.title}
                 options={this.state.userStories.map((story, index) => {
