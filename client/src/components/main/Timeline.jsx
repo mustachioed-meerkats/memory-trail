@@ -55,7 +55,6 @@ class Timeline extends React.Component {
       userStories: '',
       currentStory: '',
       currentPostIndex: 0,
-      currentPost: '',
       _map: null,
       chartVisible: false
     };
