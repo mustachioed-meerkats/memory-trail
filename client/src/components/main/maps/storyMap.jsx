@@ -21,7 +21,7 @@ let mapOptions = {
   scaleControl: false,
   streetViewControl: false,
   rotateControl: false,
-  fullscreenControl: false
+  fullscreenControl: true
 };
 
 const StoryMap = withGoogleMap(props => (
