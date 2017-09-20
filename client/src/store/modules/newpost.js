@@ -131,14 +131,11 @@ export const handleNewPost = (postObject) => {
     dispatch({
       type: HANDLE_NEW_POST,
     });
-    createNewPost(postObject)
+    return createNewPost(postObject)
     .then(() => {
       dispatch(push(`/profile/${initialState.profile_id}`));
-      console.log('(Client) Success! CREATING NEW POST');
     })
       .catch((err) => {
-        console.log('(Client) Error! CREATING NEW POST');
-        console.log(err);
       });
   };
 };

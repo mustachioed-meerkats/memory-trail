@@ -58,8 +58,8 @@ passport.use('local-signup', new LocalStrategy({
     .tap(profile => {
       return models.Story.createStory({
         profile_id: profile.get('id'),
-        title: 'default story',
-        summary: 'default summary',
+        title: 'Everyday Life',
+        summary: 'This is the story of my life!',
         default_post: true,
         default_display: true
       });
@@ -141,12 +141,12 @@ const getOrCreateOAuthProfile = (type, oauthProfile, done) => {
       return models.Profile.where({ email: oauthProfile.emails[0].value }).fetch();
     })
     .then(profile => {
-
       let profileInfo = {
         first: oauthProfile.name.givenName,
         last: oauthProfile.name.familyName,
         display: oauthProfile.displayName || `${oauthProfile.name.givenName} ${oauthProfile.name.familyName}`,
-        email: oauthProfile.emails[0].value
+        email: oauthProfile.emails[0].value,
+        img: oauthProfile.photos[0].value
       };
 
       if (profile) {
@@ -166,8 +166,8 @@ const getOrCreateOAuthProfile = (type, oauthProfile, done) => {
     .tap(profile => {
       return models.Story.createStory({
         profile_id: profile.get('id'),
-        title: 'default story',
-        summary: 'default summary',
+        title: 'Everyday Life',
+        summary: 'This is the story of my life!',
         default_post: true,
         default_display: true
       });

@@ -37,11 +37,11 @@ const FollowingFeedList = (props) => {
     );
   } else {
     return (
-      <Segment.Group>
+      <div>
         {props.posts.map((post, i) => {
           return <FollowingFeedListEntry post={post} id={i} key={i} />;
         })}
-      </Segment.Group>
+      </div>
     );
   }
 };

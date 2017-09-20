@@ -98,6 +98,13 @@ module.exports.getInfoByUserId = (req, res) => {
     })
     .then(stories => {
       info.push(stories);
+      return models.Profile.getProfileById(req.params.id);
+    })
+    .then(profile => {
+      return profile.landmarks().fetch();
+    })
+    .then(passport => {
+      info.push(passport);
       res.send(info);
     });
 };
@@ -118,6 +125,13 @@ module.exports.preloadUserInfo = (req, res) => {
       })
       .then(following => {
         preloadedState.user.following = following;
+        return models.Profile.getProfileById(req.user.id);
+      })
+      .then(profile => {
+        return profile.landmarks().fetch();
+      })
+      .then(passport => {
+        preloadedState.user.passport = passport;
         res.render('index', {preloadedState});
       })
       .catch((err) => {

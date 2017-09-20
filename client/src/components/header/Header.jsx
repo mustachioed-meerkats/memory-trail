@@ -14,7 +14,7 @@ class Header extends React.Component {
     return (
       <div>
         <NavSideBar />
-        {this.props.location.pathname === '/' ? '' : <FixedNavMenu/>}
+        {this.props.location.pathname === '/explore' ? '' : <FixedNavMenu/>}
       </div>
     );
   }
