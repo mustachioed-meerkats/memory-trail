@@ -7,23 +7,7 @@ import getTimeSincePost from '../../../../lib/getTimeSincePost';
 /** ============================================================
  * Import Semantic UI Components
  * ========================================================== */
-import {
-  Button, 
-  Container,
-  Grid, 
-  Header, 
-  Icon,
-  Image, 
-  Item, 
-  Label, 
-  Menu, 
-  Segment, 
-  Step,
-  Table,
-  Card,
-  Dimmer,
-  Loader
-} from 'semantic-ui-react';
+import { Icon, Card } from 'semantic-ui-react';
 
 /** ============================================================
  * Define Component
@@ -47,7 +31,7 @@ const LandmarkMapListListEntry = ({landmark}) => {
         <Card.Meta>
         </Card.Meta>
         <Card.Description>
-          <Link to={`/landmark/${landmark.id}`}>{landmark.name}</Link>
+          <strong><Link to={`/landmark/${landmark.id}`}><Icon name='map pin' /> {landmark.name || 'LANDMARK_NAME'}</Link></strong>
         </Card.Description>
       </Card.Content>
     </Card>

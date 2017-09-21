@@ -6,27 +6,7 @@ import LandmarkPostList from './landmarks/LandmarkPostList.jsx';
 /** ============================================================
  * Import Semantic UI Components
  * ========================================================== */
-import {
-  Button, 
-  Container,
-  Grid, 
-  Header, 
-  Icon,
-  Image, 
-  Item, 
-  Label, 
-  Menu, 
-  Segment, 
-  Step,
-  Table,
-  Card,
-  Dimmer,
-  Loader
-} from 'semantic-ui-react';
-
-/** ============================================================
- * Import Redux Action Creators
- * ========================================================== */
+import { Container, Grid, Segment } from 'semantic-ui-react';
 
 /** ============================================================
  * Define Component
@@ -50,20 +30,25 @@ class LandmarkPage extends React.Component {
         color: 'white'
       }
     };
+    const landmarkTitle = {
+      padding: '12.5rem 0rem 0rem 0rem', 
+      textAlign: 'center',
+      fontSize: '3rem'
+    };
     const guestBook = [... new Set(landmark.posts.map((post) => { return post.profile_display; }))];
     return (
       <Container>
         <Segment.Group>
           <Segment>
             <div style={style.card}>
-              <div style={{top: '10px'}}>Welcome to <strong>{landmark.name}</strong></div>
+              <div className='landmark-page-title'><strong>{landmark.name}</strong></div>
             </div>
           </Segment>
         </Segment.Group>
         <Grid columns={2} stackable>
           <Grid.Column width={6}>
             <Segment>
-              <div>
+              <div className='panel-title'>
                 <strong>Landmark Information:</strong>
               </div>
               <div>
@@ -71,7 +56,7 @@ class LandmarkPage extends React.Component {
               </div>
             </Segment>
             <Segment>
-              <div>
+              <div className='panel-title'>
                 <strong>Guest Book:</strong>
               </div>
               <div>

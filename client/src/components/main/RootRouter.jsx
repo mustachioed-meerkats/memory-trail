@@ -5,6 +5,7 @@ import Home from './Home.jsx';
 import ProfileRouterPage from './ProfileRouterPage.jsx';
 import FollowingFeed from './FollowingFeed.jsx';
 import LandmarkPage from './LandmarkPage.jsx';
+import ErrorPage from './ErrorPage.jsx';
 
 /** ============================================================
  * Define React Routes
@@ -16,6 +17,7 @@ const RootRouter = () => (
     <Route path='/profile/:id' component={ProfileRouterPage} />
     <Route exact path='/feed' component={FollowingFeed} />
     <Route exact path='/landmark/:id' component={LandmarkPage} />
+    <Route exact component={ErrorPage} />
   </Switch>
 );
 

@@ -10,28 +10,6 @@ import PostList from '../PostList.jsx';
 import InfoWindowContent from './InfoWindowContent.jsx';
 
 /** ============================================================
- * Import Semantic UI Components
- * ========================================================== */
-import {
-  Button, 
-  Container,
-  Grid, 
-  Header, 
-  Icon,
-  Image, 
-  Item, 
-  Label, 
-  Menu, 
-  Segment, 
-  Step,
-  Table,
-  Card,
-  Dimmer,
-  Loader,
-  Popup
-} from 'semantic-ui-react';
-
-/** ============================================================
  * Import Redux Action Creators
  * ========================================================== */
 import {
@@ -126,21 +104,6 @@ const ExploreMapComponent = withGoogleMap(props => (
     ))}
   </GoogleMap>
 ));
-
-
-
-
-{ /* <Marker 
-position={{lat: parseFloat(marker.lat), lng: parseFloat(marker.lng)}} key={index} 
-onClick={() => props.handleMarkerClick(marker)}
->
-{marker.showInfo && (
-  <InfoWindow onCloseClick={() => props.handleMarkerClose(marker)}>
-    <div><Link to={`/landmark/${marker.id}`}>{marker.name}</Link></div>
-  </InfoWindow>
-)}
-</Marker> */ }
-
 
 class ExploreMap extends React.Component {
   constructor(props) {
