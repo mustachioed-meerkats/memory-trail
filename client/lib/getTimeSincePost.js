@@ -1,4 +1,4 @@
-const getTimeSincePost = (postTime) => {
+const getTimeSincePost = function(postTime) {
   let postDateMilliseconds = new Date(postTime).getTime();
   let currentDateMilliseconds = new Date().getTime();
 

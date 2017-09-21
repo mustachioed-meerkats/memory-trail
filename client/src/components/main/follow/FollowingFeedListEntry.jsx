@@ -25,6 +25,11 @@ const FollowingFeedListEntry = ({post}) => {
           <div>
             <Link to={`/landmark/${post.landmark_id || '1'}`}>
               <strong>
+                <Icon name='book' /> {post.story_name || 'STORY_NAME'}
+              </strong>
+            </Link>
+            <Link to={`/landmark/${post.landmark_id || '1'}`}>
+              <strong>
                 <Icon name='map pin' /> {post.landmark_name || 'LAND_MARK'}
               </strong>
             </Link>

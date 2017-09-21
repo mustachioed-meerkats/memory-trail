@@ -35,6 +35,7 @@ import {
  * ========================================================== */
 const LandmarkPostModal = ({post, landmark, showModal, openModal, closeModal}) => {
   const postImage = post.image_url || 'https://i.imgur.com/a53MMcb.jpg';
+  const profileImage = post.profile_image || 'https://i.imgur.com/yUvX0Es.png';
 
   return (
     <div>
@@ -45,8 +46,17 @@ const LandmarkPostModal = ({post, landmark, showModal, openModal, closeModal}) =
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <Image src={postImage} />
-          <div>
+          <Image src={postImage} style={{paddingBottom: '1rem'}} fluid />
+          <div style={{paddingBottom: '1rem'}}>
+            <Image floated='left' shape='circular' size='mini' src={profileImage} />
+            <div>
+              <Link to={`/landmark/${post.landmark_id || '1'}`}>
+                <strong><Icon name='book' /> {post.story_name || 'STORY_NAME'} </strong>
+              </Link>
+              <Link to={`/landmark/${post.landmark_id || '1'}`}>
+                <strong><Icon name='map pin' />{post.landmark_name || 'LAND_MARK'} </strong>
+              </Link>
+            </div>
             Submitted {getTimeSincePost(post.created_at)} by <Link to={`/profile/${post.profile_id}`}><strong>{post.profile_display}</strong></Link>
           </div>
           <div>
@@ -54,9 +64,6 @@ const LandmarkPostModal = ({post, landmark, showModal, openModal, closeModal}) =
           </div>
         </Modal.Body>
         <Modal.Footer>
-          <Button icon='heart'/>
-          <Button circular icon='commenting outline' />
-          <Button circular icon='share alternate' />
         </Modal.Footer>
       </Modal>
     </div>

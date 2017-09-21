@@ -8,7 +8,8 @@ import SearchBox from 'react-google-maps/lib/places/SearchBox';
  * Import Semantic UI Components
  * ========================================================== */
 import {
-  Button, 
+  Button,
+  Popup,
   Container,
   Grid, 
   Header, 
@@ -95,10 +96,16 @@ const Home = (props) => {
           icon='sidebar'
           onClick={ () => props.openSideBar()}
         />
-        <Button
-          style={{backgroundColor: 'white'}}
-          icon='compass'
-          onClick={() => props.handleSearchArea(props.center)}
+        <Popup
+          trigger={
+            <Button 
+              style={{backgroundColor: 'white'}} 
+              icon='compass' 
+              onClick={() => props.handleSearchArea(props.center)}
+            />
+          }
+          content='Search this Area!'
+          position='top center'
         />
       </div>
       <div style={landMarkListContainer}>

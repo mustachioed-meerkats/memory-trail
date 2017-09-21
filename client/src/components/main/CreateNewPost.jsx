@@ -87,15 +87,15 @@ class CreateNewPost extends React.Component {
     this.props.handleSearchArea();
     //First, we are going to get the stories created by this user...
     this.props.handleStoryLoad()
-    .then(() => {
-      //Next, we are going to map through them and find which on is the default.
-      //The default story will be preloaded as the story that we post to.
-      this.props.stories.map((story) => {
-        if (story.default_post === true) {
-          this.setState({storyID: story.id, defaultStory: story.title, storyName: story.title});
-        }
+      .then(() => {
+        //Next, we are going to map through them and find which on is the default.
+        //The default story will be preloaded as the story that we post to.
+        this.props.stories.map((story) => {
+          if (story.default_post === true) {
+            this.setState({storyID: story.id, defaultStory: story.title, storyName: story.title});
+          }
+        });
       });
-    });
     //We also need to load the landmarks so that we can properly link to landmarks in case
     //the user does not visit the explore map page. 
   }
@@ -168,6 +168,7 @@ This code below is designed to run the autocomplete search box for the location 
       lng: this.props.location.lng,
       profile_id: this.props.user.id,
       profile_display: this.props.user.display,
+      profile_image: this.props.user.img,
       image_url: this.props.image_url,
       story_id: this.state.storyID,
       story_name: this.state.storyName
