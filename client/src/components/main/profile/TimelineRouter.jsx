@@ -35,7 +35,7 @@ class TimelineRouter extends React.Component {
     super(props);
     this.state = {
       userStories: '',
-      currentStory: '',
+      // currentStory: '',
       chartVisible: false
     };
     this.toggleChartVisibility = this.toggleChartVisibility.bind(this);
@@ -46,7 +46,7 @@ class TimelineRouter extends React.Component {
     let userData = this.props.isCurrentUser ? this.props.user : this.props.otherUser;
     this.setState({
       userStories: userData.stories,
-      currentStory: userData.stories[0],
+      // currentStory: userData.stories[0],
     });
   }
 
@@ -97,11 +97,11 @@ class TimelineRouter extends React.Component {
               <Route exact path={`${this.props.match.url}`} render={() => (
                 <div>Welcome To Stories</div>
               )}/>
-              <Route path={`${this.props.match.url}/:storyTitle`} render={() => (
+              <Route path={`${this.props.match.url}/:storyId`} render={(props) => (
                 <Timeline 
-                isCurrentUser={this.state.isCurrentUser}
+                {...props}
+                isCurrentUser={this.props.isCurrentUser}
                 chartVisible={this.state.chartVisible}
-                currentStory={this.state.currentStory}
                 />
               )}/>
             </Switch>

@@ -53,6 +53,7 @@ class Timeline extends React.Component {
     super(props);
     this.state = {
       currentPostIndex: 0,
+      currentStory: '',
       _map: null,
     };
     this.handleMapMounted = this.handleMapMounted.bind(this);
@@ -60,12 +61,27 @@ class Timeline extends React.Component {
   }
 
   componentWillMount () {
+    var story_id = Number(this.props.match.params.storyId);
+    this.setCurrentStory(story_id);
+  }
+
+  componentWillReceiveProps(nextProps) {
+    var new_story_id = Number(nextProps.match.params.storyId);
+    if (this.props.match.params.storyId !== new_story_id) {
+      this.setCurrentStory(new_story_id);
+    }
+  }
+
+  setCurrentStory(storyId) {
     let userData = this.props.isCurrentUser ? this.props.user : this.props.otherUser;
-    this.setState({
-      userStories: userData.stories,
-      currentStory: userData.stories[0],
-      currentPostIndex: 0
+    let selectedStory = userData.stories.filter((story) => {
+      return story.id === storyId;
     });
+    if (selectedStory.length > 0) {
+      this.setState({
+        currentStory: selectedStory[0]
+      });
+    }
   }
 
   handleMapMounted(map) {
@@ -89,15 +105,15 @@ class Timeline extends React.Component {
     if (this.props.chartVisible) {
       sentimentAnalysis = (
         <div>
-          <SentimentChart story={this.props.currentStory}/>
+          <SentimentChart story={this.state.currentStory}/>
         </div>
       );
     }
     
     return (
       <div>
-        <h1 style={{textAlign:'center'}}>{this.props.currentStory.title}</h1>
-        <p style={{textAlign:'center'}}>{this.props.currentStory.summary}</p>
+        <h1 style={{textAlign:'center'}}>{this.state.currentStory.title}</h1>
+        <p style={{textAlign:'center'}}>{this.state.currentStory.summary}</p>
         <Grid columns={2} stackable>
           <Grid.Column>
             <div style={{height: '80vh'}}>
@@ -113,8 +129,8 @@ class Timeline extends React.Component {
                 inputStyle={this.props.inputStyle}
                 handleMarkerClick={this.props.handleMarkerClick}
                 handleMarkerClose={this.props.handleMarkerClose}
-                markers={this.props.currentStory.posts}
-                currentPost={this.props.currentStory.posts[this.state.currentPostIndex]}
+                markers={this.state.currentStory.posts}
+                currentPost={this.state.currentStory.posts[this.state.currentPostIndex]}
                 landmarks={this.props.landmarks}
                 openSideBar={this.props.openSideBar}
               />
@@ -131,7 +147,7 @@ class Timeline extends React.Component {
                 selectedItem={this.state.currentPostIndex}
                 onChange={(e) => this.handleChange(e)}
                 >
-                {this.props.currentStory.posts.map((post, index) => {
+                {this.state.currentStory.posts.map((post, index) => {
                   return (
                     <Card key={index} fluid>
                       <Card.Header style={{height: '5vh', objectFit: 'cover'}}>
