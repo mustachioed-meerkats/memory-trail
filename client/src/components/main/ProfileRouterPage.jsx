@@ -7,6 +7,7 @@ import Timeline from './Timeline.jsx';
 import CurrentUserPostList from './profile/CurrentUserPostList.jsx';
 import FollowingsPageList from './follow/FollowingsPageList.jsx';
 import SentimentAnalysis from './SentimentAnalysis.jsx';
+import TimelineRouter from './profile/TimelineRouter.jsx';
 
 /** ============================================================
  * Import Semantic UI Components
@@ -162,7 +163,7 @@ class ProfileRouterPage extends React.Component {
       }
     }
     let passport = [... new Set(passportData.map((passportEntry, index) => {
-        return `${passportEntry.name} + ${passportEntry.id}`;
+      return `${passportEntry.name} + ${passportEntry.id}`;
     }))];
 
     return (
@@ -175,10 +176,10 @@ class ProfileRouterPage extends React.Component {
           </div>
           <Menu text vertical size='large'>
             <Menu.Item>
-              <Link to={`${this.props.match.url}`}>Stories</Link>
+              <Link to={`${this.props.match.url}`}>Posts</Link>
             </Menu.Item>
             <Menu.Item>
-              <Link to={`${this.props.match.url}/posts`}>Posts</Link>
+              <Link to={`${this.props.match.url}/stories`}>Stories</Link>
             </Menu.Item>
             <Menu.Item>
               {followingLink}
@@ -203,20 +204,23 @@ class ProfileRouterPage extends React.Component {
           </List>
           </Grid.Column>
           <Grid.Column width={14}>
-            <Route exact path={`${this.props.match.url}`} render={() => (
-              <Timeline isCurrentUser={this.state.isCurrentUser} />
-            )}/>
-            <Route exact path={`${this.props.match.url}/posts`} render={() => (
-              <CurrentUserPostList isCurrentUser={this.state.isCurrentUser} />
-            )}/>
-            <Route exact path={`${this.props.match.url}/following`} render={() => (
-              <FollowingsPageList
-                isCurrentUser={this.state.isCurrentUser}
-                handleUserChange={this.handleUserChange}/>
-            )}/>
-            <Route exact path={`${this.props.match.url}/sentiment`} render={() => (
-              <SentimentAnalysis isCurrentUser={this.state.isCurrentUser} />
-            )}/>
+            <Switch>
+              <Route exact path={`${this.props.match.url}`} render={() => (
+                <CurrentUserPostList isCurrentUser={this.state.isCurrentUser} />
+              )}/>
+              <Route path={`${this.props.match.url}/stories`} render={(props) => (
+                <TimelineRouter 
+                {...props}
+                isCurrentUser={this.state.isCurrentUser} />
+              )}/>
+              <Route exact path={`${this.props.match.url}/following`} render={() => (
+                <FollowingsPageList
+                  isCurrentUser={this.state.isCurrentUser} />
+              )}/>
+              <Route exact path={`${this.props.match.url}/sentiment`} render={() => (
+                <SentimentAnalysis isCurrentUser={this.state.isCurrentUser} />
+              )}/>
+            </Switch>
           </Grid.Column>
         </Grid>
       </Container>
