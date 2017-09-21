@@ -175,10 +175,10 @@ class ProfileRouterPage extends React.Component {
           </div>
           <Menu text vertical size='large'>
             <Menu.Item>
-              <Link to={`${this.props.match.url}`}>Stories</Link>
+              <Link to={`${this.props.match.url}`}>Posts</Link>
             </Menu.Item>
             <Menu.Item>
-              <Link to={`${this.props.match.url}/posts`}>Posts</Link>
+              <Link to={`${this.props.match.url}/stories`}>Stories</Link>
             </Menu.Item>
             <Menu.Item>
               {followingLink}
@@ -204,10 +204,10 @@ class ProfileRouterPage extends React.Component {
           </Grid.Column>
           <Grid.Column width={14}>
             <Route exact path={`${this.props.match.url}`} render={() => (
-              <Timeline isCurrentUser={this.state.isCurrentUser} />
-            )}/>
-            <Route exact path={`${this.props.match.url}/posts`} render={() => (
               <CurrentUserPostList isCurrentUser={this.state.isCurrentUser} />
+            )}/>
+            <Route exact path={`${this.props.match.url}/stories`} render={() => (
+              <Timeline isCurrentUser={this.state.isCurrentUser} />
             )}/>
             <Route exact path={`${this.props.match.url}/following`} render={() => (
               <FollowingsPageList
