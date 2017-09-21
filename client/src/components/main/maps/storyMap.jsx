@@ -24,11 +24,16 @@ let mapOptions = {
   fullscreenControl: true
 };
 
-const StoryMap = withGoogleMap(props => (
+const StoryMap = withGoogleMap(props => {
+  var storyMapCenter = props.center;
+  if (props.currentPost) {
+    storyMapCenter = {lat: parseFloat(props.currentPost.lat), lng: parseFloat(props.currentPost.lng)};
+  }
+  return (
   <GoogleMap
     ref={props.handleMapMounted}
     defaultZoom={15}
-    center={{lat: parseFloat(props.currentPost.lat), lng: parseFloat(props.currentPost.lng)}}
+    center={storyMapCenter}
     onDragEnd={() => props.handleBoundsChanged(props.map)}
     options={mapOptions}
   >
@@ -44,10 +49,11 @@ const StoryMap = withGoogleMap(props => (
           </InfoWindow>
         )}
         </Marker>
-      )
+      );
     })}
   </GoogleMap>
-));
+  );
+});
 
 /** ============================================================
  * Define State Subscriptions

@@ -94,8 +94,12 @@ class TimelineRouter extends React.Component {
           </Card.Header>
           <Card.Content>
             <Switch>
-              <Route exact path={`${this.props.match.url}`} render={() => (
-                <div>Welcome To Stories</div>
+              <Route exact path={`${this.props.match.url}`} render={(props) => (
+                <Timeline 
+                {...props}
+                isCurrentUser={this.props.isCurrentUser}
+                chartVisible={this.state.chartVisible}
+                />
               )}/>
               <Route path={`${this.props.match.url}/:storyId`} render={(props) => (
                 <Timeline 

@@ -48,7 +48,7 @@ import {
   handleNewPost,
 } from '../../store/modules/newpost';
 
-import {updateAfterSubmitPost} from '../../store/modules/user';
+import {updateAfterSubmitPost, updatePassport} from '../../store/modules/user';
 import {handleSearchArea, setCenter} from '../../store/modules/map';
 
 /** ============================================================
@@ -190,6 +190,9 @@ class CreateNewPost extends React.Component {
     return this.props.handleNewPost(postObject)
       .then(() => {
         return this.props.updateAfterSubmitPost(this.props.user.id);
+      })
+      .then(() => {
+        return this.props.updatePassport(this.props.user.id);
       })
       .then(() => {
         return this.props.handleSearchArea(this.props.map);
@@ -430,7 +433,8 @@ const mapDispatchToProps = dispatch => bindActionCreators({
   handleNewPost: handleNewPost,
   updateAfterSubmitPost: updateAfterSubmitPost,
   handleSearchArea: handleSearchArea,
-  setCenter: setCenter
+  setCenter: setCenter,
+  updatePassport: updatePassport
 }, dispatch);
 
 /** ============================================================

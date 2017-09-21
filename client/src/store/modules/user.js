@@ -9,6 +9,7 @@ import thunk from 'redux-thunk';
  * ========================================================== */
 export const SET_CURRENT_USER_FOLLOWINGS = 'SET_CURRENT_USER_FOLLOWINGS';
 export const UPDATE_AFTER_SUBMIT = 'UPDATE_AFTER_SUBMIT';
+export const UPDATE_PASSPORT = 'UPDATE_PASSPORT';
 
 /** ============================================================
  * Define Initial State
@@ -42,6 +43,11 @@ export default (state = initialState, action) => {
       stories: action.stories,
       posts: action.posts
     };
+  case UPDATE_PASSPORT:
+    return {
+      ...state,
+      passport: action.passport,
+    };
     applyMiddleware(middleware);
   default:
     return state;
@@ -74,6 +80,18 @@ export const updateAfterSubmitPost = (profile_id) => {
           type: UPDATE_AFTER_SUBMIT,
           stories: results.data,
           posts: posts
+        });
+      });
+  };
+};
+
+export const updatePassport = (profile_id) => {
+  return dispatch => {
+    return axios.get(`/api/profiles/passport/${profile_id}`)
+      .then(results => {
+        dispatch({
+          type: UPDATE_PASSPORT,
+          passport: results.data,
         });
         dispatch(push(`/profile/${initialState.profile_id}`));
       });
