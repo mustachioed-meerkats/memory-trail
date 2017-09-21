@@ -9,6 +9,7 @@ const Carousel = require('react-responsive-carousel').Carousel;
 import axios from 'axios';
 import StoryMap from './maps/storyMap.jsx';
 import SentimentChart from './SentimentChart.jsx';
+import { Link, Switch, Route } from 'react-router-dom';
 
 /** ============================================================
  * Import Semantic UI Components
@@ -111,96 +112,68 @@ class Timeline extends React.Component {
     var sentimentAnalysis = (<div></div>);
     if (this.state.chartVisible) {
       sentimentAnalysis = (
-        <Card raised fluid>
-          <Card.Header>
-            Sentiment Analysis
-          </Card.Header>
-          <Card.Content>
-            <SentimentChart story={this.state.currentStory}/>
-          </Card.Content>
-        </Card>
+        <div>
+          <SentimentChart story={this.state.currentStory}/>
+        </div>
       );
     }
     
-
     return (
-      <Container fluid={true}>
-        <Card raised fluid>
-          <Card.Header>
-            <Menu vertical={false} size='large'>
-              <Dropdown
-                closeOnBlur={true}
-                scrolling
-                item
-                text={'Choose a Story'}
-                options={this.state.userStories.map((story, index) => {
-                  return {value: story.title, text: story.title, key: index}
-                })}
-                onChange={(e) => this.updateSelectedStory(e)}
+      <div>
+        <h1 style={{textAlign:'center'}}>{this.state.currentStory.title}</h1>
+        <p style={{textAlign:'center'}}>{this.state.currentStory.summary}</p>
+        <Grid columns={2} stackable>
+          <Grid.Column>
+            <div style={{height: '80vh'}}>
+              <StoryMap 
+                containerElement={this.props.containerElement}
+                mapElement={this.props.mapElement}
+                handleMapMounted={this.handleMapMounted}
+                center={this.props.center}
+                handleBoundsChanged={this.props.handleBoundsChanged}
+                map={this.state._map}
+                bounds={this.props.bounds}
+                handlePlacesChanged={this.props.handlePlacesChanged}
+                inputStyle={this.props.inputStyle}
+                handleMarkerClick={this.props.handleMarkerClick}
+                handleMarkerClose={this.props.handleMarkerClose}
+                markers={this.state.currentStory.posts}
+                currentPost={this.state.currentStory.posts[this.state.currentPostIndex]}
+                landmarks={this.props.landmarks}
+                openSideBar={this.props.openSideBar}
+              />
+            </div>
+          </Grid.Column>
+          <Grid.Column>
+            <div style={{height: 100+'%'}}>
+              <Carousel
+                showThumbs={false}
+                showArrows={true}
+                showStatus={true}
+                showIndicators={false}
+                useKeyboardArrows={true}
+                selectedItem={this.state.currentPostIndex}
+                onChange={(e) => this.handleChange(e)}
                 >
-              </Dropdown>
-              <Button onClick={this.toggleChartVisibility}>
-                Sentiment Analysis
-              </Button>
-            </Menu>
-            <h1 style={{textAlign:'center'}}>{this.state.currentStory.title}</h1>
-            <p style={{textAlign:'center'}}>{this.state.currentStory.summary}</p>
-          </Card.Header>
-          <Card.Content>
-            <Grid columns={2} stackable>
-              <Grid.Column>
-                <div style={{height: '80vh'}}>
-                  <StoryMap 
-                    containerElement={this.props.containerElement}
-                    mapElement={this.props.mapElement}
-                    handleMapMounted={this.handleMapMounted}
-                    center={this.props.center}
-                    handleBoundsChanged={this.props.handleBoundsChanged}
-                    map={this.state._map}
-                    bounds={this.props.bounds}
-                    handlePlacesChanged={this.props.handlePlacesChanged}
-                    inputStyle={this.props.inputStyle}
-                    handleMarkerClick={this.props.handleMarkerClick}
-                    handleMarkerClose={this.props.handleMarkerClose}
-                    markers={this.state.currentStory.posts}
-                    currentPost={this.state.currentStory.posts[this.state.currentPostIndex]}
-                    landmarks={this.props.landmarks}
-                    openSideBar={this.props.openSideBar}
-                  />
-                </div>
-              </Grid.Column>
-              <Grid.Column>
-                <div style={{height: 100+'%'}}>
-                  <Carousel
-                    showThumbs={false}
-                    showArrows={true}
-                    showStatus={true}
-                    showIndicators={false}
-                    useKeyboardArrows={true}
-                    selectedItem={this.state.currentPostIndex}
-                    onChange={(e) => this.handleChange(e)}
-                    >
-                    {this.state.currentStory.posts.map((post, index) => {
-                      return (
-                        <Card key={index} fluid>
-                          <Card.Header style={{height: '5vh', objectFit: 'cover'}}>
-                            {post.landmark_name}
-                          </Card.Header>
-                          <Image style={{height: '60vh', objectFit: 'cover'}} src={post.image_url} />
-                          <Card.Description style={{height: '15vh', objectFit: 'cover'}}>
-                            {post.content}
-                          </Card.Description>
-                        </Card>
-                      );
-                    })}
-                  </Carousel>
-                </div>
-              </Grid.Column>
-            </Grid>
-          </Card.Content>
-        </Card>
+                {this.state.currentStory.posts.map((post, index) => {
+                  return (
+                    <Card key={index} fluid>
+                      <Card.Header style={{height: '5vh', objectFit: 'cover'}}>
+                        {post.landmark_name}
+                      </Card.Header>
+                      <Image style={{height: '60vh', objectFit: 'cover'}} src={post.image_url} />
+                      <Card.Description style={{height: '15vh', objectFit: 'cover'}}>
+                        {post.content}
+                      </Card.Description>
+                    </Card>
+                  );
+                })}
+              </Carousel>
+            </div>
+          </Grid.Column>
+        </Grid>
         {sentimentAnalysis}
-      </Container>
+      </div>
     );
   }
 }
