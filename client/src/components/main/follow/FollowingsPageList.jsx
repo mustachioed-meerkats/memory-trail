@@ -39,7 +39,7 @@ const FollowingsPageList = (props) => {
     return (
       <Segment>
         {props.followings.map((following, i) => {
-          return <FollowingsPageListEntry handleUserChange={props.handleUserChange} following={following} id={i} key={i} />;
+          return <FollowingsPageListEntry following={following} id={i} key={i} />;
         })}
       </Segment>
     );

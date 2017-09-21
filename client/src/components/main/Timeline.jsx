@@ -9,7 +9,6 @@ const Carousel = require('react-responsive-carousel').Carousel;
 import axios from 'axios';
 import StoryMap from './maps/storyMap.jsx';
 import SentimentChart from './SentimentChart.jsx';
-import { Link, Switch, Route } from 'react-router-dom';
 
 /** ============================================================
  * Import Semantic UI Components
@@ -53,16 +52,12 @@ class Timeline extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      userStories: '',
-      currentStory: '',
       currentPostIndex: 0,
       _map: null,
       chartVisible: false
     };
     this.handleMapMounted = this.handleMapMounted.bind(this);
     this.handleChange = this.handleChange.bind(this);
-    this.toggleChartVisibility = this.toggleChartVisibility.bind(this);
-    this.updateSelectedStory = this.updateSelectedStory.bind(this);
   }
 
   componentWillMount () {
@@ -88,24 +83,6 @@ class Timeline extends React.Component {
   
   handleChange(e) {
     this.updateCurrentPostIndex(e);
-  }
-
-  toggleChartVisibility() {
-    this.setState({
-      chartVisible: !this.state.chartVisible
-    });
-  }
-
-  updateSelectedStory(e) {
-    e.persist();
-    let selectedStory = this.state.userStories.filter((story) => {
-      return story.title === e.target.textContent;
-    });
-    if (selectedStory.length > 0) {
-      this.setState({
-        currentStory: selectedStory[0]
-      })
-    }
   }
 
   render() {
