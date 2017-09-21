@@ -1,7 +1,7 @@
-const getTimeSinceMembership = (date) => {
-  let objDate = new Date(date);
-  let month = objDate.toLocaleString('en-us', { month: 'short' });
-  let year = objDate.getFullYear();
+const getTimeSinceMembership = function (date) {
+  var objDate = new Date(date);
+  var month = objDate.toLocaleString('en-us', { month: 'short' });
+  var year = objDate.getFullYear();
   return ' ' + month + ' ' + year;
 };
 
