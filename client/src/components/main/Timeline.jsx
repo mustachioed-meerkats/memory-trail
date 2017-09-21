@@ -61,8 +61,12 @@ class Timeline extends React.Component {
   }
 
   componentWillMount () {
-    var story_id = Number(this.props.match.params.storyId);
-    this.setCurrentStory(story_id);
+    if (this.props.match.params.storyId) {
+      var story_id = Number(this.props.match.params.storyId);
+      this.setCurrentStory(story_id);
+    } else {
+      this.setCurrentStory();
+    }
   }
 
   componentWillReceiveProps(nextProps) {
@@ -74,12 +78,15 @@ class Timeline extends React.Component {
 
   setCurrentStory(storyId) {
     let userData = this.props.isCurrentUser ? this.props.user : this.props.otherUser;
-    let selectedStory = userData.stories.filter((story) => {
-      return story.id === storyId;
-    });
-    if (selectedStory.length > 0) {
+    let selectedStory = userData.stories[0];
+    if (storyId) {
+      selectedStory = userData.stories.filter((story) => {
+        return story.id === storyId;
+      })[0];
+    }
+    if (selectedStory) {
       this.setState({
-        currentStory: selectedStory[0]
+        currentStory: selectedStory
       });
     }
   }
