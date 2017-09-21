@@ -6,7 +6,6 @@ import { Link, Switch, Route } from 'react-router-dom';
 import Timeline from './Timeline.jsx';
 import CurrentUserPostList from './profile/CurrentUserPostList.jsx';
 import FollowingsPageList from './follow/FollowingsPageList.jsx';
-import SentimentAnalysis from './SentimentAnalysis.jsx';
 import TimelineRouter from './profile/TimelineRouter.jsx';
 
 /** ============================================================
@@ -148,12 +147,10 @@ class ProfileRouterPage extends React.Component {
   render() {
     var followingLink = (<div></div>);
     var followButton = (<span></span>);
-    var sentimentLink = (<div></div>);
     var passportData;
     if (this.state.isCurrentUser) {
       passportData = this.props.user.passport;
       followingLink = (<Link to={`${this.props.match.url}/following`}>Following</Link>);
-      sentimentLink = (<Link to={`${this.props.match.url}/sentiment`}>Sentiment Analysis</Link>);
     } else {
       passportData = this.props.otherUser.passport;
       if (this.state.isFollowing) {
@@ -184,9 +181,6 @@ class ProfileRouterPage extends React.Component {
             <Menu.Item>
               {followingLink}
             </Menu.Item>
-            <Menu.Item>
-              {sentimentLink}
-            </Menu.Item>
           </Menu>
           <Divider/>
           <List relaxed size='large'>
@@ -216,9 +210,6 @@ class ProfileRouterPage extends React.Component {
               <Route exact path={`${this.props.match.url}/following`} render={() => (
                 <FollowingsPageList
                   isCurrentUser={this.state.isCurrentUser} />
-              )}/>
-              <Route exact path={`${this.props.match.url}/sentiment`} render={() => (
-                <SentimentAnalysis isCurrentUser={this.state.isCurrentUser} />
               )}/>
             </Switch>
           </Grid.Column>
