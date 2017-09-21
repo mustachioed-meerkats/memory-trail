@@ -59,7 +59,7 @@ class LandmarkPostListEntry extends React.Component {
               Submitted {getTimeSincePost(this.props.post.created_at)} by <Link to={`/profile/${this.props.post.profile_id}`}><strong>{this.props.post.profile_display}</strong></Link>
             </Card.Meta>
             <Card.Description>
-              {this.props.post.content}
+              {this.props.post.content.length > 255 ? this.props.post.content.slice(0, 255) + ' ...' : this.props.post.content }
             </Card.Description>
           </Card.Content>
         </Card>

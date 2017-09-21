@@ -12,23 +12,7 @@ import { Modal } from 'react-bootstrap';
 /** ============================================================
  * Import Semantic UI Components
  * ========================================================== */
-import {
-  Button, 
-  Container,
-  Grid, 
-  Header, 
-  Icon,
-  Image, 
-  Item, 
-  Label,
-  Menu, 
-  Segment, 
-  Step,
-  Table,
-  Card,
-  Dimmer,
-  Loader
-} from 'semantic-ui-react';
+import { Image, Icon } from 'semantic-ui-react';
 
 /** ============================================================
  * Define Component
@@ -40,10 +24,8 @@ const LandmarkPostModal = ({post, landmark, showModal, openModal, closeModal}) =
   return (
     <div>
       <Modal show={showModal} onHide={closeModal} bsSize='large' dialogClassName='modal-landmark'>
-        <Modal.Header closeButton>
-          <Modal.Title>
-            {landmark.name}
-          </Modal.Title>
+        <Modal.Header closeButton className='landmark-post-modal'>
+          {landmark.name}
         </Modal.Header>
         <Modal.Body>
           <Image src={postImage} style={{paddingBottom: '1rem'}} fluid />

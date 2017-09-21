@@ -6,23 +6,7 @@ import LandmarkPostListEntry from './LandmarkPostListEntry.jsx';
 /** ============================================================
  * Import Semantic UI Components
  * ========================================================== */
-import {
-  Button, 
-  Container,
-  Grid, 
-  Header, 
-  Icon,
-  Image, 
-  Item, 
-  Label, 
-  Menu, 
-  Segment, 
-  Step,
-  Table,
-  Card,
-  Dimmer,
-  Loader
-} from 'semantic-ui-react';
+import { Dimmer, Loader } from 'semantic-ui-react';
 
 /** ============================================================
  * Define Component
@@ -30,19 +14,17 @@ import {
 const LandmarkPostList = (props) => {
   if (!props.landmark) {
     return (
-      <Segment>
-        <Dimmer active inverted>
-          <Loader inverted>Loading</Loader>
-        </Dimmer>
-      </Segment>
+      <Dimmer active inverted>
+        <Loader inverted>Loading</Loader>
+      </Dimmer>
     );
   } else {
     return (
-      <Segment>
-        {props.landmark.posts.sort((a, b) => { return b.created_at - a.created_at; }).map((post, i) => {
+      <div>
+        {props.landmark.posts.sort((a, b) => { return a.created_at - b.created_at; }).map((post, i) => {
           return <LandmarkPostListEntry post={post} id={i} landmark={props.landmark} key={i} />;
         })}
-      </Segment>
+      </div>
     );
   }
 };

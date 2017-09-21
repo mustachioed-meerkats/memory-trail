@@ -9,21 +9,7 @@ import SearchBox from 'react-google-maps/lib/places/SearchBox';
  * ========================================================== */
 import {
   Button,
-  Popup,
-  Container,
-  Grid, 
-  Header, 
-  Icon,
-  Image, 
-  Item, 
-  Label, 
-  Menu, 
-  Segment, 
-  Step,
-  Table,
-  Card,
-  Dimmer,
-  Loader
+  Popup
 } from 'semantic-ui-react';
 
 /** ============================================================
@@ -39,42 +25,18 @@ import LandmarkMapList from './landmarks/LandmarkMapList.jsx';
 import { 
   setCenter,
   handleSearchArea,
-  handlePlacesChanged
 } from '../../store/modules/map';
 import { openSideBar } from '../../store/modules/sidebar';
 
-// TODO: Refactor into styles
-
-const landMarkListContainer = {
-  position: 'fixed',
-  padding: '1rem',
-  bottom: 0,
-  top: 64,
-  overflow: 'hidden'
-};
-
+// TODO: Refactor into styles-
 const listNav = {
   position: 'fixed',
   padding: '1rem',
   top: 0
 };
-
-const postListStyle = {
-  position: 'fixed',
-  bottom: 0,
-  top: 64,
-  overflowY: 'auto'
-};
-
 const exploreMapStyle = {
   height: window.innerHeight
 };
-
-// class Home extends React.Component {
-
-
-
-// }
 
 const Home = (props) => {
   if (!props.userLocationAvailable) {
@@ -108,8 +70,8 @@ const Home = (props) => {
           position='top center'
         />
       </div>
-      <div style={landMarkListContainer}>
-        <div style={postListStyle}>
+      <div className='landmark-map-list-container'>
+        <div className='landmark-map-list'>
           <LandmarkMapList />
         </div>
       </div>
@@ -126,7 +88,6 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => bindActionCreators({
   setCenter,
   openSideBar,
-  handlePlacesChanged,
   handleSearchArea
 }, dispatch);
 

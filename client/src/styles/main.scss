@@ -1,3 +1,67 @@
+@import url(http://fonts.googleapis.com/css?family=Roboto:400,100,100italic,300,300ita‌​lic,400italic,500,500italic,700,700italic,900italic,900);
+html, html * {
+  font-family: Roboto;
+}
+
+body {
+  font-family: 'Roboto', sans-serif !important;;
+}
+/** ============================================================
+ * Define Class Names
+ * ========================================================== */
+.panel-title {
+  color: #4183c4;
+  font-family: 'Roboto', sans-serif;
+  font-weight: 800;
+  font-size: 1.25rem;
+}
+
+/** ============================================================
+ * Define Landmark Class Names
+ * ========================================================== */
+ .landmark-map-list-container {
+   position: fixed;
+   padding: 1rem;
+   bottom: 0;
+   top: 64;
+   overflow: hidden;
+ }
+
+ .landmark-map-list {
+  position: fixed;
+  bottom: 0px;
+  top: 64px;
+  overflow-y: auto;
+  padding-right: 1rem;
+}
+
+.landmark-map-list::-webkit-scrollbar {
+  width: 0px;
+}
+
+.landmark-page-title {
+  color: #fff;
+  font-family: 'Roboto', sans-serif;
+  font-weight: 800;
+  font-size: 3rem;
+  text-align: center;
+  text-shadow: 1px 2px 1px rgba(0, 0, 0, .6);
+  letter-spacing: -1px;
+  padding: 12.5rem 0rem 0rem 0rem;
+}
+
+.landmark-post-modal {
+  color: #fff;
+  font-family: 'Roboto', sans-serif;
+  font-weight: 800;
+  font-size: 2rem;
+  letter-spacing: -1px;
+  background-color: #1797d2;
+  text-shadow: 1px 2px 1px rgba(0, 0, 0, .6);
+}
+/** ============================================================
+ * Define NavSideBar Class Names
+ * ========================================================== */
 .modal-landmark {
   @media screen and (max-width: 425px) {
     width: 95vw;

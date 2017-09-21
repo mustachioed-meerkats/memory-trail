@@ -127,9 +127,9 @@ class CreateNewPost extends React.Component {
       });
   }
 
-/*
-This code below is designed to run the autocomplete search box for the location search.
-*/
+  /*
+    This code below is designed to run the autocomplete search box for the location search.
+  */
 
 
   // Autocomplete feature for the form's location input field
@@ -318,11 +318,9 @@ This code below is designed to run the autocomplete search box for the location 
 
     if (!this.props.userLocationAvailable) {
       return (
-        <Segment>
-          <Dimmer active inverted>
-            <Loader inverted>Loading</Loader>
-          </Dimmer>
-        </Segment>
+        <Dimmer active inverted>
+          <Loader inverted>Loading</Loader>
+        </Dimmer>
       );
     } else {
       return (
