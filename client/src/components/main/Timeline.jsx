@@ -100,9 +100,11 @@ class Timeline extends React.Component {
     let selectedStory = this.state.userStories.filter((story) => {
       return story.title === e.target.textContent;
     });
-    this.setState({
-      currentStory: selectedStory[0]
-    })
+    if (selectedStory.length > 0) {
+      this.setState({
+        currentStory: selectedStory[0]
+      })
+    }
   }
 
   render() {
@@ -126,11 +128,11 @@ class Timeline extends React.Component {
         <Card raised fluid>
           <Card.Header>
             <Menu vertical={false} size='large'>
-              <Menu.Item>Choose a Story</Menu.Item>
               <Dropdown
                 closeOnBlur={true}
+                scrolling
                 item
-                text={this.state.currentStory.title}
+                text={'Choose a Story'}
                 options={this.state.userStories.map((story, index) => {
                   return {value: story.title, text: story.title, key: index}
                 })}
