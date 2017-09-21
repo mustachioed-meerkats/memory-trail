@@ -31,7 +31,9 @@ import {
   Table,
   TextArea,
   Popup,
-  Transition
+  Transition,
+  Dimmer,
+  Loader
 } from 'semantic-ui-react';
 
 /** ============================================================
@@ -47,7 +49,7 @@ import {
 } from '../../store/modules/newpost';
 
 import {updateAfterSubmitPost} from '../../store/modules/user';
-import {handleSearchArea} from '../../store/modules/map';
+import {handleSearchArea, setCenter} from '../../store/modules/map';
 
 /** ============================================================
  * Define Component
@@ -84,7 +86,14 @@ class CreateNewPost extends React.Component {
   */
 
   componentWillMount () {
-    this.props.handleSearchArea();
+    if (!this.props.userLocationAvailable) {
+      var fn = this;
+      navigator.geolocation.getCurrentPosition(function(location) {
+        var lat = location.coords.latitude;
+        var lng = location.coords.longitude;
+        fn.props.setCenter(lat, lng);
+      });
+    }
     //First, we are going to get the stories created by this user...
     this.props.handleStoryLoad()
       .then(() => {
@@ -307,83 +316,93 @@ This code below is designed to run the autocomplete search box for the location 
         />;
     }
 
-    return (
-      <Grid centered columns={2} stackable>
-        <Grid.Row>
-          <Upload />
-        </Grid.Row>
-        <Message positive>
-          <Message.Header>Your current story is {this.state.storyName} </Message.Header>
-            <p>FYI, {this.state.defaultStory} is your default story.</p>
-        </Message>
-        <Grid.Row>
-          <Grid.Column>
-            <Button.Group size='massive' fluid={true}>
-              <Button content='New Story' onClick={this.handleStoryFormVisibility}/>
-              <Button.Or/>
-              <Button content='Select' onClick={this.handleDropdownVisibility}/>
-            </Button.Group>
-            <Modal size= 'tiny' open={this.state.storyFormVisible} onClose={this.handleStoryFormVisibility}>
-              <Modal.Content>
-                <Form>
-                  <Form.Field>
-                    <Input fluid={true} size='huge' placeholder='Name Your Story' onChange={(e) => this.handleStoryTitle(e.target.value)}/>
-                    <br/>
-                    <TextArea style={{fontSize: '20px'}} placeholder='Story Summary' onChange={(e) => this.handleStorySummary(e.target.value)} />
-                  </Form.Field>
-                </Form>
-              </Modal.Content>
-              <Modal.Actions>
-                <Button negative onClick={this.handleStoryFormVisibility} >
-                  Cancel
-                </Button>
-                {storyFormValidation}
-              </Modal.Actions>
-            </Modal>
-            <Transition.Group animation='slide down' duration='500ms'>
-              {this.state.dropdownVisible &&
-              <Card fluid={true}>
-                <List
-                  relaxed
-                  selection
-                  size='big'
-                  >
-                  {this.props.stories.map((story, index) => {
-                    return <List.Item key={index} onClick={() => this.storySelected(story.title)} content={story.title} value={story.title}/>;
-                  })}
-                </List>
-              </Card>
-              }
-            </Transition.Group>
-          </Grid.Column>
-        </Grid.Row>
-        <Grid.Row>
-          <Grid.Column>
-            <Form>
-              <TextArea
-                style={{fontSize: '20px'}}
-                placeholder='Record a Memory!'
-                onChange={(e) => { this.props.handleContentTextArea(e.target.value); }}
-                />
-              <br/>
-              <br/>
-              <Input
-                id='locationInput'
-                fluid={true}
-                size='huge'
-                icon='compass'
-                onChange={this.initializeAutocomplete}
-                placeholder='Enter a Location...' />
-            </Form>
-          </Grid.Column>
-        </Grid.Row>
-        <Grid.Row>
-          <Grid.Column>
-            {postFormValidation}            
-          </Grid.Column>
-        </Grid.Row>
-      </Grid>
-    );
+    if (!this.props.userLocationAvailable) {
+      return (
+        <Segment>
+          <Dimmer active inverted>
+            <Loader inverted>Loading</Loader>
+          </Dimmer>
+        </Segment>
+      );
+    } else {
+      return (
+        <Grid centered columns={2} stackable>
+          <Grid.Row>
+            <Upload />
+          </Grid.Row>
+          <Message positive>
+            <Message.Header>Your current story is {this.state.storyName} </Message.Header>
+              <p>FYI, {this.state.defaultStory} is your default story.</p>
+          </Message>
+          <Grid.Row>
+            <Grid.Column>
+              <Button.Group size='massive' fluid={true}>
+                <Button content='New Story' onClick={this.handleStoryFormVisibility}/>
+                <Button.Or/>
+                <Button content='Select' onClick={this.handleDropdownVisibility}/>
+              </Button.Group>
+              <Modal size= 'tiny' open={this.state.storyFormVisible} onClose={this.handleStoryFormVisibility}>
+                <Modal.Content>
+                  <Form>
+                    <Form.Field>
+                      <Input fluid={true} size='huge' placeholder='Name Your Story' onChange={(e) => this.handleStoryTitle(e.target.value)}/>
+                      <br/>
+                      <TextArea style={{fontSize: '20px'}} placeholder='Story Summary' onChange={(e) => this.handleStorySummary(e.target.value)} />
+                    </Form.Field>
+                  </Form>
+                </Modal.Content>
+                <Modal.Actions>
+                  <Button negative onClick={this.handleStoryFormVisibility} >
+                    Cancel
+                  </Button>
+                  {storyFormValidation}
+                </Modal.Actions>
+              </Modal>
+              <Transition.Group animation='slide down' duration='500ms'>
+                {this.state.dropdownVisible &&
+                <Card fluid={true}>
+                  <List
+                    relaxed
+                    selection
+                    size='big'
+                    >
+                    {this.props.stories.map((story, index) => {
+                      return <List.Item key={index} onClick={() => this.storySelected(story.title)} content={story.title} value={story.title}/>;
+                    })}
+                  </List>
+                </Card>
+                }
+              </Transition.Group>
+            </Grid.Column>
+          </Grid.Row>
+          <Grid.Row>
+            <Grid.Column>
+              <Form>
+                <TextArea
+                  style={{fontSize: '20px'}}
+                  placeholder='Record a Memory!'
+                  onChange={(e) => { this.props.handleContentTextArea(e.target.value); }}
+                  />
+                <br/>
+                <br/>
+                <Input
+                  id='locationInput'
+                  fluid={true}
+                  size='huge'
+                  icon='compass'
+                  onChange={this.initializeAutocomplete}
+                  placeholder='Enter a Location...' />
+              </Form>
+            </Grid.Column>
+          </Grid.Row>
+          <Grid.Row>
+            <Grid.Column>
+              {postFormValidation}            
+            </Grid.Column>
+          </Grid.Row>
+        </Grid>
+      );
+    }
   }
 }
 
@@ -399,6 +418,7 @@ const mapStateToProps = state => ({
   user: state.user.user,
   image_url: state.newpost.image_url,
   stories: state.newpost.allUserStories,
+  userLocationAvailable: state.map.userLocationAvailable
 });
 
 /** ============================================================
@@ -412,6 +432,7 @@ const mapDispatchToProps = dispatch => bindActionCreators({
   handleNewPost: handleNewPost,
   updateAfterSubmitPost: updateAfterSubmitPost,
   handleSearchArea: handleSearchArea,
+  setCenter: setCenter
 }, dispatch);
 
 /** ============================================================

@@ -21,7 +21,7 @@ export const HANDLE_LANDMARK_SELECT = 'map/HANDLE_LANDMARK_SELECT';
  * =============================================================
  */
 const initialState = {
-  center: __PRELOADED_STATE__.map,
+  center: null,
   bounds: null,
   landmarks: [],
   markers: [],
