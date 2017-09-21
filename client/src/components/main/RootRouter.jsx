@@ -1,28 +1,22 @@
 import React from 'react';
 import { Switch, Route } from 'react-router-dom';
-import Home from './Home.jsx';
-import PostPage from './PostPage.jsx';
 import CreateNewPost from './CreateNewPost.jsx';
-import FollowingFeed from './FollowingFeed.jsx';
-import FollowingsPage from './FollowingsPage.jsx';
-import UserProfilePage from './UserProfilePage.jsx';
-import CurrentUserProfilePage from './CurrentUserProfilePage.jsx';
+import Home from './Home.jsx';
 import ProfileRouterPage from './ProfileRouterPage.jsx';
+import FollowingFeed from './FollowingFeed.jsx';
 import LandmarkPage from './LandmarkPage.jsx';
-import TestPage from './TestPage.jsx';
 
+/** ============================================================
+ * Define React Routes
+ * ========================================================== */
 const RootRouter = () => (
   <Switch>
     <Route exact path='/' component={CreateNewPost} />
     <Route exact path='/explore' component={Home} />
     <Route path='/profile/:id' component={ProfileRouterPage} />
     <Route exact path='/feed' component={FollowingFeed} />
-    <Route exact path='/post/:id' component={PostPage} />
     <Route exact path='/landmark/:id' component={LandmarkPage} />
-    <Route exact path='/followings' component={FollowingsPage} />
-    <Route exact path='/testpage' component={TestPage} />
   </Switch>
 );
-
 
 export default RootRouter;

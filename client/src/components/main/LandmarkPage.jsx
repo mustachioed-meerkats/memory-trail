@@ -56,7 +56,7 @@ class LandmarkPage extends React.Component {
         <Segment.Group>
           <Segment>
             <div style={style.card}>
-              <div>Welcome to <strong>{landmark.name}</strong></div>
+              <div style={{top: '10px'}}>Welcome to <strong>{landmark.name}</strong></div>
             </div>
           </Segment>
         </Segment.Group>

@@ -46,30 +46,29 @@ class NavSideBar extends React.Component {
     };
   }
 
+  
   render() {
+
     return (
       <SidebarModal side='left' isVisible={ this.props.toggleSideBar} onHide={ () => this.props.closeSideBar() }>
         <Menu fluid vertical icon='labeled'>
-          <Menu.Item as={Link} to='/' name='newstory' onClick={this.handleItemClick}>
-            <Icon name='pencil' />
-            Record a Memory
-          </Menu.Item>
-          <Menu.Item as={Link} to='/explore' name='explore' onClick={this.handleItemClick}>
-            <Icon name='map outline' />
-            Explore
-          </Menu.Item>
-          <Menu.Item as={Link} to='/feed' name='feed' onClick={this.handleItemClick}>
-            <Icon name='feed' />
-            Feed
-          </Menu.Item>
-          <Menu.Item as={Link} to={`/profile/${this.props.user.user.id}`} name='profile' onClick={this.handleItemClick}>
+          <Menu.Item as={Link} to={`/profile/${this.props.user.user.id}`} name='profile' onClick={() => this.props.closeSideBar()}>
             <Icon name='user circle outline' />
             {this.props.user.user.display}
           </Menu.Item>
-          <Menu.Item as={Link} to='/testpage' name='test' onClick={this.handleItemClick}>
-            TEST_PAGE
+          <Menu.Item as={Link} to='/' name='newstory' onClick={() => this.props.closeSideBar()}>
+            <Icon name='pencil' />
+            Record a Memory
           </Menu.Item>
-          <Menu.Item as={Link} to='/logout' name='logout' onClick={this.handleItemClick}>
+          <Menu.Item as={Link} to='/explore' name='explore' onClick={() => this.props.closeSideBar()}>
+            <Icon name='map outline' />
+            Explore
+          </Menu.Item>
+          <Menu.Item as={Link} to='/feed' name='feed' onClick={() => this.props.closeSideBar()}>
+            <Icon name='feed' />
+            Feed
+          </Menu.Item>
+          <Menu.Item link href='/logout' name='logout' onClick={() => this.props.closeSideBar()}>
             <Icon name='log out' />
             Logout
           </Menu.Item>
@@ -90,6 +89,7 @@ class SidebarModal extends React.Component {
         show={ this.props.isVisible }
         onHide={this.props.onHide} 
         autoFocus keyboard
+        style={{outlineWidth: '0px'}}
       >
         <Modal.Header closeButton>
           <Modal.Title>
