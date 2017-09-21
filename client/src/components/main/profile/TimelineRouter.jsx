@@ -57,6 +57,7 @@ class TimelineRouter extends React.Component {
   }
 
   updateSelectedStory(e) {
+    console.log('selected: ', e.target);
     e.persist();
     let selectedStory = this.state.userStories.filter((story) => {
       return story.title === e.target.textContent;
@@ -64,7 +65,7 @@ class TimelineRouter extends React.Component {
     if (selectedStory.length > 0) {
       this.setState({
         currentStory: selectedStory[0]
-      })
+      });
     }
   }
 
@@ -74,16 +75,17 @@ class TimelineRouter extends React.Component {
         <Card raised fluid>
           <Card.Header>
             <Menu vertical={false} size='large'>
-              <Dropdown
-                closeOnBlur={true}
-                scrolling
-                item
-                text={'Choose a Story'}
-                options={this.state.userStories.map((story, index) => {
-                  return {value: story.title, text: story.title, key: index}
-                })}
-                onChange={(e) => this.updateSelectedStory(e)}
-                >
+              <Dropdown 
+              text='Choose a Story' 
+              closeOnBlur={true}
+              scrolling
+              item
+              onChange={(e) => this.updateSelectedStory(e)}>
+                <Dropdown.Menu>
+                  {this.state.userStories.map((story, index) => {
+                    return (<Link to={`${this.props.match.url}/${story.id}`} key={index}><Dropdown.Item value={story.id} text={story.title} key={index}/></Link>);
+                  })}
+                </Dropdown.Menu>
               </Dropdown>
               <Button onClick={this.toggleChartVisibility}>
                 Sentiment Analysis

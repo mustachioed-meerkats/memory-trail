@@ -54,7 +54,6 @@ class Timeline extends React.Component {
     this.state = {
       currentPostIndex: 0,
       _map: null,
-      chartVisible: false
     };
     this.handleMapMounted = this.handleMapMounted.bind(this);
     this.handleChange = this.handleChange.bind(this);
@@ -78,7 +77,7 @@ class Timeline extends React.Component {
   updateCurrentPostIndex (index) {
     this.setState({
       currentPostIndex: index
-    })
+    });
   }
   
   handleChange(e) {
@@ -87,18 +86,18 @@ class Timeline extends React.Component {
 
   render() {
     var sentimentAnalysis = (<div></div>);
-    if (this.state.chartVisible) {
+    if (this.props.chartVisible) {
       sentimentAnalysis = (
         <div>
-          <SentimentChart story={this.state.currentStory}/>
+          <SentimentChart story={this.props.currentStory}/>
         </div>
       );
     }
     
     return (
       <div>
-        <h1 style={{textAlign:'center'}}>{this.state.currentStory.title}</h1>
-        <p style={{textAlign:'center'}}>{this.state.currentStory.summary}</p>
+        <h1 style={{textAlign:'center'}}>{this.props.currentStory.title}</h1>
+        <p style={{textAlign:'center'}}>{this.props.currentStory.summary}</p>
         <Grid columns={2} stackable>
           <Grid.Column>
             <div style={{height: '80vh'}}>
@@ -114,8 +113,8 @@ class Timeline extends React.Component {
                 inputStyle={this.props.inputStyle}
                 handleMarkerClick={this.props.handleMarkerClick}
                 handleMarkerClose={this.props.handleMarkerClose}
-                markers={this.state.currentStory.posts}
-                currentPost={this.state.currentStory.posts[this.state.currentPostIndex]}
+                markers={this.props.currentStory.posts}
+                currentPost={this.props.currentStory.posts[this.state.currentPostIndex]}
                 landmarks={this.props.landmarks}
                 openSideBar={this.props.openSideBar}
               />
@@ -132,7 +131,7 @@ class Timeline extends React.Component {
                 selectedItem={this.state.currentPostIndex}
                 onChange={(e) => this.handleChange(e)}
                 >
-                {this.state.currentStory.posts.map((post, index) => {
+                {this.props.currentStory.posts.map((post, index) => {
                   return (
                     <Card key={index} fluid>
                       <Card.Header style={{height: '5vh', objectFit: 'cover'}}>

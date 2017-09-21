@@ -163,7 +163,7 @@ class ProfileRouterPage extends React.Component {
       }
     }
     let passport = [... new Set(passportData.map((passportEntry, index) => {
-        return `${passportEntry.name} + ${passportEntry.id}`;
+      return `${passportEntry.name} + ${passportEntry.id}`;
     }))];
 
     return (
