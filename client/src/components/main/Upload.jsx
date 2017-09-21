@@ -2,7 +2,7 @@ import React from 'react';
 import axios from 'axios';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { Button, Form, Header, Icon, Input, Image, Message, Popup } from 'semantic-ui-react';
+import { Button, Form, Header, Icon, Input, Image, Message, Segment, Popup } from 'semantic-ui-react';
 
 import {
   handleImageUrl
@@ -125,9 +125,9 @@ class Upload extends React.Component {
     }
 
     return (
-      <div>
+      <div >
         <label htmlFor="hidden-new-file">
-          <Icon name='photo' size='massive' color='teal' style={{cursor: 'pointer'}}/>
+          <Icon name='photo' size='massive' style={{cursor: 'pointer', color: 'white'}}/>
         </label>
         <input ref='file' type='file' id="hidden-new-file" style={{display: 'none'}} onChange={this.handleFile}/>
         {buttonUpload}
