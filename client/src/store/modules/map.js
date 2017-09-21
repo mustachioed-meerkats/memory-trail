@@ -20,6 +20,7 @@ export const HANDLE_LANDMARK_SELECT = 'map/HANDLE_LANDMARK_SELECT';
  * Define Initial State
  * =============================================================
  */
+
 const initialState = {
   center: null,
   bounds: null,
