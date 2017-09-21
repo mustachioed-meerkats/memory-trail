@@ -57,26 +57,31 @@ class SentimentChart extends React.Component {
   }
 
   componentDidMount() {
-    this.generateSeries(this.props.story);
+    this.generateSeries(this.props.story, this.props.currentPostIndex);
   }
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.story.title !== this.props.story.title) {
-      this.generateSeries(nextProps.story);
+      this.generateSeries(nextProps.story, nextProps.currentPostIndex);
+    }
+    if (nextProps.currentPostIndex !== this.props.currentPostIndex) {
+      this.generateSeries(nextProps.story, nextProps.currentPostIndex);
     }
   }
 
-  generateSeries(story) {
+  generateSeries(story, index) {
     var data = story.posts.map(post => {
       return Number(post.score) * Number(post.magnitude);
     });
     var landmark_names = story.posts.map(post => {
       return post.landmark_name || 'Oakland';
     });
+    var currentData = data.slice(0, index + 1);
+    var currentLandmarks = landmark_names.slice(0, index + 1);
     this.setState({
       series: [{
-        data: data,
-        landmark_name: landmark_names
+        data: currentData,
+        landmark_name: currentLandmarks
       }],
     });
   }

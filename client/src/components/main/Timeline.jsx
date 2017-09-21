@@ -105,7 +105,7 @@ class Timeline extends React.Component {
     if (this.props.chartVisible) {
       sentimentAnalysis = (
         <div>
-          <SentimentChart story={this.state.currentStory}/>
+          <SentimentChart story={this.state.currentStory} currentPostIndex={this.state.currentPostIndex}/>
         </div>
       );
     }
