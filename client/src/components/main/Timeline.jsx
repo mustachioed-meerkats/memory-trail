@@ -33,7 +33,9 @@ import {
   Segment,
   Table,
   TextArea,
-  Transition
+  Transition,
+  Dimmer,
+  Loader
 } from 'semantic-ui-react';
 
 /** ============================================================
@@ -47,6 +49,8 @@ import {
   handleMarkerClose,
   handleCurrentPostMarker
 } from '../../store/modules/map';
+
+import {getUserInfo} from '../../store/modules/otherUser';
 
 class Timeline extends React.Component {
   constructor(props) {
@@ -77,7 +81,17 @@ class Timeline extends React.Component {
   }
 
   setCurrentStory(storyId) {
-    let userData = this.props.isCurrentUser ? this.props.user : this.props.otherUser;
+    var userId = Number(this.props.match.url.split('/')[2]);
+    var isCurUser = (userId === this.props.user.user.id);
+    let userData = isCurUser ? this.props.user : this.props.otherUser;
+    if (userData.stories.length !== 0) {
+      this.setStory(storyId, userData);
+    } else if (userData.stories.length === 0 && !isCurUser) {
+      this.props.getUserInfo(userId);
+    }
+  }
+
+  setStory(storyId, userData) {
     let selectedStory = userData.stories[0];
     if (storyId) {
       selectedStory = userData.stories.filter((story) => {
@@ -116,64 +130,71 @@ class Timeline extends React.Component {
         </div>
       );
     }
-    
-    return (
-      <div>
-        <h1 style={{textAlign:'center'}}>{this.state.currentStory.title}</h1>
-        <p style={{textAlign:'center'}}>{this.state.currentStory.summary}</p>
-        <Grid columns={2} stackable>
-          <Grid.Column>
-            <div style={{height: '80vh'}}>
-              <StoryMap 
-                containerElement={this.props.containerElement}
-                mapElement={this.props.mapElement}
-                handleMapMounted={this.handleMapMounted}
-                center={this.props.center}
-                handleBoundsChanged={this.props.handleBoundsChanged}
-                map={this.state._map}
-                bounds={this.props.bounds}
-                handlePlacesChanged={this.props.handlePlacesChanged}
-                inputStyle={this.props.inputStyle}
-                handleMarkerClick={this.props.handleMarkerClick}
-                handleMarkerClose={this.props.handleMarkerClose}
-                markers={this.state.currentStory.posts}
-                currentPost={this.state.currentStory.posts[this.state.currentPostIndex]}
-                landmarks={this.props.landmarks}
-                openSideBar={this.props.openSideBar}
-              />
-            </div>
-          </Grid.Column>
-          <Grid.Column>
-            <div style={{height: 100+'%'}}>
-              <Carousel
-                showThumbs={false}
-                showArrows={true}
-                showStatus={true}
-                showIndicators={false}
-                useKeyboardArrows={true}
-                selectedItem={this.state.currentPostIndex}
-                onChange={(e) => this.handleChange(e)}
-                >
-                {this.state.currentStory.posts.map((post, index) => {
-                  return (
-                    <Card key={index} fluid>
-                      <Card.Header style={{height: '5vh', objectFit: 'cover'}}>
-                        {post.landmark_name}
-                      </Card.Header>
-                      <Image style={{height: '60vh', objectFit: 'cover'}} src={post.image_url} />
-                      <Card.Description style={{height: '15vh', objectFit: 'cover'}}>
-                        {post.content}
-                      </Card.Description>
-                    </Card>
-                  );
-                })}
-              </Carousel>
-            </div>
-          </Grid.Column>
-        </Grid>
-        {sentimentAnalysis}
-      </div>
-    );
+    if (this.state.currentStory) {
+      return (
+        <div>
+          <h1 style={{textAlign:'center'}}>{this.state.currentStory.title}</h1>
+          <p style={{textAlign:'center'}}>{this.state.currentStory.summary}</p>
+          <Grid columns={2} stackable>
+            <Grid.Column>
+              <div style={{height: '80vh'}}>
+                <StoryMap 
+                  containerElement={this.props.containerElement}
+                  mapElement={this.props.mapElement}
+                  handleMapMounted={this.handleMapMounted}
+                  center={this.props.center}
+                  handleBoundsChanged={this.props.handleBoundsChanged}
+                  map={this.state._map}
+                  bounds={this.props.bounds}
+                  handlePlacesChanged={this.props.handlePlacesChanged}
+                  inputStyle={this.props.inputStyle}
+                  handleMarkerClick={this.props.handleMarkerClick}
+                  handleMarkerClose={this.props.handleMarkerClose}
+                  markers={this.state.currentStory.posts}
+                  currentPost={this.state.currentStory.posts[this.state.currentPostIndex]}
+                  landmarks={this.props.landmarks}
+                  openSideBar={this.props.openSideBar}
+                />
+              </div>
+            </Grid.Column>
+            <Grid.Column>
+              <div style={{height: 100+'%'}}>
+                <Carousel
+                  showThumbs={false}
+                  showArrows={true}
+                  showStatus={true}
+                  showIndicators={false}
+                  useKeyboardArrows={true}
+                  selectedItem={this.state.currentPostIndex}
+                  onChange={(e) => this.handleChange(e)}
+                  >
+                  {this.state.currentStory.posts.map((post, index) => {
+                    return (
+                      <Card key={index} fluid>
+                        <Card.Header style={{height: '5vh', objectFit: 'cover'}}>
+                          {post.landmark_name}
+                        </Card.Header>
+                        <Image style={{height: '60vh', objectFit: 'cover'}} src={post.image_url} />
+                        <Card.Description style={{height: '15vh', objectFit: 'cover'}}>
+                          {post.content}
+                        </Card.Description>
+                      </Card>
+                    );
+                  })}
+                </Carousel>
+              </div>
+            </Grid.Column>
+          </Grid>
+          {sentimentAnalysis}
+        </div>
+      );
+    } else {
+      return (
+        <Dimmer active inverted>
+          <Loader inverted>Loading</Loader>
+        </Dimmer>
+      );
+    }
   }
 }
 
@@ -199,7 +220,8 @@ const mapDispatchToProps = dispatch => bindActionCreators({
   handlePlacesChanged,
   handleBoundsChanged,
   handleMarkerClick,
-  handleMarkerClose
+  handleMarkerClose,
+  getUserInfo
 }, dispatch);
 
 export default connect(
