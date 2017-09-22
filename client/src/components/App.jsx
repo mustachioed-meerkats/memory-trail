@@ -4,7 +4,7 @@ import RootRouter from './main/RootRouter.jsx';
 
 const App = () => {
   return (
-    <div>
+    <div style={{backgroundColor: '#f6f6f6'}}>
       <Header />
       <RootRouter />
     </div>

@@ -90,20 +90,20 @@ class Upload extends React.Component {
     let buttonUpload = <Button size='small' onClick={this.handleSubmit}>Upload</Button>;
 
     if (this.state.imageStatus === true) {
-      previewMessage = <Message positive >
+      previewMessage = <Message floating >
       <Message.Header> Image Preview </Message.Header>
       </Message>;
     }
 
     if (this.state.imageStatus === 'failed' && this.state.messageOpen === true) {
-      previewMessage = <Message negative >
+      previewMessage = <Message floating negative >
       <Message.Header> Uh Oh... Upload Failed </Message.Header>
       <p> Please try again, or refresh the page. </p>
       </Message>;
     }
 
     if (this.state.imageStatus === 'uploaded' && this.state.messageOpen === true) {
-      previewMessage = <Message positive>
+      previewMessage = <Message floating>
         <Message.Header> Image Uploaded! </Message.Header>
         </Message>;
     }
