@@ -6,6 +6,7 @@ import Autocomplete from 'react-google-autocomplete';
 import Upload from './Upload.jsx';
 import { browserHistory } from 'react-router';
 import { Link } from 'react-router-dom';
+import LoadingPage from './LoadingPage.jsx';
 
 /** ============================================================
  * Import Semantic UI Components
@@ -321,9 +322,7 @@ class CreateNewPost extends React.Component {
 
     if (!this.props.userLocationAvailable) {
       return (
-        <Dimmer active inverted>
-          <Loader inverted>Loading</Loader>
-        </Dimmer>
+        <LoadingPage />
       );
     } else {
       return (
@@ -333,7 +332,7 @@ class CreateNewPost extends React.Component {
           </Grid.Row>
           <Message positive>
             <Message.Header>Your current story is {this.state.storyName} </Message.Header>
-              <p>FYI, {this.state.defaultStory} is your default story.</p>
+            <p>FYI, {this.state.defaultStory} is your default story.</p>
           </Message>
           <Grid.Row>
             <Grid.Column>
@@ -366,7 +365,7 @@ class CreateNewPost extends React.Component {
                     relaxed
                     selection
                     size='big'
-                    >
+                  >
                     {this.props.stories.map((story, index) => {
                       return <List.Item key={index} onClick={() => this.storySelected(story.title)} content={story.title} value={story.title}/>;
                     })}
@@ -383,7 +382,7 @@ class CreateNewPost extends React.Component {
                   style={{fontSize: '20px'}}
                   placeholder='Record a Memory!'
                   onChange={(e) => { this.props.handleContentTextArea(e.target.value); }}
-                  />
+                />
                 <br/>
                 <br/>
                 <Input

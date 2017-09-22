@@ -16,14 +16,15 @@ import { Icon, Image, Card } from 'semantic-ui-react';
 const FollowingFeedListEntry = ({post}) => {
 
   const postImage = post.image_url || 'https://i.imgur.com/a53MMcb.jpg';
+  const profileImage = post.profile_image || 'https://i.imgur.com/yUvX0Es.png';
   return (
-    <Card fluid raised={true}> 
+    <Card fluid raised={true} > 
       <Image centered fluid src={post.image_url}/>
       <Card.Content>
-        <Image floated='left' shape='circular' size='mini' src={post.profile.img} />
+        <Image floated='left' shape='circular' size='mini' src={profileImage} />
         <Card.Meta>
           <div>
-            <Link to={`/landmark/${post.landmark_id || '1'}`}>
+            <Link to={`/profile/${post.profile_id}/stories/${post.story_id}`}>
               <strong>
                 <Icon name='book' /> {post.story_name || 'STORY_NAME'}
               </strong>
