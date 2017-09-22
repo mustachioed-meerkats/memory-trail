@@ -151,12 +151,20 @@ class ProfileRouterPage extends React.Component {
     var user;
     if (this.state.isCurrentUser) {
       user = this.props.user;
-      var userImage = user.user.img.slice(0, user.user.img.length-6);
+      if (user.user.img) {
+        var userImage = user.user.img.slice(0, user.user.img.length-6);
+      } else {
+        var userImage = 'https://i.imgur.com/yUvX0Es.png';
+      }
       passportData = this.props.user.passport;
       followingLink = (<Menu.Item><Link to={`${this.props.match.url}/following`}>Following</Link></Menu.Item>);
     } else {
       user = this.props.otherUser;
-      var userImage = user.user.img.slice(0, user.user.img.length-6);
+      if (user.user.img) {
+        var userImage = user.user.img.slice(0, user.user.img.length-6);
+      } else {
+        var userImage = 'https://i.imgur.com/yUvX0Es.png';
+      }
       passportData = this.props.otherUser.passport;
       if (this.state.isFollowing) {
         followButton = (<Button size="mini" style={{display: 'inline-block', backgroundColor: '#3fbad9', color: 'white'}} onClick={this.handleUnfollow}>Unfollow</Button>);
