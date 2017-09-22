@@ -8,23 +8,7 @@ import FollowingFeedList from './follow/FollowingFeedList.jsx';
 /** ============================================================
  * Import Semantic UI Components
  * ========================================================== */
-import {
-  Button, 
-  Container,
-  Grid, 
-  Header, 
-  Icon,
-  Image, 
-  Item, 
-  Label, 
-  Menu, 
-  Segment, 
-  Step,
-  Table,
-  Card,
-  Dimmer,
-  Loader
-} from 'semantic-ui-react';
+import { Container } from 'semantic-ui-react';
 
 /** ============================================================
  * Import Redux Action Creators
@@ -51,10 +35,7 @@ class FollowingFeed extends React.Component {
     };
 
     return (
-      <Container>
-        <Segment.Group>
-          <Segment>Memory Feed</Segment>
-        </Segment.Group>
+      <Container text>
         <FollowingFeedList />
       </Container>
     );
