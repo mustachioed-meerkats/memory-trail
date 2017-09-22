@@ -88,56 +88,54 @@ class TimelineRouter extends React.Component {
   }
 
   render() {
-    if (this.state.userStories.length !== 0) {
-      return (
-        <Container fluid={true}>
-          <Card raised fluid>
-            <Card.Header>
-              <Menu vertical={false} size='large'>
-                <Dropdown 
-                text='Choose a Story' 
-                closeOnBlur={true}
-                scrolling
-                item
-                onChange={(e) => this.updateSelectedStory(e)}>
-                  <Dropdown.Menu>
-                    {this.state.userStories.map((story, index) => {
-                      return (<Link to={`${this.props.match.url}/${story.id}`} key={index}><Dropdown.Item value={story.id} text={story.title} key={index}/></Link>);
-                    })}
-                  </Dropdown.Menu>
-                </Dropdown>
-                <Button onClick={this.toggleChartVisibility}>
-                  Sentiment Analysis
-                </Button>
-              </Menu>
-            </Card.Header>
-            <Card.Content>
-              <Switch>
-                <Route exact path={`${this.props.match.url}`} render={(props) => (
-                  <Timeline 
-                  {...props}
-                  chartVisible={this.state.chartVisible}
-                  />
-                )}/>
-                <Route path={`${this.props.match.url}/:storyId`} render={(props) => (
-                  <Timeline 
-                  {...props}
-                  chartVisible={this.state.chartVisible}
-                  />
-                )}/>
-              </Switch>
-            </Card.Content>
-          </Card>
-        </Container>
-      );
-    } else {
-      return (
-        <Dimmer active inverted>
-          <Loader inverted>Loading</Loader>
-        </Dimmer>
-      );
-    }
+  if (this.state.userStories.length !== 0) {
+    return (
+      <Container fluid={true} style={{backgroundColor: '#f6f6f6'}}>
+        <Menu vertical={false} size='large'>
+          <Dropdown 
+          text='Choose a Story' 
+          closeOnBlur={true}
+          scrolling
+          item
+          onChange={(e) => this.updateSelectedStory(e)}>
+            <Dropdown.Menu>
+              {this.state.userStories.map((story, index) => {
+                return (<Link to={`${this.props.match.url}/${story.id}`} key={index}><Dropdown.Item value={story.id} text={story.title} key={index}/></Link>);
+              })}
+            </Dropdown.Menu>
+          </Dropdown>
+          <Menu.Item>
+            <Button onClick={this.toggleChartVisibility} style={{backgroundColor: '#3fbad9', color: 'white'}}>
+              View Emotions
+            </Button>
+          </Menu.Item>
+        </Menu>
+            <Switch>
+              <Route exact path={`${this.props.match.url}`} render={(props) => (
+                <Timeline 
+                {...props}
+                isCurrentUser={this.props.isCurrentUser}
+                chartVisible={this.state.chartVisible}
+                />
+              )}/>
+              <Route path={`${this.props.match.url}/:storyId`} render={(props) => (
+                <Timeline 
+                {...props}
+                isCurrentUser={this.props.isCurrentUser}
+                chartVisible={this.state.chartVisible}
+                />
+              )}/>
+            </Switch>
+      </Container>
+    );
+  } else {
+    return (
+      <Dimmer active inverted>
+        <Loader inverted>Loading</Loader>
+      </Dimmer>
+    );
   }
+}
 }
 
 /** ============================================================

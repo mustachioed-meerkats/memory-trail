@@ -2,7 +2,7 @@ import React from 'react';
 import axios from 'axios';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { Button, Form, Header, Icon, Input, Image, Message, Popup } from 'semantic-ui-react';
+import { Button, Form, Header, Icon, Input, Image, Message, Segment, Popup } from 'semantic-ui-react';
 
 import {
   handleImageUrl
@@ -90,20 +90,20 @@ class Upload extends React.Component {
     let buttonUpload = <Button size='small' onClick={this.handleSubmit}>Upload</Button>;
 
     if (this.state.imageStatus === true) {
-      previewMessage = <Message positive >
+      previewMessage = <Message floating >
       <Message.Header> Image Preview </Message.Header>
       </Message>;
     }
 
     if (this.state.imageStatus === 'failed' && this.state.messageOpen === true) {
-      previewMessage = <Message negative >
+      previewMessage = <Message floating negative >
       <Message.Header> Uh Oh... Upload Failed </Message.Header>
       <p> Please try again, or refresh the page. </p>
       </Message>;
     }
 
     if (this.state.imageStatus === 'uploaded' && this.state.messageOpen === true) {
-      previewMessage = <Message positive>
+      previewMessage = <Message floating>
         <Message.Header> Image Uploaded! </Message.Header>
         </Message>;
     }
@@ -127,7 +127,7 @@ class Upload extends React.Component {
     return (
       <div>
         <label htmlFor="hidden-new-file">
-          <Icon name='photo' size='massive' color='teal' style={{cursor: 'pointer'}}/>
+          <Icon name='photo' size='massive' style={{cursor: 'pointer', color: '#1797d2'}}/>
         </label>
         <input ref='file' type='file' id="hidden-new-file" style={{display: 'none'}} onChange={this.handleFile}/>
         {buttonUpload}

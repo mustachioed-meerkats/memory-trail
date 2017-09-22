@@ -7,6 +7,7 @@ import Upload from './Upload.jsx';
 import { browserHistory } from 'react-router';
 import { Link } from 'react-router-dom';
 import LoadingPage from './LoadingPage.jsx';
+import { Modal } from 'react-bootstrap';
 
 /** ============================================================
  * Import Semantic UI Components
@@ -27,7 +28,6 @@ import {
   List,
   Menu,
   Message,
-  Modal,
   Segment,
   Table,
   TextArea,
@@ -267,11 +267,11 @@ class CreateNewPost extends React.Component {
     //Only once the user has filled in all of the rquired information is the actual button released to the 
     //end user, where they can publish their post. 
 
-    let postFormValidation = <Button fluid={true} size='massive' color='teal' onClick={() => this.handlePostSubmit(this.state.landmark)}>Publish</Button>;
+    let postFormValidation = <Button fluid={true} size='massive' style={{backgroundColor:'#1797d2', color:'white'}} onClick={() => this.handlePostSubmit(this.state.landmark)}>Publish</Button>;
     if (this.props.location === '') {
       postFormValidation = 
         <Popup
-          trigger={<Button fluid={true} size='massive' color='teal'>Publish</Button>}
+          trigger={<Button fluid={true} size='massive' style={{backgroundColor:'#1797d2', color:'white'}}>Publish</Button>}
           content={<p> Please Select location </p>}
           on='click'
           position='top right'
@@ -280,7 +280,7 @@ class CreateNewPost extends React.Component {
     if (this.props.content === '') {
       postFormValidation =         
         <Popup
-          trigger={<Button fluid={true} size='massive' color='teal'>Publish</Button>}
+          trigger={<Button fluid={true} size='massive' style={{backgroundColor:'#1797d2', color:'white'}}>Publish</Button>}
           content={<p> Please write a post. </p>}
           on='click'
           position='top right'
@@ -289,7 +289,7 @@ class CreateNewPost extends React.Component {
     if (this.props.image_url === '') {
       postFormValidation =  
         <Popup
-          trigger={<Button fluid={true} size='massive' color='teal'>Publish</Button>}
+          trigger={<Button fluid={true} size='massive' style={{backgroundColor:'#1797d2', color:'white'}}>Publish</Button>}
           content={<p> Please upload a Photo </p>}
           on='click'
           position='top right'
@@ -298,12 +298,12 @@ class CreateNewPost extends React.Component {
 
     //Form Validation for the create story modal. 
 
-    let storyFormValidation = <Button positive onClick={this.storySubmit}> Submit </Button>;
+    let storyFormValidation = <Button style={{backgroundColor:'#2185d0', color:'white'}} onClick={this.storySubmit}> Submit </Button>;
   
     if (this.state.storySummaryForm === '') {
       storyFormValidation =                 
         <Popup
-          trigger={<Button positive> Submit </Button>}
+          trigger={<Button style={{backgroundColor:'#2185d0', color:'white'}}> Submit </Button>}
           content={<p> Enter a Story Summary! </p>}
           on='click'
           position='top right'
@@ -313,7 +313,7 @@ class CreateNewPost extends React.Component {
     if (this.state.storyTitleForm === '') {
       storyFormValidation = 
         <Popup
-          trigger={<Button positive> Submit </Button>}
+          trigger={<Button style={{backgroundColor:'#2185d0', color:'white'}}> Submit </Button>}
           content={<p> Enter a Story Title! </p>}
           on='click'
           position='top right'
@@ -330,10 +330,9 @@ class CreateNewPost extends React.Component {
           <Grid.Row>
             <Upload />
           </Grid.Row>
-          <Message positive>
-            <Message.Header>Your current story is {this.state.storyName} </Message.Header>
-            <p>FYI, {this.state.defaultStory} is your default story.</p>
-          </Message>
+          <Grid.Row>
+            <p style={{fontFamily:'Roboto', fontSize: '16px', fontWeight: '400', fontStyle: 'italic'}}>Your current story is "{this.state.storyName}"</p>
+          </Grid.Row>
           <Grid.Row>
             <Grid.Column>
               <Button.Group size='massive' fluid={true}>
@@ -341,8 +340,8 @@ class CreateNewPost extends React.Component {
                 <Button.Or/>
                 <Button content='Select' onClick={this.handleDropdownVisibility}/>
               </Button.Group>
-              <Modal size= 'tiny' open={this.state.storyFormVisible} onClose={this.handleStoryFormVisibility}>
-                <Modal.Content>
+              <Modal size='small' show={this.state.storyFormVisible} onHide={this.handleStoryFormVisibility}>
+                <Modal.Body>
                   <Form>
                     <Form.Field>
                       <Input fluid={true} size='huge' placeholder='Name Your Story' onChange={(e) => this.handleStoryTitle(e.target.value)}/>
@@ -350,13 +349,13 @@ class CreateNewPost extends React.Component {
                       <TextArea style={{fontSize: '20px'}} placeholder='Story Summary' onChange={(e) => this.handleStorySummary(e.target.value)} />
                     </Form.Field>
                   </Form>
-                </Modal.Content>
-                <Modal.Actions>
-                  <Button negative onClick={this.handleStoryFormVisibility} >
+                </Modal.Body>
+                <Modal.Footer>
+                  <Button onClick={this.handleStoryFormVisibility} >
                     Cancel
                   </Button>
                   {storyFormValidation}
-                </Modal.Actions>
+                </Modal.Footer>
               </Modal>
               <Transition.Group animation='slide down' duration='500ms'>
                 {this.state.dropdownVisible &&
@@ -397,7 +396,7 @@ class CreateNewPost extends React.Component {
           </Grid.Row>
           <Grid.Row>
             <Grid.Column>
-              {postFormValidation}            
+              {postFormValidation}
             </Grid.Column>
           </Grid.Row>
         </Grid>
