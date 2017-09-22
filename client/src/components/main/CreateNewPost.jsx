@@ -267,11 +267,11 @@ class CreateNewPost extends React.Component {
     //Only once the user has filled in all of the rquired information is the actual button released to the 
     //end user, where they can publish their post. 
 
-    let postFormValidation = <Button fluid={true} size='massive' style={{backgroundColor:'#2185d0', color:'white'}} onClick={() => this.handlePostSubmit(this.state.landmark)}>Publish</Button>;
+    let postFormValidation = <Button fluid={true} size='massive' style={{backgroundColor:'#1797d2', color:'white'}} onClick={() => this.handlePostSubmit(this.state.landmark)}>Publish</Button>;
     if (this.props.location === '') {
       postFormValidation = 
         <Popup
-          trigger={<Button fluid={true} size='massive' style={{backgroundColor:'#2185d0', color:'white'}}>Publish</Button>}
+          trigger={<Button fluid={true} size='massive' style={{backgroundColor:'#1797d2', color:'white'}}>Publish</Button>}
           content={<p> Please Select location </p>}
           on='click'
           position='top right'
@@ -280,7 +280,7 @@ class CreateNewPost extends React.Component {
     if (this.props.content === '') {
       postFormValidation =         
         <Popup
-          trigger={<Button fluid={true} size='massive' style={{backgroundColor:'#2185d0', color:'white'}}>Publish</Button>}
+          trigger={<Button fluid={true} size='massive' style={{backgroundColor:'#1797d2', color:'white'}}>Publish</Button>}
           content={<p> Please write a post. </p>}
           on='click'
           position='top right'
@@ -289,7 +289,7 @@ class CreateNewPost extends React.Component {
     if (this.props.image_url === '') {
       postFormValidation =  
         <Popup
-          trigger={<Button fluid={true} size='massive' style={{backgroundColor:'#2185d0', color:'white'}}>Publish</Button>}
+          trigger={<Button fluid={true} size='massive' style={{backgroundColor:'#1797d2', color:'white'}}>Publish</Button>}
           content={<p> Please upload a Photo </p>}
           on='click'
           position='top right'
@@ -331,7 +331,7 @@ class CreateNewPost extends React.Component {
             <Upload />
           </Grid.Row>
           <Grid.Row>
-            <p style={{fontFamily:'Roboto', fontSize: '16px', fontWeight: '400', fontStyle: 'italic', color: 'white'}}>Your current story is "{this.state.storyName}"</p>
+            <p style={{fontFamily:'Roboto', fontSize: '16px', fontWeight: '400', fontStyle: 'italic'}}>Your current story is "{this.state.storyName}"</p>
           </Grid.Row>
           <Grid.Row>
             <Grid.Column>

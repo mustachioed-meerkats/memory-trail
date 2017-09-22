@@ -167,23 +167,25 @@ class ProfileRouterPage extends React.Component {
       <Container fluid={true}>
         <Grid columns={2}>
           <Grid.Column width={2}>
-          <div>
-            {this.state.profile_display}
-            {followButton}
-          </div>
-          <Menu text vertical size='large'>
-            <Menu.Item>
-              <Link to={`${this.props.match.url}`}>Posts</Link>
-            </Menu.Item>
-            <Menu.Item>
-              <Link to={`${this.props.match.url}/stories`}>Stories</Link>
-            </Menu.Item>
-            <Menu.Item>
-              {followingLink}
-            </Menu.Item>
-          </Menu>
+          <Card raised>
+            <Menu text compact vertical>
+              <Menu.Header style={{fontSize: '14rm'}}>
+                {this.state.profile_display}
+                {followButton}
+              </Menu.Header>
+              <Menu.Item>
+                <Link to={`${this.props.match.url}`}>Posts</Link>
+              </Menu.Item>
+              <Menu.Item>
+                <Link to={`${this.props.match.url}/stories`}>Stories</Link>
+              </Menu.Item>
+              <Menu.Item>
+                {followingLink}
+              </Menu.Item>
+            </Menu>
+          </Card>
           <Divider/>
-          <List relaxed size='large'>
+          <List compact size='large'>
             <List.Item>
               <List.Header>Passport</List.Header>
             </List.Item>

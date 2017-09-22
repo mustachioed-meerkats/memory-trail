@@ -125,9 +125,9 @@ class Upload extends React.Component {
     }
 
     return (
-      <div >
+      <div>
         <label htmlFor="hidden-new-file">
-          <Icon name='photo' size='massive' style={{cursor: 'pointer', color: 'white'}}/>
+          <Icon name='photo' size='massive' style={{cursor: 'pointer', color: '#1797d2'}}/>
         </label>
         <input ref='file' type='file' id="hidden-new-file" style={{display: 'none'}} onChange={this.handleFile}/>
         {buttonUpload}
