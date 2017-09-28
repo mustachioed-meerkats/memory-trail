@@ -123,22 +123,31 @@ class Timeline extends React.Component {
 
   render() {
     var sentimentAnalysis = (<div></div>);
+    var mapStyle={height: '80vh'};
     if (this.props.chartVisible) {
+      mapStyle={height: '50vh'}
       sentimentAnalysis = (
-        <div>
+        <div style={{height: '30vh'}}>
           <SentimentChart story={this.state.currentStory} currentPostIndex={this.state.currentPostIndex}/>
         </div>
       );
     }
     if (this.state.currentStory) {
-      return (
-        <div>
-          <h1 style={{textAlign:'center'}}>{this.state.currentStory.title}</h1>
-          <p style={{textAlign:'center'}}>{this.state.currentStory.summary}</p>
+    return (
+      <Card fluid={true}>
+        <Card.Content>
+          <Card.Header>
+            <h1 style={{textAlign:'center'}}>{this.state.currentStory.title}</h1>
+          </Card.Header>
+          <Card.Description>
+            <p style={{textAlign:'center'}}>{this.state.currentStory.summary}</p>
+          </Card.Description>
+        </Card.Content>
+        <Card.Content extra>
           <Grid columns={2} stackable>
             <Grid.Column>
-              <div style={{height: '80vh'}}>
-                <StoryMap 
+              <div style={mapStyle}>
+                <StoryMap
                   containerElement={this.props.containerElement}
                   mapElement={this.props.mapElement}
                   handleMapMounted={this.handleMapMounted}
@@ -156,48 +165,52 @@ class Timeline extends React.Component {
                   openSideBar={this.props.openSideBar}
                 />
               </div>
+              {sentimentAnalysis}
             </Grid.Column>
             <Grid.Column>
               <div style={{height: 100+'%'}}>
-                <Carousel
-                  showThumbs={false}
-                  showArrows={true}
-                  showStatus={true}
-                  showIndicators={false}
-                  useKeyboardArrows={true}
-                  selectedItem={this.state.currentPostIndex}
-                  onChange={(e) => this.handleChange(e)}
-                  >
-                  {this.state.currentStory.posts.map((post, index) => {
-                    return (
-                      <Card key={index} fluid>
-                        <Card.Header style={{height: '5vh', objectFit: 'cover'}}>
-                          {post.landmark_name}
-                        </Card.Header>
-                        <Image style={{height: '60vh', objectFit: 'cover'}} src={post.image_url} />
-                        <Card.Description style={{height: '15vh', objectFit: 'cover'}}>
-                          {post.content}
-                        </Card.Description>
-                      </Card>
-                    );
-                  })}
-                </Carousel>
+                <Card fluid={true} raised>
+                  <Carousel
+                    showThumbs={false}
+                    showArrows={true}
+                    showStatus={true}
+                    showIndicators={false}
+                    useKeyboardArrows={true}
+                    selectedItem={this.state.currentPostIndex}
+                    onChange={(e) => this.handleChange(e)}
+                    >
+                    {this.state.currentStory.posts.map((post, index) => {
+                      return (
+                        <Card key={index} fluid>
+                          <Image style={{height: '60vh', objectFit: 'cover'}} src={post.image_url} />
+                          <Card.Content style={{height: '20vh', objectFit: 'cover'}}>
+                            <Card.Header>
+                              {post.landmark_name}
+                            </Card.Header>
+                            <Card.Description>
+                              {post.content}
+                            </Card.Description>
+                          </Card.Content>
+                        </Card>
+                      );
+                    })}
+                  </Carousel>
+                </Card>
               </div>
             </Grid.Column>
           </Grid>
-          {sentimentAnalysis}
-        </div>
-      );
-    } else {
-      return (
-        <Dimmer active inverted>
-          <Loader inverted>Loading</Loader>
-        </Dimmer>
-      );
-    }
+        </Card.Content>
+      </Card>
+    );
+  } else {
+    return (
+      <Dimmer active inverted>
+        <Loader inverted>Loading</Loader>
+      </Dimmer>
+    );
   }
 }
-
+}
 
 /** ============================================================
  * Define State Subscriptions

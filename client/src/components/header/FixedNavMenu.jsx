@@ -48,15 +48,13 @@ class FixedNavMenu extends React.Component {
     
     return (
       <div>
-        <Menu size='tiny' fixed='top'>
-          <Menu.Item>
-            <Button
-              size='tiny'
-              style={{backgroundColor: 'white'}}
-              icon='sidebar'
-              onClick={ () => this.props.openSideBar()}
-            />
-          </Menu.Item>
+        <Menu size='tiny' fixed='top' className='fixed-nav-bar'>
+          <Button
+            size='tiny'
+            style={{backgroundColor: 'white', paddingRight: '1rem'}}
+            icon='sidebar'
+            onClick={ () => this.props.openSideBar()}
+          />
         </Menu>
         <div style={space}>
         </div>

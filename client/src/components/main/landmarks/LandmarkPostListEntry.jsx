@@ -49,11 +49,15 @@ class LandmarkPostListEntry extends React.Component {
             <Image floated='left' shape='circular' size='mini' src={profileImage} />
             <Card.Meta>
               <div>
-                <Link to={`/landmark/${this.props.post.landmark_id || '1'}`}>
-                  <strong><Icon name='book' /> {this.props.post.story_name || 'STORY_NAME'} </strong>
+                <Link to={`/profile/${this.props.post.profile_id}/stories/${this.props.post.story_id}`}>
+                  <strong>
+                    <Icon name='book' /> {this.props.post.story_name || 'STORY_NAME'}
+                  </strong>
                 </Link>
                 <Link to={`/landmark/${this.props.post.landmark_id || '1'}`}>
-                  <strong><Icon name='map pin' />{this.props.post.landmark_name || 'LAND_MARK'} </strong>
+                  <strong>
+                    <Icon name='map pin' /> {this.props.post.landmark_name || 'LAND_MARK'}
+                  </strong>
                 </Link>
               </div>
               Submitted {getTimeSincePost(this.props.post.created_at)} by <Link to={`/profile/${this.props.post.profile_id}`}><strong>{this.props.post.profile_display}</strong></Link>

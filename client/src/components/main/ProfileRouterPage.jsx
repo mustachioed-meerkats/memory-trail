@@ -145,18 +145,31 @@ class ProfileRouterPage extends React.Component {
   }
 
   render() {
-    var followingLink = (<div></div>);
+    var followingLink;
     var followButton = (<span></span>);
     var passportData;
+    var user;
     if (this.state.isCurrentUser) {
+      user = this.props.user;
+      if (user.user.img) {
+        var userImage = user.user.img.slice(0, user.user.img.length-6);
+      } else {
+        var userImage = 'https://i.imgur.com/yUvX0Es.png';
+      }
       passportData = this.props.user.passport;
-      followingLink = (<Link to={`${this.props.match.url}/following`}>Following</Link>);
+      followingLink = (<Menu.Item><Link to={`${this.props.match.url}/following`}>Following</Link></Menu.Item>);
     } else {
+      user = this.props.otherUser;
+      if (user.user.img) {
+        var userImage = user.user.img.slice(0, user.user.img.length-6);
+      } else {
+        var userImage = 'https://i.imgur.com/yUvX0Es.png';
+      }
       passportData = this.props.otherUser.passport;
       if (this.state.isFollowing) {
-        followButton = (<Button onClick={this.handleUnfollow}>Unfollow</Button>);
+        followButton = (<Button size="mini" style={{display: 'inline-block', backgroundColor: '#3fbad9', color: 'white'}} onClick={this.handleUnfollow}>Unfollow</Button>);
       } else {
-        followButton = (<Button onClick={this.handleFollow}>Follow</Button>);
+        followButton = (<Button size="mini" style={{display: 'inline-block', backgroundColor: '#3fbad9', color: 'white'}} onClick={this.handleFollow}>Follow</Button>);
       }
     }
     let passport = [... new Set(passportData.map((passportEntry, index) => {
@@ -164,48 +177,48 @@ class ProfileRouterPage extends React.Component {
     }))];
 
     return (
-      <Container fluid={true}>
+      <Container style={{backgroundColor: '#f6f6f6'}} fluid={true}>
         <Grid columns={2}>
-          <Grid.Column width={2}>
-          <div>
-            {this.state.profile_display}
-            {followButton}
-          </div>
-          <Menu text vertical size='large'>
-            <Menu.Item>
-              <Link to={`${this.props.match.url}`}>Posts</Link>
-            </Menu.Item>
-            <Menu.Item>
-              <Link to={`${this.props.match.url}/stories`}>Stories</Link>
-            </Menu.Item>
-            <Menu.Item>
-              {followingLink}
-            </Menu.Item>
-          </Menu>
-          <Divider/>
-          <List relaxed size='large'>
-            <List.Item>
-              <List.Header>Passport</List.Header>
-            </List.Item>
-            <List.Content>
-              {passport.map((place, index) => {
-                let split = place.split('+');
-                let name = split[0];
-                let id = Number(split[1]);
-                return <List.Item onClick={this.landmarkSelected.bind(this, id)} key={index}><Link to={`/profile/${this.props.user.user.id}`} > {name} </Link></List.Item>;
-              })}
-            </List.Content>
-          </List>
+          <Grid.Column width={3}>
+            <Menu vertical>
+              <Menu.Header style={{textAlign: 'center'}}>
+                <Image style={{marginTop: '1rem', marginBottom: '1rem'}} bordered centered shape='circular' size='tiny' src={userImage} />
+                {this.state.profile_display}
+                <br/>
+                <br/>
+                {followButton}
+              </Menu.Header>
+              <Menu.Item>
+                <Link to={`${this.props.match.url}`}>Posts</Link>
+              </Menu.Item>
+              <Menu.Item>
+                <Link to={`${this.props.match.url}/stories`}>Stories</Link>
+              </Menu.Item>
+                {followingLink}
+              <Menu.Item>
+                Passport
+                <Menu.Menu>
+                  {passport.map((place, index) => {
+                  let split = place.split('+');
+                  let name = split[0];
+                  let id = Number(split[1]);
+                  return <Menu.Item onClick={this.landmarkSelected.bind(this, id)} key={index}><Link to={`/profile/${this.props.user.user.id}`}>{name}</Link></Menu.Item>;
+                  })}
+                </Menu.Menu>
+              </Menu.Item>
+            </Menu>
           </Grid.Column>
-          <Grid.Column width={14}>
+          <Grid.Column width={13}>
             <Switch>
               <Route exact path={`${this.props.match.url}`} render={() => (
                 <CurrentUserPostList isCurrentUser={this.state.isCurrentUser} />
               )}/>
               <Route path={`${this.props.match.url}/stories`} render={(props) => (
-                <TimelineRouter 
-                {...props}
-                isCurrentUser={this.state.isCurrentUser} />
+                <Container>
+                  <TimelineRouter 
+                  {...props}
+                  isCurrentUser={this.state.isCurrentUser} />
+                </Container>
               )}/>
               <Route exact path={`${this.props.match.url}/following`} render={() => (
                 <FollowingsPageList

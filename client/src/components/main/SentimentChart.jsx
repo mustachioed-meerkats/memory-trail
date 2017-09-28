@@ -11,6 +11,7 @@ import {
   // helpers 
   helpers, DropShadow, Gradient
 } from 'rumble-charts';
+
 import _ from 'lodash';
 
 class SentimentChart extends React.Component {
@@ -45,7 +46,7 @@ class SentimentChart extends React.Component {
       const label = document.querySelector(`.labels-label-${seriesIndex}-${pointIndex}`);
       hovered = {circle, label, radius: circle.getAttribute('r'), opacity: circle.style.fillOpacity};
       circle.setAttribute('r', 10);
-      circle.style.fillOpacity = 1;
+      circle.style.fillOpacity = 0.9;
       if (label) {
         label.style.display = 'block';
       }
@@ -88,8 +89,8 @@ class SentimentChart extends React.Component {
 
   render() {
     return (
-    <div style={{fontFamily:'sans-serif',fontSize:'2em'}}>
-      <Chart width={1600} height={800} series={this.state.series} minY={-3} maxY={3}>
+    <div style={{fontFamily:'Roboto', fontSize:'0.1rm', width: '100%', height: 'auto', marginTop: '2rem', marginBottom: '2rem'}}>
+      <Chart viewBox='0 0 500 200' series={this.state.series} minY={-3} maxY={3}>
         <Layer width='80%' height='80%' position='middle center'>
         <Handlers onMouseMove={this.handleMouseMove} onMouseLeave={this.handleMouseLeave} optimized={false}>
           <Animate _ease='bounce' _ease='elastic'>
@@ -100,17 +101,11 @@ class SentimentChart extends React.Component {
             lineLength='100%'
             lineVisible={true}
             lineStyle={{stroke: 'lightgray'}}
-            labelStyle={{textAnchor: 'end', alignmentBaseline: 'middle', fontSize: '0.5em', fill: 'lightgray'}}
-            labelAttributes={{x: -5}}
-          />
-          <Ticks
-            axis='x'
-            label={({index, props}) => props.series[0].landmark_name[index]}
-            labelStyle={{textAnchor:'middle',alignmentBaseline:'before-edge',fontSize:'0.5em',fill:'lightgray'}}
-            labelAttributes={{y: 3}}
+            /* labelStyle={{textAnchor: 'end', alignmentBaseline: 'middle', fontSize: '0.5rm', fill: 'lightgray'}} */
+            /* labelAttributes={{x: -5}} */
           />
           <Lines />
-          <Dots className='dots' dotStyle={{transition:'all 250ms',fillOpacity:0}} />
+          <Dots className='dots' dotStyle={{transition: 'all 250ms', fillOpacity: 0}} />
           <Labels
           className='labels'
           label={({series, pointIndex}) => series.landmark_name[pointIndex]}
@@ -140,3 +135,10 @@ export default connect(
   mapStateToProps,
   mapDispatchToProps
 )(SentimentChart);
+
+/* <Ticks
+            axis='x' */
+            /* label={({index, props}) => props.series[0].landmark_name[index]} */
+            /* labelStyle={{textAnchor:'middle',alignmentBaseline:'before-edge',fontSize:'0.5em',fill:'lightgray'}} */
+            /* labelAttributes={{y: 3}} 
+            /> */
